@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    supportedAncestry = ["Elf"]
+    supportedAncestry = ["Dwarf", "Elf"]
     genderList = ["Male", "Female"]
 
     def __init__(self):
@@ -40,7 +40,7 @@ class GG_Ancestry:
     def _rando_male_given_name(self):
         self.givenName = self._get_male_given_name()
 
-    def _get_male_given_name(self):        
+    def _get_male_given_name(self):
         dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
         return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
 
@@ -51,8 +51,10 @@ class GG_Ancestry:
     def _rando_surname(self):
         if self.ancestry is "Elf":
             self._rando_elf_surname()
+        elif self.ancestry is "Dwarf":
+            self._rando_dwarf_surname()
         else:
-            self._rando_default_surname()
+            self.surname = self._get_default_surname()
 
     def _rando_elf_surname(self):
         elvenSurname = "%s of %s"
@@ -68,8 +70,14 @@ class GG_Ancestry:
 
         self.surname = elvenSurname % (relationship, father)
 
-    def _rando_default_surname(self):
-        self.surname = ""  # TO DO: DON'T DO NOW
+    def _rando_dwarf_surname(self):
+        dwarfSurname = "of %s"
+        dwarfClan = self._get_default_surname()
+        self.surname = dwarfSurname % (dwarfClan)
+
+    def _get_default_surname(self):
+        dbName = "Names-" + self.ancestry + "-Surname.txt"
+        return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
 
 
 def main():
