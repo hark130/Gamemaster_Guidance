@@ -2,7 +2,7 @@
 GM aid for Pathfinder 2nd Edition written in Python 3
 
 ## TO DO
-[ ] 1. Add names for all races
+[/] 1. Add names for all races
 
 	[X] 1.1. Dwarf
 
