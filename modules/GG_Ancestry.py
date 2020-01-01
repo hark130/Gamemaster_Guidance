@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    supportedAncestry = ["Dwarf", "Elf", "Gnome"]
+    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin"]
     genderList = ["Male", "Female"]
 
     def __init__(self):
@@ -32,7 +32,7 @@ class GG_Ancestry:
         self.fullName = "%s %s" % (self.givenName, self.surname)
 
     def _rando_given_name(self):
-        if self.ancestry is "Gnome":
+        if self.ancestry is "Gnome" or self.ancestry is "Goblin":
             self.givenName = self._get_default_given_name()
         elif self.gender is self.genderList[0]:
             self._rando_male_given_name()
@@ -59,7 +59,7 @@ class GG_Ancestry:
             self._rando_elf_surname()
         elif self.ancestry is "Dwarf":
             self._rando_dwarf_surname()
-        elif self.ancestry is "Gnome":
+        elif self.ancestry is "Gnome" or self.ancestry is "Goblin":
             self.surname = ""
         else:
             self.surname = self._get_default_surname()
@@ -92,7 +92,7 @@ def main():
     test = GG_Ancestry()
     # print(test.ancestry)  # DEBUGGING
     # print(test.gender)  # DEBUGGING
-    print(test.fullName)  # DEBUGGING
+    print(test.fullName + " (" + test.ancestry + ")")  # DEBUGGING
 
 if __name__ == "__main__":
     main()
