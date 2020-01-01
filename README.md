@@ -8,7 +8,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 	[X] 1.2. Elf
 
-	[ ] 1.3. Gnome
+	[X] 1.3. Gnome
 
 	[ ] 1.4. Goblin
 
