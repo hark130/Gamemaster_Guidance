@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    supportedAncestry = ["Dwarf", "Elf"]
+    supportedAncestry = ["Dwarf", "Elf", "Gnome"]
     genderList = ["Male", "Female"]
 
     def __init__(self):
@@ -32,13 +32,19 @@ class GG_Ancestry:
         self.fullName = "%s %s" % (self.givenName, self.surname)
 
     def _rando_given_name(self):
-        if self.gender is self.genderList[0]:
+        if self.ancestry is "Gnome":
+            self.givenName = self._get_default_given_name()
+        elif self.gender is self.genderList[0]:
             self._rando_male_given_name()
         else:
             self._rando_female_given_name()
 
     def _rando_male_given_name(self):
         self.givenName = self._get_male_given_name()
+
+    def _get_default_given_name(self):
+        dbName = "Names-" + self.ancestry + "-Given_Name.txt"
+        return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
 
     def _get_male_given_name(self):
         dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
@@ -53,6 +59,8 @@ class GG_Ancestry:
             self._rando_elf_surname()
         elif self.ancestry is "Dwarf":
             self._rando_dwarf_surname()
+        elif self.ancestry is "Gnome":
+            self.surname = ""
         else:
             self.surname = self._get_default_surname()
 
