@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin"]
+    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling"]
     genderList = ["Male", "Female"]
 
     def __init__(self):
