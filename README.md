@@ -12,3 +12,9 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 1.6. Human
 	[ ] 1.7. Half-Elf
 	[ ] 1.8. Half-Orc
+
+[ ] 2. Main CLI Menu
+
+	[ ] 1. Randomize a name
+	[ ] 2. Randomize a character
+	[ ] 3. Randomize a bounty
