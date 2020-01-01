@@ -12,7 +12,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 	[X] 1.4. Goblin
 
-	[ ] 1.5. Halfling
+	[X] 1.5. Halfling
 
 	[ ] 1.6. Human
 
