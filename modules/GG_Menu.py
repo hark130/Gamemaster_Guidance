@@ -48,32 +48,35 @@ def rando_a_name():
     print("999. Exit")
     userInput = read_user_input()
 
-    if userInput == 1:
-        character = GG_Ancestry()
-    elif userInput == 2:
-        character = GG_Ancestry(race="Dwarf")
-    elif userInput == 3:
-        character = GG_Ancestry(race="Elf")
-    elif userInput == 4:
-        character = GG_Ancestry(race="Gnome")
-    elif userInput == 5:
-        character = GG_Ancestry(race="Goblin")
-    elif userInput == 6:
-        character = GG_Ancestry(race="Halfling")
-    elif userInput == 7:
-        character = GG_Ancestry(race="Human")
-    elif userInput == 8:
-        character = GG_Ancestry(race="Half-Elf")
-    elif userInput == 9:
-        character = GG_Ancestry(race="Half-Orc")
-    elif userInput == 42:
-        return userInput
+    try:
+        if userInput == 1:
+            character = GG_Ancestry()
+        elif userInput == 2:
+            character = GG_Ancestry(race="Dwarf")
+        elif userInput == 3:
+            character = GG_Ancestry(race="Elf")
+        elif userInput == 4:
+            character = GG_Ancestry(race="Gnome")
+        elif userInput == 5:
+            character = GG_Ancestry(race="Goblin")
+        elif userInput == 6:
+            character = GG_Ancestry(race="Halfling")
+        elif userInput == 7:
+            character = GG_Ancestry(race="Human")
+        elif userInput == 8:
+            character = GG_Ancestry(race="Half-Elf")
+        elif userInput == 9:
+            character = GG_Ancestry(race="Half-Orc")
+        elif userInput == 42:
+            return userInput
+        else:
+            return 999
+    except RuntimeError as err:
+        print(format(err))
     else:
-        return 999
-
-    if character:
-        pass  # TO DO: DON'T DO NOW... Call print method
-        print(character.fullName)  # Placeholder
+        if character:
+            pass  # TO DO: DON'T DO NOW... Call print method
+            print("\n" + character.fullName + "\n")  # Placeholder
 
     return userInput
 
