@@ -3,10 +3,7 @@ import random
 
 def pick_entry(filename):
     """Returns a single entry from a newline-delimited file"""
-    with open(filename, "r") as inFile:
-        fileContent = inFile.read()
-
-    return random.choice(fileContent.split("\n"))
+    return pick_entries(filename, 1)[0]
 
 
 def pick_entries(filename, numTuples):
