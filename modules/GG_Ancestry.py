@@ -38,7 +38,7 @@ class GG_Ancestry:
 
 
     def return_race(self):
-        return self.race
+        return self.ancestry
 
 
     def return_sex(self):
