@@ -115,13 +115,3 @@ class GG_Ancestry:
     def _get_default_surname(self):
         dbName = "Names-" + self.ancestry + "-Surname.txt"
         return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
-
-
-# def main():
-#     test = GG_Ancestry()
-#     # print(test.ancestry)  # DEBUGGING
-#     # print(test.gender)  # DEBUGGING
-#     print(test.fullName + " (" + test.ancestry + ")")  # DEBUGGING
-
-# if __name__ == "__main__":
-#     main()
