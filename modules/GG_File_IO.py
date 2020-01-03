@@ -1,7 +1,7 @@
 import random
 
 
-def pick_tuple(filename):
+def pick_entry(filename):
     """Returns a single entry from a newline-delimited file"""
     with open(filename, "r") as inFile:
         fileContent = inFile.read()
@@ -9,10 +9,10 @@ def pick_tuple(filename):
     return random.choice(fileContent.split("\n"))
 
 
-def pick_tuples(filename, numTuples):
+def pick_entries(filename, numTuples):
     """Returns a list of strings from a newline-delimited file"""
     # LOCAL VARIABLES
-    listOfTuples = []
+    listOfEntries = []
 
     # BUILD LIST
     # Open File
@@ -25,7 +25,7 @@ def pick_tuples(filename, numTuples):
 
     # Choose List Entries
     for _ in range(1, numTuples + 1):
-        listOfTuples.append(random.choice(fileList))
+        listOfEntries.append(random.choice(fileList))
 
     # DONE
-    return listOfTuples
+    return listOfEntries
