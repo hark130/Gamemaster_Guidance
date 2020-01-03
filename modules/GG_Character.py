@@ -18,11 +18,21 @@ class GG_Character:
 
     def print_character(self):
         self.print_name()
+        self.print_race()
+        self.print_sex()
         self.print_traits()
 
 
     def print_name(self):
         print(self.charAncestry.return_full_name())
+
+
+    def print_race(self):
+        print(self.charAncestry.return_race())
+
+
+    def print_sex(self):
+        print(self.charAncestry.return_sex())
 
 
     def print_traits(self):
