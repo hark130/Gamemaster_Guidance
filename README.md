@@ -23,7 +23,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 4. Randomize a trait
 
-	[ ] 1. Randomize one or more traits for a character
+	[X] 1. Randomize one or more traits for a character
 
 5. Read city-based yml file to calculate geographic bias
 
