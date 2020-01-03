@@ -5,7 +5,8 @@ from GG_File_IO import pick_entries
 
 
 class GG_Character:
-
+    entryTitleWidth = 10  # Width of each printed entry's title
+    entryFormatStr = "{:"+str(entryTitleWidth)+"}"
 
     def __init__(self, race=None, sex=None, numTraits=3):
         """Class constructor"""
@@ -17,28 +18,34 @@ class GG_Character:
 
 
     def print_character(self):
+        print("\n")
         self.print_name()
         self.print_race()
         self.print_sex()
         self.print_traits()
+        print("\n")
 
 
     def print_name(self):
-        print(self.charAncestry.return_full_name())
+        self._print_something("Name:", self.charAncestry.return_full_name())
 
 
     def print_race(self):
-        print(self.charAncestry.return_race())
+        self._print_something("Race:", self.charAncestry.return_race())
 
 
     def print_sex(self):
-        print(self.charAncestry.return_sex())
+        self._print_something("Gender:", self.charAncestry.return_sex())
 
 
     def print_traits(self):
-        print("Traits:")
+        self._print_something("Traits:", "")
         for trait in self.traitList:
-            print("\t%s" % trait)
+            self._print_something("", trait)
+            # print("\t%s" % trait)
+
+    def _print_something(self, title, entry):
+        print(self.entryFormatStr.format(title) + " " + entry)
 
 
 def main():
