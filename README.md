@@ -16,7 +16,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 2. Main CLI Menu
 
 	[X] 1. Randomize a name<br>
-	[ ] 2. Randomize a character<br>
+	[/] 2. Randomize a character<br>
 	[ ] 3. Randomize a bounty<br>
 
 3. Custom GG_Ancestry Exception to indicate unsupported feature
