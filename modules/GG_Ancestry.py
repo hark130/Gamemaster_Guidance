@@ -37,6 +37,14 @@ class GG_Ancestry:
         return self.fullName
 
 
+    def return_race(self):
+        return self.race
+
+
+    def return_sex(self):
+        return self.gender
+
+
     def _rando_ancestry(self):
         """Initialize the ancestry attribute"""
         self.ancestry = random.choice(self.supportedAncestry)
