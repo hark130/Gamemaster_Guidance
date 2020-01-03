@@ -1,4 +1,5 @@
 from GG_Ancestry import GG_Ancestry
+from GG_Character import GG_Character
 
 import platform
 import subprocess
@@ -29,7 +30,7 @@ def read_user_input():
     return userChoice
 
 
-def rando_a_name():
+def print_race_menu():
     print("\n")
     print("  1. Random race")
     print("  2. Dwarf")
@@ -42,27 +43,31 @@ def rando_a_name():
     print("  9. Half-Orc")
     print(" 42. Main Menu")
     print("999. Exit")
+
+
+def rando_a_character():
+    print_race_menu()
     userInput = read_user_input()
 
     try:
         if userInput == 1:
-            character = GG_Ancestry()
+            character = GG_Character()
         elif userInput == 2:
-            character = GG_Ancestry(race="Dwarf")
+            character = GG_Character(race="Dwarf")
         elif userInput == 3:
-            character = GG_Ancestry(race="Elf")
+            character = GG_Character(race="Elf")
         elif userInput == 4:
-            character = GG_Ancestry(race="Gnome")
+            character = GG_Character(race="Gnome")
         elif userInput == 5:
-            character = GG_Ancestry(race="Goblin")
+            character = GG_Character(race="Goblin")
         elif userInput == 6:
-            character = GG_Ancestry(race="Halfling")
+            character = GG_Character(race="Halfling")
         elif userInput == 7:
-            character = GG_Ancestry(race="Human")
+            character = GG_Character(race="Human")
         elif userInput == 8:
-            character = GG_Ancestry(race="Half-Elf")
+            character = GG_Character(race="Half-Elf")
         elif userInput == 9:
-            character = GG_Ancestry(race="Half-Orc")
+            character = GG_Character(race="Half-Orc")
         elif userInput == 42:
             return userInput
         else:
@@ -71,8 +76,41 @@ def rando_a_name():
         print(format(err))
     else:
         if character:
-            pass  # TO DO: DON'T DO NOW... Call print method
-            print("\n" + character.fullName + "\n")  # Placeholder
+            character.print_character()
+
+
+def rando_a_name():
+    print_race_menu()
+    userInput = read_user_input()
+
+    try:
+        if userInput == 1:
+            charName = GG_Ancestry()
+        elif userInput == 2:
+            charName = GG_Ancestry(race="Dwarf")
+        elif userInput == 3:
+            charName = GG_Ancestry(race="Elf")
+        elif userInput == 4:
+            charName = GG_Ancestry(race="Gnome")
+        elif userInput == 5:
+            charName = GG_Ancestry(race="Goblin")
+        elif userInput == 6:
+            charName = GG_Ancestry(race="Halfling")
+        elif userInput == 7:
+            charName = GG_Ancestry(race="Human")
+        elif userInput == 8:
+            charName = GG_Ancestry(race="Half-Elf")
+        elif userInput == 9:
+            charName = GG_Ancestry(race="Half-Orc")
+        elif userInput == 42:
+            return userInput
+        else:
+            return 999
+    except RuntimeError as err:
+        print(format(err))
+    else:
+        if charName:
+            print("\n" + charName.return_full_name() + "\n")
 
     return userInput
 
@@ -84,11 +122,14 @@ def menu():
 
     while userInput != 999:
         print("  1. Randomize a name")
+        print("  2. Randomize a character")
         print("999. Exit")
         print("Choose an option [999]:")
         userInput = read_user_input()
         if userInput == 1:
             userInput = rando_a_name()
+        elif userInput == 2:
+            userInput = rando_a_character()
         else:
             break
 
