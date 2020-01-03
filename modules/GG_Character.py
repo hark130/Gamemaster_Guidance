@@ -52,12 +52,3 @@ class GG_Character:
     def _print_something(self, title, entry):
         """Standardize the format on behalf of all print_* methods"""
         print(self.entryFormatStr.format(title) + " " + entry)
-
-
-def main():
-    testCharacter = GG_Character()
-    testCharacter.print_character()
-
-
-if __name__ == "__main__":
-    main()

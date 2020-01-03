@@ -16,15 +16,17 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 2. Main CLI Menu
 
 	[X] 1. Randomize a name<br>
-	[ ] 2. Randomize a character<br>
+	[X] 2. Randomize a character<br>
 	[ ] 3. Randomize a bounty<br>
 
-3. Custom GG_Ancestry Exception to indicate unsupported feature
+3. Custom Exceptions for new classes
 
-4. Randomize a trait
+	[ ] 1. GG_Ancestry Exception to indicate unsupported feature<br>
+	[ ] 2. GG_Character(?) Exception<br>
 
-	[X] 1. Randomize one or more traits for a character
+4. Randomize Something
+
+	[X] 1. Trait - Randomize one or more traits for a character<br>
+	[ ] 2. REfactor GG_Menu's "randomize a name" entry into "randomize [something]" and create a sub-menu<br>
 
 5. Read city-based yml file to calculate geographic bias
-
-
