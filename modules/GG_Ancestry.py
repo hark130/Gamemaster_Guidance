@@ -1,4 +1,4 @@
-from GG_File_IO import pick_tuple
+from GG_File_IO import pick_entry
 from GG_Rando import rand_percent
 
 import os
@@ -31,6 +31,18 @@ class GG_Ancestry:
 
         # Name
         self._rando_name()
+
+
+    def return_full_name(self):
+        return self.fullName
+
+
+    def return_race(self):
+        return self.ancestry
+
+
+    def return_sex(self):
+        return self.gender
 
 
     def _rando_ancestry(self):
@@ -67,17 +79,17 @@ class GG_Ancestry:
 
     def _get_default_given_name(self):
         dbName = "Names-" + self.ancestry + "-Given_Name.txt"
-        return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _get_male_given_name(self):
         dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
-        return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _rando_female_given_name(self):
         dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
-        self.givenName = pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
+        self.givenName = pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _rando_surname(self):
@@ -114,4 +126,4 @@ class GG_Ancestry:
 
     def _get_default_surname(self):
         dbName = "Names-" + self.ancestry + "-Surname.txt"
-        return pick_tuple(os.path.join(os.getcwd(), "databases", dbName))
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
