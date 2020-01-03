@@ -43,6 +43,7 @@ def print_race_menu():
     print("  9. Half-Orc")
     print(" 42. Main Menu")
     print("999. Exit")
+    print("Choose an option [999]:")
 
 
 def rando_a_character():
