@@ -23,10 +23,6 @@ def read_user_input():
     userInput = input()
     try:
         userChoice = int(userInput)
-        # print("User Input: {}".format(userChoice))  # DEBUGGING
-    # except Exception as err:
-    #     print("Invalid Input: {}".format(err))
-    #     raise err
     except:
         userChoice = int(-1)
 
@@ -87,12 +83,10 @@ def menu():
     print("\nWelcome to Gamemaster Guidance\n")
 
     while userInput != 999:
-        # print("User Input: {}".format(userInput))  # DEBUGGING
         print("  1. Randomize a name")
         print("999. Exit")
         print("Choose an option [999]:")
         userInput = read_user_input()
-        # print("User Input: {}".format(userInput))  # DEBUGGING
         if userInput == 1:
             userInput = rando_a_name()
         else:
