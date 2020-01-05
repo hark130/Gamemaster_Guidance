@@ -32,6 +32,6 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 5. Read city-based yml file to calculate geographic bias
 
 	[X] 1. Take an argument (setting configuration file)
-	[ ] 2. Parse yaml configuration file
+	[/] 2. Parse yaml configuration file
 	[ ] 3. Create GG_city class to parse city input
 
