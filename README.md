@@ -30,3 +30,8 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 2. REfactor GG_Menu's "randomize a name" entry into "randomize [something]" and create a sub-menu<br>
 
 5. Read city-based yml file to calculate geographic bias
+
+	[ ] 1. Take an argument (setting configuration file)
+	[ ] 2. Parse yaml configuration file
+	[ ] 3. Create GG_city class to parse city input
+
