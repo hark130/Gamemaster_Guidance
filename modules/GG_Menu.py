@@ -121,9 +121,6 @@ def menu(cityDict = None):
     userInput = 0
     print("\nWelcome to Gamemaster Guidance\n")
 
-    if cityDict:
-        print(cityDict)  # DEBUGGING
-
     while userInput != 999:
         print("  1. Randomize a name")
         print("  2. Randomize a character")
