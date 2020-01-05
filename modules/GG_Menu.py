@@ -1,5 +1,5 @@
-from GG_Ancestry import GG_Ancestry
-from GG_Character import GG_Character
+from . GG_Ancestry import GG_Ancestry
+from . GG_Character import GG_Character
 
 import platform
 import subprocess
@@ -116,10 +116,13 @@ def rando_a_name():
     return userInput
 
 
-def menu():
+def menu(cityDict = None):
     clear_screen()
     userInput = 0
     print("\nWelcome to Gamemaster Guidance\n")
+
+    if cityDict:
+        print(cityDict)  # DEBUGGING
 
     while userInput != 999:
         print("  1. Randomize a name")
