@@ -1,0 +1,47 @@
+# city:
+#   name: Some_City
+#   region: Some_Region
+#   ethnicity:
+#     Dwarf: 12.5
+#     Elf: 12.5
+#     Gnome: 12.5
+#     Goblin: 12.5
+#     Halfling: 12.5
+#     Human:
+#       Garundi: 1.136
+#       Keleshite: 1.136
+#       Kellid: 1.136
+#       Mwangi: 1.136
+#       Nidalese: 1.136
+#       Shoanti: 1.136
+#       Taldan: 1.136
+#       Tian: 1.136
+#       Ulfen: 1.136
+#       Varisian: 1.136
+#       Vudrani: 1.136
+#     Half-Elf: 12.5
+#     Half-Orc: 12.5
+"""
+city:
+  name: Some_City
+  region: Some_Region
+  ethnicity:
+    Dwarf: 12.5
+    Elf: 12.5
+    Gnome: 12.5
+    Goblin: 12.5
+    Halfling: 12.5
+    Human:
+      Garundi: 1.136
+      Keleshite: 1.136
+      Kellid: 1.136
+      Mwangi: 1.136
+      Nidalese: 1.136
+      Shoanti: 1.136
+      Taldan: 1.136
+      Tian: 1.136
+      Ulfen: 1.136
+      Varisian: 1.136
+      Vudrani: 1.136
+    Half-Elf: 12.5
+    Half-Orc: 12.5
