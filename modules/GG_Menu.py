@@ -1,8 +1,10 @@
 from GG_Ancestry import GG_Ancestry
+from GG_Arguments import parse_arguments
 from GG_Character import GG_Character
 
 import platform
 import subprocess
+import sys
 
 
 def clear_screen():
@@ -136,9 +138,10 @@ def menu():
 
     return
 
-def main():
+def main(argList):
+    parse_arguments(argList)
     menu()
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])
