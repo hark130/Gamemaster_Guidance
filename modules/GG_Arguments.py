@@ -2,8 +2,8 @@ import getopt
 import sys
 
 
-def print_help():
-    print("-c <cityfile>")
+def print_help(scriptName):
+    print(scriptName + " -c <cityfile>")
 
 
 def parse_arguments(argList):
@@ -14,12 +14,12 @@ def parse_arguments(argList):
     try:
         opts, args = getopt.getopt(argList, "hc:", ["cityfile="])
     except getopt.GetoptError:
-        print_help()
+        print_help(argList[0])
         sys.exit(2)
     else:
         for opt, arg in opts:
             if opt == "-h":
-                print_help()
+                print_help(argList[0])
                 sys.exit()
             elif opt in ("-c", "--cityfile"):
                 retDict["cityfile"] = arg
