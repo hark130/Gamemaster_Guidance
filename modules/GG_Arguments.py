@@ -10,9 +10,10 @@ def parse_arguments(argList):
     """Returns script arguments in a dictionary"""
     # LOCAL VARIABLES
     retDict = {}
+    # print(argList)  # DEBUGGING
 
     try:
-        opts, args = getopt.getopt(argList, "hc:", ["cityfile="])
+        opts, args = getopt.getopt(argList[1:], "hc:", ["cityfile="])
     except getopt.GetoptError:
         print_help(argList[0])
         sys.exit(2)
