@@ -1,5 +1,5 @@
-from GG_File_IO import pick_entry
-from GG_Rando import rand_percent
+from . GG_File_IO import pick_entry
+from . GG_Rando import rand_percent
 
 import os
 import random
