@@ -1,7 +1,7 @@
 import os
 
-from GG_Ancestry import GG_Ancestry
-from GG_File_IO import pick_entries
+from . GG_Ancestry import GG_Ancestry
+from . GG_File_IO import pick_entries
 
 
 class GG_Character:

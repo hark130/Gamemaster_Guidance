@@ -32,6 +32,11 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 5. Read city-based yml file to calculate geographic bias
 
 	[X] 1. Take an argument (setting configuration file)
-	[ ] 2. Parse yaml configuration file
+	[X] 2. Parse yaml configuration file
 	[ ] 3. Create GG_city class to parse city input
 
+6. Add "quirks" to character creation
+
+	[ ] 1. Use:
+		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/
+		- http://dndspeak.com/2017/12/100-personality-quirks/

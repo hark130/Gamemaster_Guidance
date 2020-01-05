@@ -1,10 +1,8 @@
-from GG_Ancestry import GG_Ancestry
-from GG_Arguments import parse_arguments
-from GG_Character import GG_Character
+from . GG_Ancestry import GG_Ancestry
+from . GG_Character import GG_Character
 
 import platform
 import subprocess
-import sys
 
 
 def clear_screen():
@@ -118,7 +116,7 @@ def rando_a_name():
     return userInput
 
 
-def menu():
+def menu(cityDict = None):
     clear_screen()
     userInput = 0
     print("\nWelcome to Gamemaster Guidance\n")
@@ -137,11 +135,3 @@ def menu():
             break
 
     return
-
-def main(argList):
-    parse_arguments(argList)
-    menu()
-
-
-if __name__ == "__main__":
-    main(sys.argv[1:])
