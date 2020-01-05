@@ -3,7 +3,7 @@ import sys
 
 
 def print_help(scriptName):
-    print(scriptName + " -c <cityfile>")
+    print("\n" + scriptName + " -c <cityfile>\n")
 
 
 def parse_arguments(argList):
