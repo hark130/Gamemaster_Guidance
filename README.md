@@ -31,9 +31,11 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 5. Read city-based yml file to calculate geographic bias
 
-	[X] 1. Take an argument (setting configuration file)
-	[X] 2. Parse yaml configuration file
-	[ ] 3. Create GG_city class to parse city input
+	[X] 1. Take an argument (setting configuration file)<br>
+	[X] 2. Parse yaml configuration file<br>
+	[ ] 3. Create GG_city class to parse city input<br>
+		- http://legacy.aonprd.com/gameMasteryGuide/settlements.html
+		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards
 
 6. Add "quirks" to character creation
 
