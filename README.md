@@ -36,6 +36,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 3. Create GG_city class to parse city input<br>
 		- http://legacy.aonprd.com/gameMasteryGuide/settlements.html
 		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards
+		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes
 
 6. Add "quirks" to character creation
 
