@@ -42,3 +42,4 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 1. Use:
 		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/
 		- http://dndspeak.com/2017/12/100-personality-quirks/
+		- D&D 3.5 Dungeon Master's Guide P. 128
