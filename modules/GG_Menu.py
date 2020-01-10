@@ -53,7 +53,7 @@ def rando_a_character(cityObj=None):
 
     try:
         if userInput == 1:
-            character = GG_Character()
+            character = GG_Character(cityObject=cityObj)
         elif userInput == 2:
             character = GG_Character(race="Dwarf")
         elif userInput == 3:
@@ -117,7 +117,7 @@ def rando_a_name():
     return userInput
 
 
-def menu(cityDict = None):
+def menu(cityDict=None):
     clear_screen()
     userInput = 0
     cityObj = None
