@@ -31,12 +31,17 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 5. Read city-based yml file to calculate geographic bias
 
-	[X] 1. Take an argument (setting configuration file)
-	[X] 2. Parse yaml configuration file
-	[ ] 3. Create GG_city class to parse city input
+	[X] 1. Take an argument (setting configuration file)<br>
+	[X] 2. Parse yaml configuration file<br>
+	[X] 3. Create GG_city class to parse city input<br>
+	[ ] 4. Expand GG_city class to determine city attributes<br>
+		- http://legacy.aonprd.com/gameMasteryGuide/settlements.html<br>
+		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards<br>
+		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes<br>
 
 6. Add "quirks" to character creation
 
-	[ ] 1. Use:
-		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/
-		- http://dndspeak.com/2017/12/100-personality-quirks/
+	[ ] 1. Use:<br>
+		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/<br>
+		- http://dndspeak.com/2017/12/100-personality-quirks/<br>
+		- D&D 3.5 Dungeon Master's Guide P. 128<br>
