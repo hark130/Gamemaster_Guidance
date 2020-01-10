@@ -9,7 +9,7 @@ class GG_Character:
     entryTitleWidth = 10  # Width of each printed entry's title
     entryFormatStr = "{:"+str(entryTitleWidth)+"}"
 
-    def __init__(self, race=None, sex=None, numTraits=3):
+    def __init__(self, race=None, sex=None, numTraits=3, cityObj=None):
         """Class constructor"""
         # Ancestry
         self.charAncestry = GG_Ancestry(race, sex)

@@ -1,5 +1,6 @@
 from . GG_Ancestry import GG_Ancestry
 from . GG_Character import GG_Character
+from . GG_City import GG_City
 
 import platform
 import subprocess
@@ -46,7 +47,7 @@ def print_race_menu():
     print("Choose an option [999]:")
 
 
-def rando_a_character():
+def rando_a_character(cityObj=None):
     print_race_menu()
     userInput = read_user_input()
 
@@ -119,6 +120,11 @@ def rando_a_name():
 def menu(cityDict = None):
     clear_screen()
     userInput = 0
+    cityObj = None
+
+    if cityDict:
+        cityObj = GG_City(cityDict)
+
     print("\nWelcome to Gamemaster Guidance\n")
 
     while userInput != 999:
@@ -130,7 +136,7 @@ def menu(cityDict = None):
         if userInput == 1:
             userInput = rando_a_name()
         elif userInput == 2:
-            userInput = rando_a_character()
+            userInput = rando_a_character(cityObj)
         else:
             break
 
