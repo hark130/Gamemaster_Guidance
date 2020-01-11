@@ -19,6 +19,7 @@ class GG_Ancestry:
         """Class constructor"""
         self.ethnicity = None
         self.subgroup = None
+        self.notes = None
 
         # Ancestry
         if race and race not in self.supportedAncestry:
@@ -67,6 +68,10 @@ class GG_Ancestry:
 
     def return_sex(self):
         return self.gender
+
+
+    def return_notes(self):
+        return self.notes
 
 
     def _rando_ancestry(self):
