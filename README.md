@@ -14,7 +14,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		* 1.6.2 Keleshite<br>
 		* 1.6.3 Kellid<br>
 		* 1.6.4 Mwangi<br>
-		* 1.6.5 Nidalese<br>
+		* 1.6.5 Nidalese (not found)<br>
 		* 1.6.6 Shoanti<br>
 		* 1.6.7 Taldan<br>
 		* 1.6.8 Tian<br>
