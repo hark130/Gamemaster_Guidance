@@ -41,7 +41,12 @@ class GG_Character:
 
     def print_race(self):
         """Print the character's race"""
+        charEthnicity = self.charAncestry.return_ethnicity()
+
         self._print_something("Race:", self.charAncestry.return_race())
+
+        if charEthnicity:
+            self._print_something("Ethnicity:", charEthnicity)
 
 
     def print_sex(self):
@@ -54,6 +59,7 @@ class GG_Character:
         self._print_something("Traits:", "")
         for trait in self.traitList:
             self._print_something("", trait)
+
 
     def _print_something(self, title, entry):
         """Standardize the format on behalf of all print_* methods"""
