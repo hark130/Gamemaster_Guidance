@@ -50,7 +50,7 @@ class GG_Character:
             self._print_something("Ethnicity:", charEthnicity)
 
         if charSubGroup:
-            self._print_something("Sub Group:", charSubGroup)
+            self._print_something("Subgroup:", charSubGroup)
 
 
     def print_sex(self):
