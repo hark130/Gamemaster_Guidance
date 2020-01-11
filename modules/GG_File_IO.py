@@ -6,8 +6,8 @@ def pick_entry(filename):
     return pick_entries(filename, 1)[0]
 
 
-def pick_entries(filename, numTuples):
-    """Returns a list of strings from a newline-delimited file"""
+def pick_entries(filename, numTuples, skipComments=True):
+    """Returns a list of strings from a newline-delimited file, skipping comments"""
     # LOCAL VARIABLES
     listOfEntries = []
 
@@ -18,7 +18,11 @@ def pick_entries(filename, numTuples):
         fileContent = inFile.read()
 
     # Split Content
-    fileList = fileContent.split("\n")
+    if skipComments:
+        # Skipping Comments
+        fileList = [entry for entry in fileContent.split("\n") if not entry.startswith("#")]
+    else:
+        fileList = fileContent.split("\n")
 
     # Choose List Entries
     for _ in range(1, numTuples + 1):

@@ -6,16 +6,21 @@ import random
 
 
 class GG_Ancestry:
-    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling"]
+    humanEthnicities = ["Garundi"]  # Keleshite, Kellid, Mwangi, Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
+    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
 
     def __init__(self, race=None, sex=None):
         """Class constructor"""
+        self.ethnicity = None
 
         # Ancestry
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
+        elif race is "Human":
+            self._rando_human_ethnicity()
+            self.ancestry = race
         elif race:
             self.ancestry = race
         else:
@@ -39,6 +44,10 @@ class GG_Ancestry:
 
     def return_race(self):
         return self.ancestry
+
+
+    def return_ethnicity(self):
+        return self.ethnicity
 
 
     def return_sex(self):
@@ -78,17 +87,26 @@ class GG_Ancestry:
 
 
     def _get_default_given_name(self):
-        dbName = "Names-" + self.ancestry + "-Given_Name.txt"
+        if self.ancestry is "Human":
+            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name.txt"
+        else:
+            dbName = "Names-" + self.ancestry + "-Given_Name.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _get_male_given_name(self):
-        dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
+        if self.ancestry is "Human":
+            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Male.txt"
+        else:
+            dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _rando_female_given_name(self):
-        dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
+        if self.ancestry is "Human":
+            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Female.txt"
+        else:
+            dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
         self.givenName = pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
@@ -99,6 +117,11 @@ class GG_Ancestry:
             self._rando_dwarf_surname()
         elif self.ancestry is "Gnome" or self.ancestry is "Goblin":
             self.surname = ""
+        elif self.ancestry is "Human":
+            if self.ethnicity is "Garundi":
+                self.surname = "from " + self._rando_human_surname()
+            else:
+                self.surname = self._rando_human_surname()
         else:
             self.surname = self._get_default_surname()
 
@@ -126,4 +149,15 @@ class GG_Ancestry:
 
     def _get_default_surname(self):
         dbName = "Names-" + self.ancestry + "-Surname.txt"
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
+
+
+    def _rando_human_ethnicity(self):
+        """Initialize the ethnicity attribute"""
+        self.ethnicity = random.choice(self.humanEthnicities)
+
+
+    def _rando_human_surname(self):
+        """Return a Human surname based on ethnicity"""
+        dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Surname.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
