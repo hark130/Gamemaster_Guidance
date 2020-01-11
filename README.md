@@ -12,7 +12,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[/] 1.6. Human<br>
 		[X] 1.6.1 Garundi
 		[X] 1.6.2 Keleshite
-		[ ] 1.6.3 Kellid
+		[X] 1.6.3 Kellid
 		[ ] 1.6.4 Mwangi
 		[ ] 1.6.5 Nidalese
 		[ ] 1.6.6 Shoanti
