@@ -10,17 +10,17 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[X] 1.4. Goblin<br>	
 	[X] 1.5. Halfling<br>	
 	[/] 1.6. Human<br>
-		[X] 1.6.1 Garundi
-		[X] 1.6.2 Keleshite
-		[X] 1.6.3 Kellid
-		[ ] 1.6.4 Mwangi
-		[ ] 1.6.5 Nidalese
-		[ ] 1.6.6 Shoanti
-		[ ] 1.6.7 Taldan
-		[ ] 1.6.8 Tian
-		[ ] 1.6.9 Ulfen
-		[ ] 1.6.10 Varisian
-		[ ] 1.6.11 Vudrani
+		[X] 1.6.1 Garundi<br>
+		[X] 1.6.2 Keleshite<br>
+		[X] 1.6.3 Kellid<br>
+		[ ] 1.6.4 Mwangi<br>
+		[ ] 1.6.5 Nidalese<br>
+		[ ] 1.6.6 Shoanti<br>
+		[ ] 1.6.7 Taldan<br>
+		[ ] 1.6.8 Tian<br>
+		[ ] 1.6.9 Ulfen<br>
+		[ ] 1.6.10 Varisian<br>
+		[ ] 1.6.11 Vudrani<br>
 	[ ] 1.7. Half-Elf<br>	
 	[ ] 1.8. Half-Orc<br>
 
