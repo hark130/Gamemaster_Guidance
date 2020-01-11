@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Shoanti", "Taldan", "Tian", "Ulfen", "Varisian", "Vudrani"]  # User Story 7. Nidalese
+    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Nidalese", "Shoanti", "Taldan", "Tian", "Ulfen", "Varisian", "Vudrani"]  # User Story 8. Nidalese
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
@@ -25,6 +25,8 @@ class GG_Ancestry:
             raise RuntimeError("Unsupported race")
         elif race is "Human":
             self._rando_human_ethnicity()
+            if self.ethnicity is "Nidalese":
+                self.ethnicity = "Taldan"  # Fix this in User Story #8
             self.ancestry = race
             if self.ethnicity is "Mwangi":
                 self._rando_mwangi_subgroup()
