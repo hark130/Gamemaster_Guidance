@@ -6,8 +6,11 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
+    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Shoanti"]  # Nidalese, Taldan, Tian, Uflen, Varisian, Vudrani
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
+    shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
+                    "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
+                    "Tamiir-Quah (Wind Clan)"]
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -155,6 +158,9 @@ class GG_Ancestry:
             retSurname = ""
         elif self.ethnicity is "Mwangi":
             retSurname = "from the %s" % self._get_mwangi_surname()
+        elif self.ethnicity is "Shoanti":
+            retSurname = "%s of the %s" % (self._rando_human_surname(),
+                                           self._get_shoanti_clan())
         else:
             retSurname = self._rando_human_surname()
 
@@ -203,6 +209,11 @@ class GG_Ancestry:
     def _rando_mwangi_subgroup(self):
         """Initialize the subgroup attribute"""
         self.subgroup = random.choice(self.mwangiSubgroups)
+
+
+    def _get_shoanti_clan(self):
+        """Return a Shoanti clan"""
+        return random.choice(self.shoantiClans)
 
 
     def _rando_human_surname(self):

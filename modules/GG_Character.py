@@ -15,7 +15,6 @@ class GG_Character:
         self.cityObj = cityObject
         if self.cityObj and not race:
             race = self.cityObj.rando_city_race()
-            # print("RANDOMIZED %s" % race)  # DEBUGGING
 
         # Ancestry
         self.charAncestry = GG_Ancestry(race, sex)
