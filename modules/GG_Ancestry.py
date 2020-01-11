@@ -7,7 +7,7 @@ import random
 
 class GG_Ancestry:
     humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
-    mwangiSubgroups = ["Bekyar", "Bonuwat"]  # Mauxi, Zenj
+    mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi"]  # Zenj
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -17,14 +17,11 @@ class GG_Ancestry:
         self.ethnicity = None
         self.subgroup = None
 
-        # self.subgroup = self.mwangiSubgroups[0]  # DEBUGGING
-
         # Ancestry
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
         elif race is "Human":
             self._rando_human_ethnicity()
-            # self.ethnicity = self.humanEthnicities[3]  # DEBUGGING
             self.ancestry = race
             if self.ethnicity is "Mwangi":
                 self._rando_mwangi_subgroup()
