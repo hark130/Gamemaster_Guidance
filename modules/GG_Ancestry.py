@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Shoanti"]  # Nidalese, Taldan, Tian, Uflen, Varisian, Vudrani
+    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Shoanti", "Taldan"]  # Nidalese, Tian, Uflen, Varisian, Vudrani
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
