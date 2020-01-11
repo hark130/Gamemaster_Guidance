@@ -20,9 +20,9 @@ def pick_entries(filename, numTuples, skipComments=True):
     # Split Content
     if skipComments:
         # Skipping Comments
-        fileList = [entry for entry in fileContent.split("\n") if not entry.startswith("#")]
+        fileList = [entry for entry in fileContent.split("\n") if not entry.startswith("#") and entry]
     else:
-        fileList = fileContent.split("\n")
+        fileList = [entry for entry in fileContent.split("\n") if entry]
 
     # Choose List Entries
     for _ in range(1, numTuples + 1):
