@@ -42,11 +42,15 @@ class GG_Character:
     def print_race(self):
         """Print the character's race"""
         charEthnicity = self.charAncestry.return_ethnicity()
+        charSubGroup = self.charAncestry.return_subgroup()
 
         self._print_something("Race:", self.charAncestry.return_race())
 
         if charEthnicity:
             self._print_something("Ethnicity:", charEthnicity)
+
+        if charSubGroup:
+            self._print_something("Sub Group:", charSubGroup)
 
 
     def print_sex(self):

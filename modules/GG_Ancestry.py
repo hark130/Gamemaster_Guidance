@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi", "Keleshite", "Kellid"]  # Mwangi, Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
+    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -14,6 +14,7 @@ class GG_Ancestry:
     def __init__(self, race=None, sex=None):
         """Class constructor"""
         self.ethnicity = None
+        self.subGroup = None
 
         # Ancestry
         if race and race not in self.supportedAncestry:
@@ -48,6 +49,10 @@ class GG_Ancestry:
 
     def return_ethnicity(self):
         return self.ethnicity
+
+
+    def return_subgroup(self):
+        return self.subGroup
 
 
     def return_sex(self):
