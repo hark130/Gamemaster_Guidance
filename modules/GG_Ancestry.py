@@ -11,7 +11,7 @@ class GG_Ancestry:
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
                     "Tamiir-Quah (Wind Clan)"]
-    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
+    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human", "Half-Elf"]
     genderList = ["Male", "Female"]
 
 
@@ -95,14 +95,12 @@ class GG_Ancestry:
     def _rando_given_name(self):
         if self.ancestry is "Gnome" or self.ancestry is "Goblin":
             self.givenName = self._get_default_given_name()
+        elif self.ancestry is "Half-Elf":
+            self._rando_half-elf_given_name()
         elif self.gender is self.genderList[0]:
             self._rando_male_given_name()
         else:
             self._rando_female_given_name()
-
-
-    def _rando_male_given_name(self):
-        self.givenName = self._get_male_given_name()
 
 
     def _get_default_given_name(self):
@@ -111,6 +109,10 @@ class GG_Ancestry:
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
+
+
+    def _rando_male_given_name(self):
+        self.givenName = self._get_male_given_name()
 
 
     def _get_male_given_name(self):
@@ -128,6 +130,10 @@ class GG_Ancestry:
 
 
     def _rando_female_given_name(self):
+        self.givenName = self._get_female_given_name()
+
+
+    def _get_female_given_name():
         if self.ancestry is "Human":
             if self.subgroup:
                 if self.subgroup is "Mauxi":
@@ -138,7 +144,7 @@ class GG_Ancestry:
                 dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Female.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
-        self.givenName = pick_entry(os.path.join(os.getcwd(), "databases", dbName))
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
     def _rando_surname(self):
