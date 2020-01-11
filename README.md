@@ -60,3 +60,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 7. Expand the Human ethnicity of Tian
 
 	[ ] 1. Add all subgroups to the Human ethnicity of Tian<br>
+
+8. Human ethnicity Nidalese
+
+	[ ] 1. Find and implement character functionality for the Nidalese ethnicity (missing?!)<br>
