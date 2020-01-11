@@ -6,7 +6,7 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi"]  # Keleshite, Kellid, Mwangi, Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
+    humanEthnicities = ["Garundi", "Keleshite"]  # Kellid, Mwangi, Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -118,12 +118,23 @@ class GG_Ancestry:
         elif self.ancestry is "Gnome" or self.ancestry is "Goblin":
             self.surname = ""
         elif self.ancestry is "Human":
-            if self.ethnicity is "Garundi":
-                self.surname = "from " + self._rando_human_surname()
-            else:
-                self.surname = self._rando_human_surname()
+            self.surname = self._get_human_surname()
         else:
             self.surname = self._get_default_surname()
+
+
+    def _get_human_surname(self):
+        if self.ethnicity is "Garundi":
+            retSurname = "from " + self._rando_human_surname()
+        elif self.ethnicity is "Keleshite":
+            retSurname = "al-%s %s %s al-%s" % (self._rando_human_surname(),
+                                                self._rando_human_surname(),
+                                                self._rando_human_surname(),
+                                                self._rando_human_surname())
+        else:
+            retSurname = self._rando_human_surname()
+
+        return retSurname
 
 
     def _rando_elf_surname(self):

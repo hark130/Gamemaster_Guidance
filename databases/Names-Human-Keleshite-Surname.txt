@@ -1,0 +1,168 @@
+# Class often inspires how Keleshites grant names. Lower-class
+# Keleshites draw from the horse cultures of central Casmaron
+# alongside their clan and family names, while important and
+# wealthy Keleshites use a single name derived from imperial Kelesh.
+#
+# Keleshite names can also be influenced by their traditional
+# culture. Most who have no strong connection to a founding
+# culture follow the conventions of the Althameri: a first
+# name followed by a matronymic, with the prefix al- (such
+# as Yaqib al-Marah, meaning "Yaqib, son of Marah"). When more
+# specific identification is necessary, Althameri names can also
+# include an ancestor, while in formal situations a tribal name,
+# merchant house, noble family name, religious temple name, and
+# home city might also be included (such as Yaqib al-marah Tiferi
+# Bekhzadi Al-Hiraf, or Yaqib, son of Marah, a member of the
+# Tiferi tribe and Bekhzadi merchant house, from Al-Hiraf).
+# Members of the imperial family use the family name al-Parishat,
+# with other names representing their branch of the family.
+Abdulla
+Arsha
+Attia
+Ayoub
+Baccus
+Bahabania
+Baluch
+Bazzi
+Bilal
+Boutros
+Darwishidi
+Farah
+Hadam
+Haddoury
+Hafeez
+Hameh
+Hamel
+Hasen
+Hashemi
+Hassa
+Kabet
+Khata
+Mahdi
+Mirza
+Rahammad
+Sabbagh
+Salaf
+Sayegh
+Sleiman
+Zaidi
+Abbas
+Adelrahine
+Akhtar
+Atalloum
+Atiyeh
+Begum
+Darwar
+Fareef
+Gerges
+Guirguis
+Hasheed
+Hassein
+Hussan
+Ishmi
+Kassa
+Khalim
+Koroma
+Mansouri
+Massa
+Morad
+Mussaf
+Rahman
+Rehman
+Salehi
+Shahimi
+Shakeem
+Soliman
+Tamel
+Wahaman
+Waharid
+Abdalla
+Aghadeh
+Akbar
+Arifi
+Dajani
+Demian
+Ebrah
+Farra
+Greiss
+Hamad
+Hanan
+Haser
+Ibrah
+Madan
+Mahfouz
+Maloof
+Marounes
+Mostafa
+Munir
+Mussa
+Nasen
+Nawayad
+Nouri
+Radwan
+Rahan
+Rayegh
+Seliman
+Shalhourais
+Siddin
+Zamal
+Abadi
+Abdulla
+Afzal
+Ahman
+Akbar
+Akbara
+Amara
+Bacho
+Badin
+Badou
+Ghanem
+Habibi
+Hameen
+Hamel
+Hannam
+Hussain
+Jafri
+Kabir
+Kamaan
+Kassen
+Khalid
+Khalik
+Naifeh
+Obeid
+Salih
+Salim
+Siddin
+Tahimi
+Yousuf
+Zogby
+Abdel
+Ahman
+Atiyeh
+Bahani
+Baten
+Bishari
+Daheed
+Darwar
+Ghaffar
+Ghatib
+Ghazal
+Haidar
+Kassouri
+Kouri
+Mahmoon
+Mansoori
+Momin
+Moussa
+Pashim
+Qures
+Rassen
+Saader
+Sabaz
+Shaffari
+Shaheed
+Shakoor
+Shamoun
+Tamed
+Totah
+Waliba
