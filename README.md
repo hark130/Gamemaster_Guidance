@@ -9,8 +9,8 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[X] 1.3. Gnome<br>	
 	[X] 1.4. Goblin<br>	
 	[X] 1.5. Halfling<br>	
-	[ ] 1.6. Human<br>
-		[ ] 1.6.1 Garundi
+	[/] 1.6. Human<br>
+		[X] 1.6.1 Garundi
 		[ ] 1.6.2 Keleshite
 		[ ] 1.6.3 Kellid
 		[ ] 1.6.4 Mwangi
