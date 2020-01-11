@@ -7,6 +7,7 @@ import random
 
 class GG_Ancestry:
     humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
+    mwangiSubGroups = ["Bekyar"]  # Bonuwat, Mauxi, Zenj
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -22,6 +23,8 @@ class GG_Ancestry:
         elif race is "Human":
             self._rando_human_ethnicity()
             self.ancestry = race
+            if self.ethnicity is "Mwanagi":
+                self._rando_mwangi_subgroup()
         elif race:
             self.ancestry = race
         else:
@@ -173,6 +176,11 @@ class GG_Ancestry:
     def _rando_human_ethnicity(self):
         """Initialize the ethnicity attribute"""
         self.ethnicity = random.choice(self.humanEthnicities)
+
+
+    def _rando_mwangi_subgroup(self):
+        """Initialize the subgroup attribute"""
+        self.subGroup = random.choice(self.mwangiSubGroups)
 
 
     def _rando_human_surname(self):
