@@ -7,7 +7,7 @@ import random
 
 class GG_Ancestry:
     humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
-    mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi"]  # Zenj
+    mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
