@@ -56,3 +56,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/<br>
 		- http://dndspeak.com/2017/12/100-personality-quirks/<br>
 		- D&D 3.5 Dungeon Master's Guide P. 128<br>
+
+7. Expand the Human ethnicity of Tian
+
+	[ ] 1. Add all subgroups to the Human ethnicity of Tian<br>
