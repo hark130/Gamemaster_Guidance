@@ -1,0 +1,148 @@
+# Garundi names are used to define both the territory claimed
+# by the clan and the individual’s place in the local hierarchy.
+# Those at the top of the hierarchy have names that span the
+# entirety of the territory – the name of the city, geographic
+# region, or a nearby major river or mountain. Mid-ranking Garundi
+# are named after sites, geographic features, or buildings known
+# to most locals – waterfalls, neighborhoods, or important local
+# industry. Low-standing clan members have names of local sites
+# (often from near where they were born – streets, statues, trees.
+<city>
+<region>
+<major river>
+<mountain>
+<site>
+<geographic feature>
+<well known building>
+<waterfall>
+<work neighborhood>
+<important local industry>
+<birth street>
+<work street>
+<birth statue>
+<birth neighborhood>
+<birth tree>
+Potter's Lane
+Sunset Falls
+Victoria Falls
+Angel Falls
+Iguazu Falls
+Tugela Falls
+Havasu Falls
+Ribbon Fall
+Sky Fall
+Invisible Cove
+Grand Ark
+Raider Springs
+Tea Chase
+East Blank
+Lower Blank
+Upper Blank
+Tion Center
+North Tion
+South Zip
+Ant Valley
+Park Heights
+Pilot Creek
+Core Hills
+Soft Hills
+Awakened Hills
+Soft Grove
+Three Creek
+Selection Center
+Liza Village
+Half Park
+Early Valley
+Little Creek
+Pole Heights
+Grand Sell
+Public Springs
+Juniper Guide
+Broken Cove
+Grand Break
+Zip Springs
+South Chase
+East Spade
+Lower Spade
+Upper Spade
+Gum Center
+North Shoe
+South Point
+Pin Valley
+Green Heights
+Slow Creek
+Running Hills
+Moon Hills
+Star Hills
+Star Grove
+Star Creek
+Star Center
+Sun Village
+Sun Park
+Sun Valley
+Fork Creek
+Hidden Heights
+Grand 
+Lost Springs
+Juniper 
+Fire Gardens
+Burnt Hills
+Bright Canyon
+Hidden Bay
+Lost Gardens
+Forgotten Fort
+Trail Junction
+Split Rock
+Warm Springs
+White Lion
+Blue Fields
+Green Mills
+Farm Union
+Mount Himmi
+Kapatid Hills
+Cut Grove
+Frog Creek
+Burm Center
+Top Village
+Bletchley Park
+Pale Valley
+Forest Creek
+Granite Heights
+Grand Field
+Fast Springs
+Baby Pines
+Leysa Gardens
+Purple Hills
+Purple Canyon
+Salt Bay
+Retta Gardens
+Fort Lore
+Shell Junction
+Black Rock
+Salt Springs
+White Rock
+Blue Run
+Flat Mills
+Fell Union
+Tabor Mine
+Lion Mine
+Blue Mine
+Red Mine
+Green Mine
+Farm Fair
+Himmi Fair
+Chalk Hills
+Cut Mine
+Frog Mine
+Joan Center
+Fountains Abbey
+Bletchley Field
+Pale Lane
+Forest Fair
+Granite Road
+Grand Lane
+Fast Run
+Elm Evers
+Full Smith
+Dry Lake
+
