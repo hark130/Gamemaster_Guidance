@@ -7,7 +7,7 @@ import random
 
 class GG_Ancestry:
     humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi"]  # Nidalese, Shoanti, Taldan, Tian, Uflen, Varisian, Vudrani
-    mwangiSubGroups = ["Bekyar"]  # Bonuwat, Mauxi, Zenj
+    mwangiSubgroups = ["Bekyar"]  # Bonuwat, Mauxi, Zenj
     supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human"]
     genderList = ["Male", "Female"]
 
@@ -15,15 +15,18 @@ class GG_Ancestry:
     def __init__(self, race=None, sex=None):
         """Class constructor"""
         self.ethnicity = None
-        self.subGroup = None
+        self.subgroup = None
+
+        # self.subgroup = self.mwangiSubgroups[0]  # DEBUGGING
 
         # Ancestry
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
         elif race is "Human":
             self._rando_human_ethnicity()
+            # self.ethnicity = self.humanEthnicities[3]  # DEBUGGING
             self.ancestry = race
-            if self.ethnicity is "Mwanagi":
+            if self.ethnicity is "Mwangi":
                 self._rando_mwangi_subgroup()
         elif race:
             self.ancestry = race
@@ -55,7 +58,7 @@ class GG_Ancestry:
 
 
     def return_subgroup(self):
-        return self.subGroup
+        return self.subgroup
 
 
     def return_sex(self):
@@ -104,7 +107,14 @@ class GG_Ancestry:
 
     def _get_male_given_name(self):
         if self.ancestry is "Human":
-            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Male.txt"
+            # print("ANCESTRY IS HUMAN")  # DEBUGGING
+            # print("Ethnicity: %s" % self.ethnicity)  # DEBUGGING
+            # print("Subgroup: %s" % self.subgroup)  # DEBUGGING
+            if self.ethnicity is "Mwangi" and self.subgroup:
+                # print("ETHNICITY IS MWANGI")  # DEBUGGING
+                dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Male.txt"
+            else:
+                dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Male.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
@@ -112,7 +122,14 @@ class GG_Ancestry:
 
     def _rando_female_given_name(self):
         if self.ancestry is "Human":
-            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Female.txt"
+            # print("ANCESTRY IS HUMAN")  # DEBUGGING
+            # print("Ethnicity: %s" % self.ethnicity)  # DEBUGGING
+            # print("Subgroup: %s" % self.subgroup)  # DEBUGGING
+            if self.ethnicity is "Mwangi" and self.subgroup:
+                # print("ETHNICITY IS MWANGI")  # DEBUGGING
+                dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Female.txt"
+            else:
+                dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Female.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
         self.givenName = pick_entry(os.path.join(os.getcwd(), "databases", dbName))
@@ -127,13 +144,14 @@ class GG_Ancestry:
             self.surname = ""
         elif self.ancestry is "Human":
             self.surname = self._get_human_surname()
+            # print("RANDO SURNAME: %s" % self.surname)  # DEBUGGING
         else:
             self.surname = self._get_default_surname()
 
 
     def _get_human_surname(self):
         if self.ethnicity is "Garundi":
-            retSurname = "from " + self._rando_human_surname()
+            retSurname = "from %s" % self._rando_human_surname()
         elif self.ethnicity is "Keleshite":
             retSurname = "al-%s %s %s al-%s" % (self._rando_human_surname(),
                                                 self._rando_human_surname(),
@@ -141,6 +159,9 @@ class GG_Ancestry:
                                                 self._rando_human_surname())
         elif self.ethnicity is "Kellid":
             retSurname = ""
+        elif self.ethnicity is "Mwangi":
+            retSurname = "from the %s" % self._get_mwangi_surname()
+            # print("MWANGI SURNAME: %s" % retSurname)  # DEBUGGING
         else:
             retSurname = self._rando_human_surname()
 
@@ -173,6 +194,12 @@ class GG_Ancestry:
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
 
+    def _get_mwangi_surname(self):
+        dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Surname.txt"
+        # print("MWANGI DATABASE NAME: %s" % dbName)  # DEBUGGING
+        return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
+
+
     def _rando_human_ethnicity(self):
         """Initialize the ethnicity attribute"""
         self.ethnicity = random.choice(self.humanEthnicities)
@@ -180,7 +207,8 @@ class GG_Ancestry:
 
     def _rando_mwangi_subgroup(self):
         """Initialize the subgroup attribute"""
-        self.subGroup = random.choice(self.mwangiSubGroups)
+        self.subgroup = random.choice(self.mwangiSubgroups)
+        # print("Subgroup is %s" % self.subgroup)  # DEBUGGING
 
 
     def _rando_human_surname(self):
