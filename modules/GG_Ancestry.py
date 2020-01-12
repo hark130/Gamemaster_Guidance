@@ -11,7 +11,7 @@ class GG_Ancestry:
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
                     "Tamiir-Quah (Wind Clan)"]
-    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human", "Half-Elf"]
+    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human", "Half-Elf", "Half-Orc"]
     genderList = ["Male", "Female"]
 
 
@@ -195,7 +195,7 @@ class GG_Ancestry:
             self._rando_elf_surname()
         elif self.ancestry is "Dwarf":
             self._rando_dwarf_surname()
-        elif self.ancestry is "Gnome" or self.ancestry is "Goblin":
+        elif self.ancestry is "Gnome" or self.ancestry is "Goblin" or self.ancestry == "Half-Orc":
             self.surname = ""
         elif self.ancestry is "Human":
             self.surname = self._get_human_surname()
