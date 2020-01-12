@@ -1,0 +1,201 @@
+# SHOANTI QUAHS
+
+# In Varisia there are seven nations, or quahs, of the rugged natives known as Shoanti.
+# Each quah has its own distinct territories, traditions, and beliefs adhered to by
+# numerous component tribes. Detailed below are the tattoos commonly worn by the quahs
+# (along with a common example), the totems their clans revere, the domains cleric
+# and druid shamans favor, and the mysteries commonly adopted by the quahs’ oracle shamans.
+
+# Lyrune-Quah (Moon Clan): Those Whose Arrows Are Like the Stars
+
+#     Tattoos: Symbols suggestive of the night, sight, and wisdom. The runes Navrik (Eyeless Sight), Iyon (The Great Moon), and Vinic (Piercing Stone) hold particular prestige.
+#     Totems: Bat, cave bear, field mouse, moon, mountain, mountain lion, owl, rainstorm, star, wolf
+#     Totem Domains: Animal, Darkness, Strength, War, Weather
+#     Oracle Mysteries: Battle, heavens, nature
+
+# Shadde-Quah (Axe Clan): Guardians upon the Sea Cliffs
+
+#     Tattoos: Symbols that suggest vitality, endurance, and traits of the ocean and its beasts are greatly desired, among them Vonark (Many Arms), Donark (The Long-Armed), and Eanaw (The Endless Journey).
+#     Totems: Cave bear, cliff, dire bear, eagle, sea, squid, water elemental
+#     Totem Domains: Animal, Destruction, Strength, Water, Weather
+#     Oracle Mysteries: Battle, nature, waves
+
+# Shriikirri-Quah (Hawk Clan): Far-Ranging Traders and Beast Masters
+
+#     Tattoos: This quah favors symbols suggestive of travel, the wilds, and animals—particularly hawks and horses. The symbols Rotomo (Headwind), Ingir (Beast Heart), and Iyavak (The Pack) are among the most desirable.
+#     Totems: Air elemental, cloud, firepelt, forest grove, hawk, hippogriff, horse, wind
+#     Totem Domains: Air, Animal, Liberation, Strength, Weather
+#     Oracle Mysteries: Lore, nature, wind
+
+# Shundar-Quah (Spire Clan): Unifiers of the Quahs and Voice of the Tribes
+
+#     Tattoos: Unity, watchfulness, and the ability to lead are all vaunted virtues of this quah. For them, the runes Drimiil (Guardian Heart), Kokip (Sentinel), and Klartitil (Broad Klar) carry extra weight.
+#     Totems: Earth elemental, mountain spire, rock fall, spirestalker, storm roc. Although uncommon, some members of the Spire Clan join in the travels of other quahs and might adopt a totem of their host clan.
+#     Totem Domains: Animal, Knowledge, Protection, Rune, Weather
+#     Oracle Mysteries: Nature, stone, wind
+
+# Sklar-Quah (Sun Clan): Fierce Warriors of the Cinderlands
+
+#     Tattoos: Among this quah, images of flame and battle are particularly desirable, especially the runes Damkil (Orc Skull), Akmiz (Fire Hand), and Razkiv (Emberstorm).
+#     Totems: Aurochs, cindersnake, emberstorm, fire elemental, firepelt, sun
+#     Totem Domains: Animal, Fire, Strength, War, Weather
+#     Oracle Mysteries: Battle, flame, nature
+
+# Skoan-Quah (Skull Clan): Voices of the Ancestors and Hunters of the Dead
+
+#     Tattoos: Members of this clan adorn their bodies with symbols of bones and skulls, their favored patterns creating the symbols Sosmo (Forever Dead), Eiril (Duty), and Graxt (Eternity).
+#     Totems: Ancestor spirit, earth elemental, giant scarab beetle, vulture, will-o’-wisp, wolf
+#     Totem Domains: Animal, Darkness, Earth, Protection, Repose
+#     Oracle Mysteries: Bones, lore, nature
+
+# Tamiir-Quah (Wind Clan): Territorial Raiders of the High Peaks
+
+#     Tattoos: Members of this quah often bear symbols related to speed, freedom, and their mountain homes. The runes Dra (Mist), Cilvat (Wind Soul), and Sovola (The Roc King) bring particular honor.
+#     Totems: Air elemental, cloud, griffin, mountain peak, snowflake, storm, storm roc, wind
+#     Totem Domains: Air, Animal, Earth, Protection, War
+#     Oracle Mysteries: Battle, nature, wind
+
+Echoing Shout
+Fire Bringer
+Gathers Grass
+Runs to Battle
+Steps Like Shadows
+Tooth-Gatherer
+Waits for the Moon
+Winter Bear
+Patient Tiger
+Lightning Rider
+Cheetah Sprinter
+Autumn Fox
+Claw Hunter
+Throws Like Giant
+War Steed
+Way Seer
+Sharp Fang
+Cloud Hunter
+Spring Eagle
+Summer Hawk
+Angered Badger
+Charging Rhino
+Acolyte
+Acrobat
+Alkenstar Tinker
+Animal Whisperer
+Artisan
+Artist
+Aspiring Free Captain
+Aspiring River Monarch
+Atteran Rancher
+Barkeep
+Barrister
+Bekyar Restorer
+Belkzen Slayer
+Bellflower Agent
+Black Market Smuggler
+Bonuwat Wavetouched
+Bounty Hunter
+Bright Lion
+Charlatan
+Chelish Rebel
+Child of Westcrown
+Child of the Puddles
+Criminal
+Cursed Family
+Desert Tracker
+Detective
+Diobel Pearl Diver
+Dragon Scholar
+Emancipated
+Emissary
+Entertainer
+Farmhand
+Field Medic
+Final Blade Survivor
+Fortune Teller
+Freed Slave of Absalom
+Gambler
+Geb Crusader
+Gladiator
+Goblinblood Orphan
+Grand Council Bureaucrat
+Guard
+Haunting Vision
+Hellknight Historian
+Herbalist
+Hermean Axpatriate
+Hermit
+Hunter
+Inlander
+Issian Partisan
+Kalistrade Follower
+Kyonin Emissary
+Laborer
+Lastwall Survivor
+Lesser Scion
+Local Scion
+Lost and Alone
+Lumber Consortium Laborer
+Magaambya Academic
+Mammoth Speaker
+Mana Wastes Refugee
+Mantis Scion
+Martial Disciple
+Menagerie Dung Sweeper
+Merabite Prodigy
+Merchant
+Miner
+Missionary
+Molthuni Mercenary
+Nexian Mystic
+Nirmathi Guerrilla
+Noble
+Nomad
+Oenopion Ooze-Tender
+Onyx Trader
+Osirionologist
+Out-Of-Towner
+Pathfinder Hopeful
+Perfection Seeker
+Press-Ganged
+Prisoner
+Purveyor of the Bizarre
+Quick
+Razmiran Faithful
+Refugee
+Reputation Seeker
+Returning Descendant
+Rivethun Adherent
+Rostland Partisan
+Sailor
+Sarkorian Reclaimer
+Sarkorian Survivor
+Scholar
+Scholar of the Ancients
+Scout
+Secular Medic
+Senghor Sailor
+Shadow Haunted
+Shoanti Name-Bearer
+Shory Seeker
+Sodden Scavenger
+Storm Survivor
+Street Urchin
+Taldan Schemer
+Teamster
+Thassilonian Traveler
+Thrune Loyalist
+Thuvian Unifier
+Tinker
+Trade Consortium Underling
+Truth Seeker
+Ulfen Raider
+Undersea Enthusiast
+Ustlavic Academic
+Varisian Wanderer
+Vidrian Reformer
+Warrior
+Whispering Way Scion
+Wildwood Local
+Winter's Child
+Witch Wary
+Wonder Taster
