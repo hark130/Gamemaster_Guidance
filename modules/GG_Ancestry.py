@@ -118,7 +118,6 @@ class GG_Ancestry:
 
         # Human, Elf, or Half-Elf given name
         if randoChance <= 33:
-            print("_rando_half_elf_given_name HUMAN")  # DEBUGGING
             # Human
             self.ancestry = "Human"
             # Determine ethnicity
@@ -130,20 +129,12 @@ class GG_Ancestry:
             tempSubgroup = self._get_human_subgroup()
             self.subgroup = tempSubgroup
             # Generate given name
-            print("TEMP SUBGROUP: %s" % tempSubgroup)  # DEBUGGING
-            print("ANCESTRY: %s" % self.ancestry)  # DEBUGGING
-            print("ETHNICITY: %s" % self.ethnicity)  # DEBUGGING
-            print("SUBGROUP: %s" % self.subgroup)  # DEBUGGING
             self._rando_given_name()
-            # self.ancestry = "Half-Elf"
-            # self.ethnicity = None
-            # self.subgroup = None
             # Add notes
             self._add_note("Given name is %s in origin" % humanEthnicity)
             if tempSubgroup:
                 self._add_note("Non-Elven ancestor is from the %s subgroup" % tempSubgroup)
         elif randoChance <= 66:
-            print("_rando_half_elf_given_name HALF-ELF")  # DEBUGGING
             # Half-Elf
             if self.gender is self.genderList[0]:
                 self._rando_male_given_name()
@@ -151,7 +142,6 @@ class GG_Ancestry:
                 self._rando_female_given_name()
             self._add_note("Half-Elf given name")
         else:
-            print("_rando_half_elf_given_name ELF")  # DEBUGGING
             # Elf
             # NOTE: This may be bad but I guarantee it's easy
             self.ancestry = "Elf"
@@ -168,10 +158,7 @@ class GG_Ancestry:
         self.givenName = self._get_male_given_name()
 
 
-    def _get_male_given_name(self):
-        print("ANCESTRY: %s" % self.ancestry)  # DEBUGGING
-        print("ETHNICITY: %s" % self.ethnicity)  # DEBUGGING
-        print("SUBGROUP: %s" % self.subgroup)  # DEBUGGING        
+    def _get_male_given_name(self):       
         if self.ancestry is "Human":
             if self.subgroup:
                 if self.subgroup is "Mauxi":
@@ -204,8 +191,6 @@ class GG_Ancestry:
 
 
     def _rando_surname(self):
-        print("ANCESTRY IS %s" % self.ancestry)  # DEBUGGING
-        print(self.ancestry == "Half-Elf")  # DEBUGGING
         if self.ancestry is "Elf":
             self._rando_elf_surname()
         elif self.ancestry is "Dwarf":
@@ -217,13 +202,10 @@ class GG_Ancestry:
         elif self.ancestry == "Half-Elf":
             self.surname = self._get_half_elf_surname()
         else:
-            # print("ANCESTRY IS %s" % self.ancestry)  # DEBUGGING
-            # print(self.ancestry == "Half-Elf")  # DEBUGGING
             self.surname = self._get_default_surname()
 
 
     def _get_half_elf_surname(self):
-        print("ENTERED _get_half_elf_surname()")  # DEBUGGING
         # LOCAL VARIABLES
         randoChance = rand_percent()
         halfElfSurname = ""
@@ -236,9 +218,6 @@ class GG_Ancestry:
                 self.ethnicity = self._get_human_ethnicity()
             self.subgroup = self._get_human_subgroup()
             halfElfSurname = self._get_human_surname()
-            print("HALF ELF ANCESTRY: %s" % self.ancestry)  # DEBUGGING
-            print("HALF ELF ETHNICITY: %s" % self.ethnicity)  # DEBUGGING
-            print("HALF ELF SURNAME: %s" % halfElfSurname)  # DEBUGGING
             self._add_note("Surname is Human (%s) in origin" % self.ethnicity)
             if self.subgroup:
                 self._add_note("Surname comes from the %s subgroup" % self.subgroup)
@@ -314,9 +293,6 @@ class GG_Ancestry:
 
 
     def _get_subgroup_surname(self):
-        print("ANCESTRY: %s" % self.ancestry)  # DEBUGGING
-        print("ETHNICITY: %s" % self.ethnicity)  # DEBUGGING
-        print("SUBGROUP: %s" % self.subgroup)  # DEBUGGING
         if self.subgroup is "Mauxi":
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Surname.txt"
         else:
@@ -366,9 +342,6 @@ class GG_Ancestry:
 
     def _get_human_subgroup(self):
         """Randomize a subgroup for a Human ethnicity, if applicable"""
-        print("_get_human_subgroup ANCESTRY: %s" % self.ancestry)  # DEBUGGING
-        print("_get_human_subgroup ETHNICITY: %s" % self.ethnicity)  # DEBUGGING
-        print("_get_human_subgroup SUBGROUP: %s" % self.subgroup)  # DEBUGGING
         # LOCAL VARIABLE
         newSubgroup = None
 
@@ -376,9 +349,8 @@ class GG_Ancestry:
         if self.ethnicity == "Mwangi":
             newSubgroup = self._get_mwangi_subgroup()
         elif self.ethnicity is "Tian":
-            newSubgroup = "Shu"  # See: User Story 7 for additional subgroups)       
+            newSubgroup = "Shu"  # See: User Story 7 for additional subgroups)
 
-        print("_get_human_subgroup IS RETURNING %s" % newSubgroup)  # DEBUGGING
         return newSubgroup
 
 
