@@ -21,7 +21,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		* 1.6.9 Ulfen<br>
 		* 1.6.10 Varisian<br>
 		* 1.6.11 Vudrani<br>
-	[ ] 1.7. Half-Elf<br>	
+	[/] 1.7. Half-Elf<br>	
 	[ ] 1.8. Half-Orc<br>
 
 2. Main CLI Menu

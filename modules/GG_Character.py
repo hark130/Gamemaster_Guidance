@@ -29,6 +29,7 @@ class GG_Character:
         self.print_name()
         self.print_race()
         self.print_sex()
+        self.print_notes()
         self.print_traits()
         print("\n")
 
@@ -55,6 +56,33 @@ class GG_Character:
     def print_sex(self):
         """Print the character's gender"""
         self._print_something("Gender:", self.charAncestry.return_sex())
+
+
+    def print_notes(self):
+        """Print the character's notes"""
+        # LOCAL VARIABLES
+        charNotes = self.charAncestry.return_notes()
+        listOfNotes = []
+
+        # PARSE NOTES
+        if isinstance(charNotes, list):
+            listOfNotes = charNotes
+        elif isinstance(charNotes, str):
+            listOfNotes.append(charNotes)
+        else:
+            try:
+                listOfNotes.append(str(charNotes))
+            except:
+                listOfNotes = None
+
+        # PRINT NOTES
+        if listOfNotes:
+            if len(listOfNotes) == 1:
+                self._print_something("Note:", listOfNotes[0])
+            else:
+                self._print_something("Notes:", "")
+                for note in listOfNotes:
+                    self._print_something("", note)
 
 
     def print_traits(self):
