@@ -77,8 +77,12 @@ class GG_Character:
 
         # PRINT NOTES
         if listOfNotes:
-            for note in listOfNotes:
-                self._print_something("Note:", note)
+            if len(listOfNotes) == 1:
+                self._print_something("Note:", listOfNotes[0])
+            else:
+                self._print_something("Notes:", "")
+                for note in listOfNotes:
+                    self._print_something("", note)
 
 
     def print_traits(self):
