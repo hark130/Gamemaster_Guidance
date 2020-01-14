@@ -40,26 +40,24 @@ class GG_City:
         mandEntries = ["name", "region", "ancestry"]
 
         # Top Level
-        try:
-            temp = self.cityDict["city"]
+        temp = self.cityDict["city"]
         # Second Level
-        try:
-            for mandEntry in mandEntries:
-                temp = self.cityDict[mandEntry]
+        for mandEntry in mandEntries:
+            temp = self.cityDict["city"][mandEntry]
         # Ethnicity Entries
         self._validate_ancestries()
 
 
     def _validate_ancestries(self):
         for ancestry in ancestryList:
-            temp = self.cityDict["ancestry"][ancestry]
+            temp = self.cityDict["city"]["ancestry"][ancestry]
 
         self._validate_human_ethnicities()
 
 
     def _validate_human_ethnicities(self):
         for ethnicity in humanEthnicityList:
-            temp = self.cityDict["ancestry"]["Human"][ethnicity]
+            temp = self.cityDict["city"]["ancestry"]["Human"][ethnicity]
 
 
     def _validate_optional(self):
@@ -74,7 +72,7 @@ class GG_City:
 
     def _parse_city(self):
         """Parse the cityDict contents into attributes"""
-        detailsDict = cityDict[GG_Yaml.GG_CITY_KEY]
+        detailsDict = self.cityDict[GG_Yaml.GG_CITY_KEY]
         cityEthnicity = detailsDict[GG_Yaml.GG_CITY_RACE_KEY]
 
         self.name = detailsDict[GG_Yaml.GG_CITY_NAME_KEY]
