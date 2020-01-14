@@ -45,3 +45,71 @@ city:
       Vudrani: 1.136
     Half-Elf: 12.5
     Half-Orc: 12.5
+
+# NOTE: The following entries are mandatory
+# city:
+#   name:
+#   region:
+#   ethnicity:
+#     Dwarf:
+#     Elf:
+#     Gnome:
+#     Goblin:
+#     Halfling:
+#     Human:
+#       Garundi:
+#       Keleshite:
+#       Kellid:
+#       Mwangi:
+#       Nidalese:
+#       Shoanti:
+#       Taldan:
+#       Tian:
+#       Ulfen:
+#       Varisian:
+#       Vudrani:
+#     Half-Elf:
+#     Half-Orc:
+
+# NOTE: The following entries are optional
+#   disadvantages:
+
+# NOTE: The following entries will be randomized by Gamemaster_Guidance if missing
+#   alignment:
+#   government:
+#   population:
+#   qualities:
+
+# NOTE: The following entries are defined by Gamemaster_Guidance.
+#   base_value:
+#   magic_items:
+#     minor:
+#     medium:
+#     major:
+#   modifiers:
+#     corruption:
+#     crime:
+#     economy:
+#     law:
+#     lore:
+#     society:
+#   npcs:
+#     Adept:
+#     Aristocrat:
+#     Barbarian:
+#     Bard:
+#     Cleric:
+#     Commoner:
+#     Druid:
+#     Expert:
+#     Fighter:
+#     Monk:
+#     Paladin:
+#     Ranger:
+#     Rogue:
+#     Sorcerer:
+#     Warrior:
+#     Wizard:
+#   purchase_limit:
+#   spellcasting:
+#   type:
