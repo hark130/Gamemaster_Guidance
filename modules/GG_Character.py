@@ -14,6 +14,7 @@ class GG_Character:
         # City Stats
         self.cityObj = cityObject
         if self.cityObj and not race:
+            self.cityObj.load()
             race = self.cityObj.rando_city_race()
 
         # Ancestry
