@@ -25,7 +25,7 @@
 city:
   name: Some_City
   region: Some_Region
-  ethnicity:
+  ancestry:
     Dwarf: 12.5
     Elf: 12.5
     Gnome: 12.5
