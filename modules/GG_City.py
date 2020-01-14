@@ -17,6 +17,34 @@ class GG_City:
 
     def __init__(self, cityDict):
         """Class constructor"""
+        self.cityDict = cityDict
+
+
+    def load(self):
+        self._validate_city()
+        self._parse_city()
+
+
+    def _validate_city(self):
+        """Validate the contents of cityDict"""
+        self._validate_mandatory()
+        self._validate_optional()
+        self._validate_defined
+
+
+    def _validate_mandatory(self):
+        pass
+
+
+    def _validate_optional(self):
+        pass
+
+
+    def _validate_defined(self):
+        pass
+
+
+    def _parse_city(self):
         detailsDict = cityDict[GG_Yaml.GG_CITY_KEY]
         cityEthnicity = detailsDict[GG_Yaml.GG_CITY_RACE_KEY]
 
