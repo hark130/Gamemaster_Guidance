@@ -14,11 +14,15 @@ def get_key_value(theDict, theKey):
 
 
 class GG_City:
+    supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
 
 
     def __init__(self, cityDict):
         """Class constructor"""
         self.cityDict = cityDict
+
+        # Use these attributes to indicate a value should be randomized prior to parsing
+        self.randoDisadvantage = False  # Randomize a disadvantage
 
 
     def load(self):
@@ -62,7 +66,35 @@ class GG_City:
 
     def _validate_optional(self):
         """Validate any optional entries in cityDict"""
-        pass
+        # Disadvantages
+        self._validate_disadvantages()
+
+
+    def _validate_disadvantages(self):
+        """Validate the disadvantages key"""
+        # LOCAL VARIABLES
+        disadValue = None
+        disadList = []
+
+        # GET VALUE
+        try:
+            disad = self.cityDict["city"]["disadvantages"]
+        except:
+            pass
+        else:
+            if isinstance(disad, str):
+                disadList = [disad]
+            elif isinstance(disad, list):
+                disadList = disad
+            elif not disad:
+                disadList = []
+                self.randoDisadvantage = True  # Randomize one before parsing
+            else:
+                disadList = [str(disad)]
+
+        for entry in disadList:
+            if entry not in self.supportedDisadvantages:
+                raise RuntimeError("Unsupported disadvantage")
 
 
     def _validate_defined(self):
