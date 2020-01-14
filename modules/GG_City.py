@@ -15,6 +15,8 @@ def get_key_value(theDict, theKey):
 
 class GG_City:
     supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
+    supportedGovernment = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
+    supportedQualities = []
 
 
     def __init__(self, cityDict):
@@ -23,6 +25,9 @@ class GG_City:
 
         # Use these attributes to indicate a value should be randomized prior to parsing
         self.randoDisadvantage = False  # Randomize a disadvantage
+        self.randoAlignment = False
+        self.randoGovernment = False
+        self.randoQuality = False
 
 
     def load(self):
@@ -68,6 +73,10 @@ class GG_City:
         """Validate any optional entries in cityDict"""
         # Disadvantages
         self._validate_disadvantages()
+        # Aignment
+        self._validate_alignment()
+        # Government
+        # self._validate_government()
 
 
     def _validate_disadvantages(self):
@@ -95,6 +104,33 @@ class GG_City:
         for entry in disadList:
             if entry not in self.supportedDisadvantages:
                 raise RuntimeError("Unsupported disadvantage")
+
+
+    def _validate_alignment(self):
+        # LOCAL VARIABLES
+        ethics = ["Lawful", "Neutral", "Chaotic"]
+        moralities = ["Good", "Neutral", "Evil"]
+        good = False
+
+        try:
+            alignment = self.cityDict["city"]["alignment"]
+        except:
+            good = True
+            self.randoAlignment = True
+        else:
+            for ethic in ethics:
+                for moral in moralities:
+                    if alignment == ethic + " " + moral:
+                        good = True
+                    elif alignment == ethic and ethic == moral:
+                        good = True
+                    if good:
+                        break
+                if good:
+                    break
+
+        if not good:
+            raise RuntimeError("Invalid alignment")
 
 
     def _validate_defined(self):
