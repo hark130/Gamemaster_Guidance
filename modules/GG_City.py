@@ -21,6 +21,7 @@ class GG_City:
 
 
     def load(self):
+        """Entry level method: validate and parse the dictionary"""
         self._validate_city()
         self._parse_city()
 
@@ -29,22 +30,26 @@ class GG_City:
         """Validate the contents of cityDict"""
         self._validate_mandatory()
         self._validate_optional()
-        self._validate_defined
+        self._validate_defined()
 
 
     def _validate_mandatory(self):
+        """Validate the mandatory entries in cityDict"""
         pass
 
 
     def _validate_optional(self):
+        """Validate any optional entries in cityDict"""
         pass
 
 
     def _validate_defined(self):
+        """Validate any script-defined entries in cityDict"""
         pass
 
 
     def _parse_city(self):
+        """Parse the cityDict contents into attributes"""
         detailsDict = cityDict[GG_Yaml.GG_CITY_KEY]
         cityEthnicity = detailsDict[GG_Yaml.GG_CITY_RACE_KEY]
 
@@ -92,6 +97,7 @@ class GG_City:
 
 
     def get_race_percent(self, raceName):
+        """Return a race's percent"""
         return self.raceLookup[raceName]
 
 
