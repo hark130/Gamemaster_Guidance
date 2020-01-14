@@ -1,5 +1,6 @@
-from . import GG_Yaml
+from . GG_Globals import ancestryList, humanEthnicityList
 from . GG_Rando import rand_float
+from . import GG_Yaml
 
 
 def get_key_value(theDict, theKey):
@@ -35,7 +36,30 @@ class GG_City:
 
     def _validate_mandatory(self):
         """Validate the mandatory entries in cityDict"""
-        pass
+        # LOCAL VARIABLES
+        mandEntries = ["name", "region", "ancestry"]
+
+        # Top Level
+        try:
+            temp = self.cityDict["city"]
+        # Second Level
+        try:
+            for mandEntry in mandEntries:
+                temp = self.cityDict[mandEntry]
+        # Ethnicity Entries
+        self._validate_ancestries()
+
+
+    def _validate_ancestries(self):
+        for ancestry in ancestryList:
+            temp = self.cityDict["ancestry"][ancestry]
+
+        self._validate_human_ethnicities()
+
+
+    def _validate_human_ethnicities(self):
+        for ethnicity in humanEthnicityList:
+            temp = self.cityDict["ancestry"]["Human"][ethnicity]
 
 
     def _validate_optional(self):
