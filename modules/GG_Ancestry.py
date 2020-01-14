@@ -1,4 +1,5 @@
 from . GG_File_IO import pick_entry
+from . GG_Globals import ancestryList, humanEthnicityList
 from . GG_Rando import rand_percent
 
 import os
@@ -6,12 +7,12 @@ import random
 
 
 class GG_Ancestry:
-    humanEthnicities = ["Garundi", "Keleshite", "Kellid", "Mwangi", "Nidalese", "Shoanti", "Taldan", "Tian", "Ulfen", "Varisian", "Vudrani"]  # User Story 8. Nidalese
+    humanEthnicities = humanEthnicityList
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
                     "Tamiir-Quah (Wind Clan)"]
-    supportedAncestry = ["Dwarf", "Elf", "Gnome", "Goblin", "Halfling", "Human", "Half-Elf", "Half-Orc"]
+    supportedAncestry = ancestryList
     genderList = ["Male", "Female"]
 
 
