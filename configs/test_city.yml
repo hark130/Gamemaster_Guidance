@@ -71,7 +71,7 @@ city:
 #     Half-Elf:
 #     Half-Orc:
 
-# NOTE: The following entries are optional
+# NOTE: The following entries are optional but will be defined if included blank
 #   disadvantages:
 
 # NOTE: The following entries will be randomized by Gamemaster_Guidance if missing
