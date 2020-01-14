@@ -15,7 +15,7 @@ def get_key_value(theDict, theKey):
 
 class GG_City:
     supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
-    supportedGovernment = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
+    supportedGovernments = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
     supportedQualities = []
 
 
@@ -76,7 +76,7 @@ class GG_City:
         # Aignment
         self._validate_alignment()
         # Government
-        # self._validate_government()
+        self._validate_government()
 
 
     def _validate_disadvantages(self):
@@ -131,6 +131,16 @@ class GG_City:
 
         if not good:
             raise RuntimeError("Invalid alignment")
+
+
+    def _validate_government(self):
+        try:
+            government = self.cityDict["city"]["government"]
+        except:
+            self.randoGovernment = True
+        else:
+            if government not in self.supportedGovernments:
+                raise RuntimeError("Unsupported government")
 
 
     def _validate_defined(self):
