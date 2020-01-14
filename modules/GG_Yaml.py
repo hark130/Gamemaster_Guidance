@@ -4,7 +4,7 @@ import yaml
 GG_CITY_KEY = "city"
 GG_CITY_NAME_KEY = "name"
 GG_CITY_REGION_KEY = "region"
-GG_CITY_RACE_KEY = "ethnicity"
+GG_CITY_RACE_KEY = "ancestry"
 GG_CITY_RACE_DWARF = "Dwarf"
 GG_CITY_RACE_ELF = "Elf"
 GG_CITY_RACE_GNOME = "Gnome"
