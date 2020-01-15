@@ -3,6 +3,9 @@ from . GG_Rando import rand_float
 from . import GG_Yaml
 
 
+import locale
+
+
 def get_key_value(theDict, theKey):
     """Returns the key value as a float, 0.0 on Exception"""
     try:
@@ -27,6 +30,7 @@ class GG_City:
         self.randoDisadvantage = False  # Randomize a disadvantage
         self.randoAlignment = False
         self.randoGovernment = False
+        self.randoPopulation = False
         self.randoQuality = False
 
 
@@ -77,6 +81,8 @@ class GG_City:
         self._validate_alignment()
         # Government
         self._validate_government()
+        # Population
+        self._validate_population()
 
 
     def _validate_disadvantages(self):
@@ -141,6 +147,18 @@ class GG_City:
         else:
             if government not in self.supportedGovernments:
                 raise RuntimeError("Unsupported government")
+
+
+    def _validate_population(self):
+        try:
+            population = self.cityDict["city"]["population"]
+        except:
+            self.randoPopulation = True
+        else:
+            try:
+                temp = locale.atoi(population)
+            except:
+                raise RuntimeError("Invalid population")
 
 
     def _validate_defined(self):
