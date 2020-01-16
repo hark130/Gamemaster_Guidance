@@ -35,6 +35,15 @@ class GG_City:
         self.randoPopulation = False
         self.randoQuality = False
 
+        # Use these attributes to indicate a value should be calculated prior to parsing
+        self.calcBaseValue = False
+        self.calcMagicItems = False
+        self.calcModifiers = False
+        self.calcNPCs = False
+        self.calcPurchaseLimit = False
+        self.calcSpellcasting = False
+        self.calcType = False
+
 
     def load(self):
         """Entry level method: validate and parse the dictionary"""
@@ -188,7 +197,13 @@ class GG_City:
 
     def _validate_defined(self):
         """Validate any script-defined entries in cityDict"""
-        pass
+        # Base Value
+        # Magic Items
+        # Modifiers
+        # NPCs
+        # Purchase Limit
+        # Spellcasting
+        # Type
 
 
     def _parse_city(self):
