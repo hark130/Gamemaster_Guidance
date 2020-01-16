@@ -19,7 +19,9 @@ def get_key_value(theDict, theKey):
 class GG_City:
     supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
     supportedGovernments = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
-    supportedQualities = []
+    supportedQualities = ["Academic", "Holy Site", "Insular", "Magically Attuned", "Notorious", "Pious",
+                          "Prosperous", "Racially Intolerant", "Rumormongering Citizens",
+                          "Strategic Location", "Superstitious", "Tourist Attraction"]
 
 
     def __init__(self, cityDict):
@@ -83,6 +85,8 @@ class GG_City:
         self._validate_government()
         # Population
         self._validate_population()
+        # Qualities
+        self._validate_qualities()
 
 
     def _validate_disadvantages(self):
@@ -159,6 +163,27 @@ class GG_City:
                 temp = locale.atoi(population)
             except:
                 raise RuntimeError("Invalid population")
+
+
+    def _validate_qualities(self):
+        try:
+            qualities = self.cityDict["city"]["qualities"]
+        except:
+            self.randoQualities = True
+        else:
+            if not qualities:
+                self.randoQualities = True
+            else:
+                print(qualities)  # DEBUGGING
+                # Respond to type
+                if isinstance(qualities, str):
+                    qualities = [qualities]
+                elif not isinstance(qualities, list):
+                    raise TypeError("Unknown qualities entry")
+                # Parse entries
+                for quality in qualities:
+                    if quality not in self.supportedQualities and not quality.startswith("Racially Intolerant"):
+                        raise RuntimeError("Unsupported quality")
 
 
     def _validate_defined(self):
