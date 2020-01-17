@@ -64,3 +64,13 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 8. Human ethnicity Nidalese
 
 	[ ] 1. Find and implement character functionality for the Nidalese ethnicity (missing?!)<br>
+
+9. Double back and implement the "validate defined" method for the "GG City" class
+
+	[ ] 1. Base Value<br>
+	[ ] 2. Magic Items<br>
+	[ ] 3. Modifiers<br>
+	[ ] 4. NPCs<br>
+	[ ] 5. Purchase Limit<br>
+	[ ] 6. Spellcasting<br>
+	[ ] 7. Type<br>
