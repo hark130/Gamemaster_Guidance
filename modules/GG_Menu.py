@@ -124,6 +124,7 @@ def menu(cityDict=None):
 
     if cityDict:
         cityObj = GG_City(cityDict)
+        cityObj.load()
 
     print("\nWelcome to Gamemaster Guidance\n")
 
