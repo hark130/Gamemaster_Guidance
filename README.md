@@ -67,10 +67,10 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 9. Double back and implement the "validate defined" method for the "GG City" class
 
-	[ ] 1. Base Value<br>
+	[X] 1. Base Value (completed in 5-4)<br>
 	[ ] 2. Magic Items<br>
 	[ ] 3. Modifiers<br>
 	[ ] 4. NPCs<br>
 	[ ] 5. Purchase Limit<br>
 	[ ] 6. Spellcasting<br>
-	[ ] 7. Type<br>
+	[X] 7. Type (completed in 5-4)<br>
