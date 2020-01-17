@@ -1,9 +1,10 @@
-from . GG_Globals import ancestryList, humanEthnicityList
-from . GG_Rando import rand_float
+from . GG_Globals import ancestryList, citySizeLimits, humanEthnicityList
+from . GG_Rando import rand_float, rand_integer
 from . import GG_Yaml
 
 
 import locale
+import random
 
 
 def get_key_value(theDict, theKey):
@@ -22,6 +23,18 @@ class GG_City:
     supportedQualities = ["Academic", "Holy Site", "Insular", "Magically Attuned", "Notorious", "Pious",
                           "Prosperous", "Racially Intolerant", "Rumormongering Citizens",
                           "Strategic Location", "Superstitious", "Tourist Attraction"]
+    supportedEthics = ["Lawful", "Neutral", "Chaotic"]
+    supportedMoralities = ["Good", "Neutral", "Evil"]
+    settlementStatistics = {
+        "Thorp":{"Modifiers":-4,"Qualities":1,"Danger":-10,"Base Value":50,"Purchase Limit":500,"Spellcasting":1,"Base Value":50},
+        "Hamlet":{"Modifiers":-2,"Qualities":1,"Danger":-5,"Base Value":200,"Purchase Limit":1000,"Spellcasting":2,"Base Value":200},
+        "Village":{"Modifiers":-1,"Qualities":2,"Danger":0,"Base Value":500,"Purchase Limit":2500,"Spellcasting":3,"Base Value":500},
+        "Small Town":{"Modifiers":0,"Qualities":2,"Danger":0,"Base Value":1000,"Purchase Limit":5000,"Spellcasting":4,"Base Value":1000},
+        "Large Town":{"Modifiers":0,"Qualities":3,"Danger":5,"Base Value":2000,"Purchase Limit":10000,"Spellcasting":5,"Base Value":2000},
+        "Small City":{"Modifiers":1,"Qualities":4,"Danger":5,"Base Value":4000,"Purchase Limit":25000,"Spellcasting":6,"Base Value":4000},
+        "Large City":{"Modifiers":2,"Qualities":5,"Danger":10,"Base Value":8000,"Purchase Limit":50000,"Spellcasting":7,"Base Value":8000},
+        "Metropolis":{"Modifiers":4,"Qualities":6,"Danger":10,"Base Value":16000,"Purchase Limit":100000,"Spellcasting":8,"Base Value":16000}
+    }
 
 
     def __init__(self, cityDict):
@@ -47,8 +60,9 @@ class GG_City:
 
     def load(self):
         """Entry level method: validate and parse the dictionary"""
-        self._validate_city()
-        self._parse_city()
+        self._validate_city()  # Verify all input
+        self._complete_city()  # Fill in the blanks
+        self._parse_city()     # Load the city into attributes
 
 
     def _validate_city(self):
@@ -127,8 +141,8 @@ class GG_City:
 
     def _validate_alignment(self):
         # LOCAL VARIABLES
-        ethics = ["Lawful", "Neutral", "Chaotic"]
-        moralities = ["Good", "Neutral", "Evil"]
+        ethics = self.supportedEthics
+        moralities = self.supportedMoralities
         good = False
 
         try:
@@ -170,8 +184,10 @@ class GG_City:
         else:
             try:
                 temp = locale.atoi(population)
-            except:
-                raise RuntimeError("Invalid population")
+            except Exception as err:
+                print("Invalid population: {}".format(population))
+                print(repr(err))
+                raise err
 
 
     def _validate_qualities(self):
@@ -179,11 +195,13 @@ class GG_City:
             qualities = self.cityDict["city"]["qualities"]
         except:
             self.randoQualities = True
+            print("MISSING KEY")  # DEBUGGING
         else:
             if not qualities:
                 self.randoQualities = True
+                print("MISSING VALUE")  # DEBUGGING
             else:
-                print(qualities)  # DEBUGGING
+                # print(qualities)  # DEBUGGING
                 # Respond to type
                 if isinstance(qualities, str):
                     qualities = [qualities]
@@ -197,13 +215,195 @@ class GG_City:
 
     def _validate_defined(self):
         """Validate any script-defined entries in cityDict"""
+        # See: User Story 9 for full implementation
         # Base Value
+        self._validate_city_base_value()
         # Magic Items
+
         # Modifiers
+        # NOTE: I think I want to REcalculate all modifiers regardless of what's in the config file
+
         # NPCs
+
         # Purchase Limit
+
         # Spellcasting
+
         # Type
+        self._validate_city_type()
+
+
+    def _validate_city_base_value(self):
+        # Get it
+        try:
+            baseValue = self.cityDict["city"]["base_value"]
+        except:
+            self.calcBaseValue = True
+        else:
+            try:
+                temp = locale.atoi(baseValue)
+            except Exception as err:
+                print("Invalid base value: {}".format(baseValue))
+                print(repr(err))
+                raise err
+
+
+    def _validate_city_type(self):
+        # Get it
+        try:
+            localType = self.cityDict["city"]["type"]
+        except:
+            self.calcType = True
+        else:
+            if localType not in self.settlementStatistics.keys():
+                raise RuntimeError("Invalid city type")
+
+        # print("CALC CITY TYPE IS: {}".format(self.calcType))  # DEBUGGING
+
+
+    def _complete_city(self):
+        self._rando_city()  # Must come first unless population is already defined
+        self._calculate_city()
+
+
+    def _rando_city(self):
+        """Randomize elements of a city not included in the config"""
+        if self.randoPopulation:
+            self._rando_population()
+            self.randoPopulation = False
+
+        if self.randoDisadvantage:
+            self._rando_disadvantage()
+            self.randoDisadvantage = False
+
+        if self.randoAlignment:
+            self._rando_alignment()
+            self.randoAlignment = False
+
+        if self.randoGovernment:
+            self._rando_government()
+            self.randoGovernment = False
+
+
+    def _rando_population(self):
+        """Randomizes a population into self.cityDict"""
+        self.cityDict["city"]["population"] = str(rand_integer(citySizeLimits[0], citySizeLimits[1]))
+
+
+    def _rando_disadvantage(self):
+        """Randomize one disadvantage into self.cityDict"""
+        self.cityDict["city"]["disadvantages"] = [random.choice(self.supportedDisadvantages)]
+
+
+    def _rando_alignment(self):
+        """Randomize one alignment into self.cityDict"""
+        # Rando
+        localAlignment = random.choice(self.supportedEthics) + " " + random.choice(self.supportedMoralities)
+        # Update True Neutral
+        if localAlignment == "Neutral Neutral":
+            localAlignment = "Neutral"
+        # Store It
+        self.cityDict["city"]["alignment"] = localAlignment
+
+
+    def _rando_government(self):
+        """Randomize a government into self.cityDict"""
+        self.cityDict["city"]["government"] = random.choice(self.supportedGovernments)
+
+
+    def _calculate_city(self):
+        """Calculate all the details of a city not already calculated in the config"""
+        # Calculate this first since the settlement statistics are derived from it
+        # print("CALC CITY TYPE IS: {}".format(self.calcType))  # DEBUGGING
+        if self.calcType:
+            self._calc_city_type()
+            self.calcType = False
+
+        # Moved from _rando_city since the "type" should be defined before the qualities
+        if self.randoQualities:
+            self._rando_city_qualities()
+            self.randoQualities = False
+
+        if self.calcBaseValue:
+            self._calc_city_base_value()
+            self.calcBaseValue = False
+
+        if self.calcMagicItems:
+            # TO DO: DON'T DO NOW
+            # IDEAS:
+            # 1. Put it into self.settlementStatistics
+            # 2. Hard code some responses into a method
+            self.calcMagicItems = False
+
+        if self.calcModifiers:
+            self.calcModifiers = False
+
+        if self.calcNPCs:
+            self.calcNPCs = False
+
+        if self.calcPurchaseLimit:
+            self.calcPurchaseLimit = False
+
+        if self.calcSpellcasting:
+            self.calcSpellcasting = False
+
+
+    def _calc_city_type(self):
+        """Calculate and store the city type into cityDict"""
+        # Get Population
+        population = locale.atoi(self.cityDict["city"]["population"])
+        print("POPULATION: {}".format(population))  # DEBUGGING
+
+        # Translate Population to Type
+        if population <= 20:
+            localType = "Thorp"
+        elif population <= 60:
+            localType = "Hamlet"
+        elif population <= 200:
+            localType = "Village"
+        elif population <= 2000:
+            localType = "Small Town"
+        elif population <= 5000:
+            localType = "Large Town"
+        elif population <= 10000:
+            localType = "Small City"
+        elif population <= 25000:
+            localType = "Large City"
+        else:
+            localType = "Metropolis"
+
+        # Verify Type
+        assert (localType in self.settlementStatistics.keys()),"Invalid city type"
+
+        # Done
+        print(localType)  # DEBUGGING
+        self.cityDict["city"]["type"] = localType
+
+
+    def _rando_city_qualities(self):
+        # LOCAL VARIABLES
+        localQualList = []
+        tempQual = None
+        numQuals = self.settlementStatistics[self.cityDict["city"]["type"]]["Qualities"]
+
+        # INPUT VALIDATION
+        assert (numQuals > 0),"Invalid number of qualities"
+        assert (numQuals <= len(self.supportedQualities)),"Not enough supported qualities"
+
+        # RANDO QUALITIES
+        while len(localQualList) < numQuals:
+            tempQual = random.choice(self.supportedQualities)
+            if tempQual not in localQualList:
+                localQualList.append(tempQual)
+
+        # DONE
+        self.cityDict["city"]["qualities"] = localQualList
+        print("QUALITIES: {}".format(localQualList))
+
+
+    def _calc_city_base_value(self):
+        self.cityDict["city"]["base_value"] = str(self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"])
+        print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
 
 
     def _parse_city(self):
