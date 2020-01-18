@@ -74,3 +74,9 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 5. Purchase Limit<br>
 	[ ] 6. Spellcasting<br>
 	[X] 7. Type (completed in 5-4)<br>
+
+10. Update remaining settlement status
+
+	[ ] 1. Spellcasting (e.g., Magial government)<br>
+	[ ] 2. Base Value (e.g., Notorious quality)<br>
+	[ ] 3. Purchase Limit (e.g., Prosperous)<br>
