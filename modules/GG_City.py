@@ -601,7 +601,40 @@ class GG_City:
 
 
     def _calc_city_modifier_society(self):
-        pass
+        # LOCAL VARIABLES
+        localSociety = self.baseCityModifier
+
+        # Alignment
+        if self.cityDict["city"]["alignment"].endswith("Good"):
+            print("GOOD")  # DEBUGGING
+            localSociety += 1
+
+        # Government
+        if self.cityDict["city"]["government"] == "Council":
+            localSociety += 4
+        elif self.cityDict["city"]["government"] == "Magical":
+            localSociety -= 2
+        elif self.cityDict["city"]["government"] == "Overlord":
+            localSociety -= 2
+
+        # Qualities
+        if "Rumormongering Citizens" in self.cityDict["city"]["qualities"]:
+            localSociety -= 1
+        if "Superstitious" in self.cityDict["city"]["qualities"]:
+            localSociety += 2
+
+        # Disadvantages
+        try:
+            if "Anarchy" in self.cityDict["city"]["disadvantages"]:
+                localSociety -= 4
+            if "Hunted" in self.cityDict["city"]["disadvantages"]:
+                localSociety -= 4
+        except:
+            pass  # Disadvantages are not mandatory
+        print("SOCIETY: {}".format(localSociety))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"society":str(localSociety)})
 
 
     def _parse_city(self):
