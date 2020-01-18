@@ -196,11 +196,11 @@ class GG_City:
             qualities = self.cityDict["city"]["qualities"]
         except:
             self.randoQualities = True
-            print("MISSING KEY")  # DEBUGGING
+            # print("MISSING KEY")  # DEBUGGING
         else:
             if not qualities:
                 self.randoQualities = True
-                print("MISSING VALUE")  # DEBUGGING
+                # print("MISSING VALUE")  # DEBUGGING
             else:
                 # print(qualities)  # DEBUGGING
                 # Respond to type
@@ -305,13 +305,13 @@ class GG_City:
             localAlignment = "Neutral"
         # Store It
         self.cityDict["city"]["alignment"] = localAlignment
-        print("CITY ALIGNMENT: {}".format(localAlignment))  # DEBUGGING
+        # print("CITY ALIGNMENT: {}".format(localAlignment))  # DEBUGGING
 
 
     def _rando_government(self):
         """Randomize a government into self.cityDict"""
         self.cityDict["city"]["government"] = random.choice(self.supportedGovernments)
-        print("CITY GOVERNMENT: {}".format(self.cityDict["city"]["government"]))  # DEBUGGING
+        # print("CITY GOVERNMENT: {}".format(self.cityDict["city"]["government"]))  # DEBUGGING
 
 
     def _calculate_city(self):
@@ -351,12 +351,18 @@ class GG_City:
         if self.calcSpellcasting:
             self.calcSpellcasting = False
 
+        # Base Value
+        # Magic Items
+        # NPCs
+        # Purchase Limit
+        # Spellcasting
+
 
     def _calc_city_type(self):
         """Calculate and store the city type into cityDict"""
         # Get Population
         population = locale.atoi(self.cityDict["city"]["population"])
-        print("POPULATION: {}".format(population))  # DEBUGGING
+        # print("POPULATION: {}".format(population))  # DEBUGGING
 
         # Translate Population to Type
         if population <= 20:
@@ -380,7 +386,7 @@ class GG_City:
         assert (localType in self.settlementStatistics.keys()),"Invalid city type"
 
         # Done
-        print(localType)  # DEBUGGING
+        # print(localType)  # DEBUGGING
         self.cityDict["city"]["type"] = localType
 
 
@@ -402,12 +408,12 @@ class GG_City:
 
         # DONE
         self.cityDict["city"]["qualities"] = localQualList
-        print("QUALITIES: {}".format(localQualList))  # DEBUGGING
+        # print("QUALITIES: {}".format(localQualList))  # DEBUGGING
 
 
     def _calc_city_base_value(self):
         self.cityDict["city"]["base_value"] = str(self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"])
-        print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
+        # print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
 
 
     def _calc_city_modifiers(self):
@@ -435,7 +441,7 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"].endswith("Evil"):
-            print("EVIL!")  # DEBUGGING
+            # print("EVIL!")  # DEBUGGING
             localCorruption += 1
 
         # Government
@@ -458,11 +464,10 @@ class GG_City:
                 localCorruption += 1
         except:
             pass  # Disadvantages are not mandatory
-        print("CORRUPTION: {}".format(localCorruption))  # DEBUGGING
+        # print("CORRUPTION: {}".format(localCorruption))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"corruption":str(localCorruption)})
-
 
 
     def _calc_city_modifier_crime(self):
@@ -471,7 +476,7 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"].startswith("Chaotic"):
-            print("CHAOTIC!")  # DEBUGGING
+            # print("CHAOTIC!")  # DEBUGGING
             localCrime += 1
 
         # Government
@@ -496,7 +501,7 @@ class GG_City:
                 localCrime += 1
         except:
             pass  # Disadvantages are not mandatory
-        print("CRIME: {}".format(localCrime))  # DEBUGGING
+        # print("CRIME: {}".format(localCrime))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"crime":str(localCrime)})
@@ -526,7 +531,7 @@ class GG_City:
                 localEconomy -= 4
         except:
             pass  # Disadvantages are not mandatory
-        print("ECONOMY: {}".format(localEconomy))  # DEBUGGING
+        # print("ECONOMY: {}".format(localEconomy))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"economy":str(localEconomy)})
@@ -538,7 +543,7 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"].startswith("Lawful"):
-            print("LAWFUL!")  # DEBUGGING
+            # print("LAWFUL!")  # DEBUGGING
             localLaw += 1
 
         # Government
@@ -565,7 +570,7 @@ class GG_City:
                 localLaw -= 4
         except:
             pass  # Disadvantages are not mandatory
-        print("LAW: {}".format(localLaw))  # DEBUGGING
+        # print("LAW: {}".format(localLaw))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"law":str(localLaw)})
@@ -577,10 +582,10 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"] == "Neutral":
-            print("NEUTRAL!")  # DEBUGGING
+            # print("NEUTRAL!")  # DEBUGGING
             localLore += 2
         elif self.cityDict["city"]["alignment"].endswith("Neutral"):
-            print("NEUTRAL")  # DEBUGGING
+            # print("NEUTRAL")  # DEBUGGING
             localLore += 1
 
         # Government
@@ -594,7 +599,7 @@ class GG_City:
             localLore += 1
         if "Rumormongering Citizens" in self.cityDict["city"]["qualities"]:
             localLore += 1
-        print("LORE: {}".format(localLore))  # DEBUGGING
+        # print("LORE: {}".format(localLore))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"lore":str(localLore)})
@@ -606,7 +611,7 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"].endswith("Good"):
-            print("GOOD")  # DEBUGGING
+            # print("GOOD")  # DEBUGGING
             localSociety += 1
 
         # Government
@@ -631,7 +636,7 @@ class GG_City:
                 localSociety -= 4
         except:
             pass  # Disadvantages are not mandatory
-        print("SOCIETY: {}".format(localSociety))  # DEBUGGING
+        # print("SOCIETY: {}".format(localSociety))  # DEBUGGING
 
         # DONE
         self.cityDict["city"]["modifiers"].update({"society":str(localSociety)})
