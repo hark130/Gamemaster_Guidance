@@ -503,7 +503,33 @@ class GG_City:
 
 
     def _calc_city_modifier_economy(self):
-        pass
+        # LOCAL VARIABLES
+        localEconomy = self.baseCityModifier
+
+        # Government
+        if self.cityDict["city"]["government"] == "Secret Syndicate":
+            localEconomy += 2
+
+        # Qualities
+        if "Prosperous" in self.cityDict["city"]["qualities"]:
+            localEconomy += 1
+        if "Strategic Location" in self.cityDict["city"]["qualities"]:
+            localEconomy += 1
+        if "Tourist Attraction" in self.cityDict["city"]["qualities"]:
+            localEconomy += 1
+
+        # Disadvantages
+        try:
+            if "Anarchy" in self.cityDict["city"]["disadvantages"]:
+                localEconomy -= 4
+            if "Hunted" in self.cityDict["city"]["disadvantages"]:
+                localEconomy -= 4
+        except:
+            pass  # Disadvantages are not mandatory
+        print("ECONOMY: {}".format(localEconomy))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"economy":str(localEconomy)})
 
 
     def _calc_city_modifier_law(self):
