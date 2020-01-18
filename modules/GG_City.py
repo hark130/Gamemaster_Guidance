@@ -572,7 +572,32 @@ class GG_City:
 
 
     def _calc_city_modifier_lore(self):
-        pass
+        # LOCAL VARIABLES
+        localLore = self.baseCityModifier
+
+        # Alignment
+        if self.cityDict["city"]["alignment"] == "Neutral":
+            print("NEUTRAL!")  # DEBUGGING
+            localLore += 2
+        elif self.cityDict["city"]["alignment"].endswith("Neutral"):
+            print("NEUTRAL")  # DEBUGGING
+            localLore += 1
+
+        # Government
+        if self.cityDict["city"]["government"] == "Council":
+            localLore -= 2
+        elif self.cityDict["city"]["government"] == "Magical":
+            localLore += 2
+
+        # Qualities
+        if "Academic" in self.cityDict["city"]["qualities"]:
+            localLore += 1
+        if "Rumormongering Citizens" in self.cityDict["city"]["qualities"]:
+            localLore += 1
+        print("LORE: {}".format(localLore))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"lore":str(localLore)})
 
 
     def _calc_city_modifier_society(self):
