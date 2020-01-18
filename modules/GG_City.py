@@ -435,6 +435,7 @@ class GG_City:
 
         # Alignment
         if self.cityDict["city"]["alignment"].endswith("Evil"):
+            print("EVIL!")  # DEBUGGING
             localCorruption += 1
 
         # Government
@@ -465,7 +466,40 @@ class GG_City:
 
 
     def _calc_city_modifier_crime(self):
-        pass
+        # LOCAL VARIABLES
+        localCrime = self.baseCityModifier
+
+        # Alignment
+        if self.cityDict["city"]["alignment"].startswith("Chaotic"):
+            print("CHAOTIC!")  # DEBUGGING
+            localCrime += 1
+
+        # Government
+        if self.cityDict["city"]["government"] == "Overlord":
+            localCrime -= 2
+        elif self.cityDict["city"]["government"] == "Secret Syndicate":
+            localCrime += 2
+
+        # Qualities
+        if "Insular" in self.cityDict["city"]["qualities"]:
+            localCrime -= 1
+        if "Notorious" in self.cityDict["city"]["qualities"]:
+            localCrime += 1
+        if "Superstitious" in self.cityDict["city"]["qualities"]:
+            localCrime -= 4
+
+        # Disadvantages
+        try:
+            if "Anarchy" in self.cityDict["city"]["disadvantages"]:
+                localCrime += 4
+            if "Impoverished" in self.cityDict["city"]["disadvantages"]:
+                localCrime += 1
+        except:
+            pass  # Disadvantages are not mandatory
+        print("CRIME: {}".format(localCrime))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"crime":str(localCrime)})
 
 
     def _calc_city_modifier_economy(self):
