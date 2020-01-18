@@ -533,7 +533,42 @@ class GG_City:
 
 
     def _calc_city_modifier_law(self):
-        pass
+        # LOCAL VARIABLES
+        localLaw = self.baseCityModifier
+
+        # Alignment
+        if self.cityDict["city"]["alignment"].startswith("Lawful"):
+            print("LAWFUL!")  # DEBUGGING
+            localLaw += 1
+
+        # Government
+        if self.cityDict["city"]["government"] == "Council":
+            localLaw -= 2
+        elif self.cityDict["city"]["government"] == "Overlord":
+            localLaw += 2
+        elif self.cityDict["city"]["government"] == "Secret Syndicate":
+            localLaw -= 6
+
+        # Qualities
+        if "Insular" in self.cityDict["city"]["qualities"]:
+            localLaw += 1
+        if "Notorious" in self.cityDict["city"]["qualities"]:
+            localLaw -= 1
+        if "Superstitious" in self.cityDict["city"]["qualities"]:
+            localLaw += 2
+
+        # Disadvantages
+        try:
+            if "Anarchy" in self.cityDict["city"]["disadvantages"]:
+                localLaw -= 6
+            if "Hunted" in self.cityDict["city"]["disadvantages"]:
+                localLaw -= 4
+        except:
+            pass  # Disadvantages are not mandatory
+        print("LAW: {}".format(localLaw))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"law":str(localLaw)})
 
 
     def _calc_city_modifier_lore(self):
