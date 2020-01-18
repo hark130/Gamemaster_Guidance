@@ -40,6 +40,7 @@ class GG_City:
     def __init__(self, cityDict):
         """Class constructor"""
         self.cityDict = cityDict
+        self.baseCityModifier = None
 
         # Use these attributes to indicate a value should be randomized prior to parsing
         self.randoDisadvantage = False  # Randomize a disadvantage
@@ -304,11 +305,13 @@ class GG_City:
             localAlignment = "Neutral"
         # Store It
         self.cityDict["city"]["alignment"] = localAlignment
+        print("CITY ALIGNMENT: {}".format(localAlignment))  # DEBUGGING
 
 
     def _rando_government(self):
         """Randomize a government into self.cityDict"""
         self.cityDict["city"]["government"] = random.choice(self.supportedGovernments)
+        print("CITY GOVERNMENT: {}".format(self.cityDict["city"]["government"]))  # DEBUGGING
 
 
     def _calculate_city(self):
@@ -335,8 +338,9 @@ class GG_City:
             # 2. Hard code some responses into a method
             self.calcMagicItems = False
 
-        if self.calcModifiers:
-            self.calcModifiers = False
+        # Always calculate modifiers
+        self._calc_city_modifiers()
+        self.calcModifiers = False
 
         if self.calcNPCs:
             self.calcNPCs = False
@@ -398,12 +402,86 @@ class GG_City:
 
         # DONE
         self.cityDict["city"]["qualities"] = localQualList
-        print("QUALITIES: {}".format(localQualList))
+        print("QUALITIES: {}".format(localQualList))  # DEBUGGING
 
 
     def _calc_city_base_value(self):
         self.cityDict["city"]["base_value"] = str(self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"])
         print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
+
+
+    def _calc_city_modifiers(self):
+        """Calcualte all six city modifiers into cityDict"""
+        #   modifiers:
+        self.baseCityModifier = self.settlementStatistics[self.cityDict["city"]["type"]]["Modifiers"]
+        self.cityDict["city"]["modifiers"] = {}  # Reset
+        #     corruption:
+        self._calc_city_modifier_corruption()
+        #     crime:
+        self._calc_city_modifier_crime()
+        #     economy:
+        self._calc_city_modifier_economy()
+        #     law:
+        self._calc_city_modifier_law()
+        #     lore:
+        self._calc_city_modifier_lore()
+        #     society:
+        self._calc_city_modifier_society()
+
+
+    def _calc_city_modifier_corruption(self):
+        # LOCAL VARIABLES
+        localCorruption = self.baseCityModifier
+
+        # Alignment
+        if self.cityDict["city"]["alignment"].endswith("Evil"):
+            localCorruption += 1
+
+        # Government
+        if self.cityDict["city"]["government"] == "Magical":
+            localCorruption -= 2
+        elif self.cityDict["city"]["government"] == "Overlord":
+            localCorruption += 2
+        elif self.cityDict["city"]["government"] == "Secret Syndicate":
+            localCorruption += 2
+
+        # Qualities
+        if "Holy Site" in self.cityDict["city"]["qualities"]:
+            localCorruption -= 2
+
+        # Disadvantages
+        try:
+            if "Anarchy" in self.cityDict["city"]["disadvantages"]:
+                localCorruption += 4
+            if "Impoverished" in self.cityDict["city"]["disadvantages"]:
+                localCorruption += 1
+        except:
+            pass  # Disadvantages are not mandatory
+        print("CORRUPTION: {}".format(localCorruption))  # DEBUGGING
+
+        # DONE
+        self.cityDict["city"]["modifiers"].update({"corruption":str(localCorruption)})
+
+
+
+    def _calc_city_modifier_crime(self):
+        pass
+
+
+    def _calc_city_modifier_economy(self):
+        pass
+
+
+    def _calc_city_modifier_law(self):
+        pass
+
+
+    def _calc_city_modifier_lore(self):
+        pass
+
+
+    def _calc_city_modifier_society(self):
+        pass
 
 
     def _parse_city(self):
