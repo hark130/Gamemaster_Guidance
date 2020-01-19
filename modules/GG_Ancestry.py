@@ -26,16 +26,17 @@ class GG_Ancestry:
         print(race)  # DEBUGGING
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
-        elif race == "Human":
-            print("GG_Ancestry.__init__() 'Human' code block")  # DEBUGGING
-            self._rando_human_ethnicity()
-            if self.ethnicity == "Nidalese":
-                self.ethnicity = "Taldan"  # Fix this in User Story #8
-            self.ancestry = race
         elif race:
             self.ancestry = race
         else:
             self._rando_ancestry()
+        # Randomize a Human ethnicity and subgroup (if appropriate)
+        if self.ancestry == "Human":
+            print("GG_Ancestry.__init__() 'Human' code block")  # DEBUGGING
+            self._rando_human_ethnicity()
+            if self.ethnicity == "Nidalese":
+                self.ethnicity = "Taldan"  # Fix this in User Story #8
+            self._rando_human_subgroup()
 
         # Gender
         if sex and sex not in self.genderList:
