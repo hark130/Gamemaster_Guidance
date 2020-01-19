@@ -539,7 +539,7 @@ class GG_City:
 
         # DONE
         self.cityDict["city"]["spellcasting"] = str(localSpellcasting)
-        print("CITY SPELLCASTING: {}".format(self.cityDict["city"]["spellcasting"]))  # DEBUGGING
+        # print("CITY SPELLCASTING: {}".format(self.cityDict["city"]["spellcasting"]))  # DEBUGGING
 
 
     def _rando_city_npcs(self):
@@ -729,12 +729,9 @@ class GG_City:
                 if levelDict[level] > 1:
                     npcListEntry = npcListEntry + "s"
 
-                print(npcListEntry)  # DEBUGGING
-
-
-        # p = inflect.engine()
-        # p.number_to_words(123).capitalize()
-
+                # print(npcListEntry)  # DEBUGGING
+                self.cityDict["city"]["npcs"].append(npcListEntry)
+        # print(self.cityDict["city"]["npcs"])  # DEBUGGING
 
 
     def _calc_city_modifier_corruption(self):
