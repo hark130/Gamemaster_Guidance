@@ -33,6 +33,7 @@ def parse_yaml(filename):
         with open(filename, "r") as inFile:
             yamlDict = yaml.load(inFile, Loader=yaml.FullLoader)
     except Exception as err:
-        print(format(err))  # DEBUGGING
+        print(format(err))
+        raise err
 
     return yamlDict
