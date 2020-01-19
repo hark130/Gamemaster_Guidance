@@ -110,11 +110,38 @@ def rando_a_name():
             return 999
     except RuntimeError as err:
         print(format(err))
+        raise err
     else:
         if charName:
             print("\n" + charName.return_full_name() + "\n")
 
     return userInput
+
+
+def print_city_menu():
+    print("\n")
+    print("  1. Print the city details")
+    print("  2. Clear screen")
+    print(" 42. Main Menu")
+    print("999. Exit")
+    print("Choose an option [999]:")
+
+
+def city_menu(cityDict):
+    clear_screen()
+    userInput = None  # Stores user input
+
+    while userInput != 999:
+        print_city_menu()
+        userInput = read_user_input()
+        if userInput == 1:
+            print("PRETEND THERE'S INFO HERE")
+        elif userInput == 2:
+            clear_screen()
+        elif userInput == 42:
+            return userInput
+        else:
+            return 999
 
 
 def menu(cityDict=None):
@@ -126,11 +153,14 @@ def menu(cityDict=None):
         cityObj = GG_City(cityDict)
         cityObj.load()
 
-    print("\nWelcome to Gamemaster Guidance\n")
+    print("\nWelcome to Gamemaster Guidance")
 
     while userInput != 999:
+        print("\n")
         print("  1. Randomize a name")
         print("  2. Randomize a character")
+        print("  3. City menu")
+        print("  4. Clear screen")
         print("999. Exit")
         print("Choose an option [999]:")
         userInput = read_user_input()
@@ -138,7 +168,9 @@ def menu(cityDict=None):
             userInput = rando_a_name()
         elif userInput == 2:
             userInput = rando_a_character(cityObj)
+        elif userInput == 3:
+            userInput = city_menu(cityObj)
+        elif userInput == 4:
+            clear_screen()
         else:
             break
-
-    return
