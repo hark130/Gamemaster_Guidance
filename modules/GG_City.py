@@ -41,6 +41,7 @@ class GG_City:
         """Class constructor"""
         self.cityDict = cityDict
         self.baseCityModifier = None
+        self.npcMultiplier = 1  # Large cities can have multiple high-level NPCs
 
         # Use these attributes to indicate a value should be randomized prior to parsing
         self.randoDisadvantage = False  # Randomize a disadvantage
@@ -223,6 +224,7 @@ class GG_City:
         # NOTE: REcalculate all modifiers regardless of what's in the config file
 
         # NPCs
+        self._validate_city_npcs()
 
         # Purchase Limit
         # NOTE: REcalculate all purchase limits regardless of what's in the config file
@@ -246,6 +248,17 @@ class GG_City:
                 print("Invalid base value: {}".format(baseValue))
                 print(repr(err))
                 raise err
+
+
+    def _validate_city_npcs(self):
+        # Get it
+        try:
+            cityNPCs = self.cityDict["city"]["npcs"]
+        except:
+            self.calcNPCs = True
+        else:
+            if not cityNPCs:
+                self.calcNPCs = True
 
 
     def _validate_city_type(self):
@@ -352,7 +365,22 @@ class GG_City:
 
         # Magic Items
         # NPCs
-        # Spellcasting
+        # Adept 1d6 + community modifier
+        # Aristocrat 1d4 + community modifier
+        # Barbarian* 1d4 + community modifier
+        # Bard 1d6 + community modifier
+        # Cleric 1d6 + community modifier
+        # Commoner 4d4 + community modifier
+        # Druid 1d6 + community modifier
+        # Expert 3d4 + community modifier
+        # Fighter 1d8 + community modifier
+        # Monk* 1d4 + community modifier
+        # Paladin 1d3 + community modifier
+        # Ranger 1d3 + community modifier
+        # Rogue 1d8 + community modifier
+        # Sorcerer 1d4 + community modifier
+        # Warrior 2d4 + community modifier
+        # Wizard 1d4 + community modifier
 
 
     def _calc_city_type(self):
