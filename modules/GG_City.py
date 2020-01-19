@@ -354,9 +354,6 @@ class GG_City:
         # Always calculate modifiers
         self._calc_city_modifiers()
 
-        if self.calcNPCs:
-            self.calcNPCs = False
-
         # Always calculate purchase limit
         self._calc_city_purchase_limit()
 
@@ -364,23 +361,12 @@ class GG_City:
         self._calc_city_spellcasting()
 
         # Magic Items
+        # TO DO: DON'T DO NOW
+
         # NPCs
-        # Adept 1d6 + community modifier
-        # Aristocrat 1d4 + community modifier
-        # Barbarian* 1d4 + community modifier
-        # Bard 1d6 + community modifier
-        # Cleric 1d6 + community modifier
-        # Commoner 4d4 + community modifier
-        # Druid 1d6 + community modifier
-        # Expert 3d4 + community modifier
-        # Fighter 1d8 + community modifier
-        # Monk* 1d4 + community modifier
-        # Paladin 1d3 + community modifier
-        # Ranger 1d3 + community modifier
-        # Rogue 1d8 + community modifier
-        # Sorcerer 1d4 + community modifier
-        # Warrior 2d4 + community modifier
-        # Wizard 1d4 + community modifier
+        if self.calcNPCs:
+            self._rando_city_npcs()
+            self.calcNPCs = False
 
 
     def _calc_city_type(self):
@@ -552,6 +538,116 @@ class GG_City:
         # DONE
         self.cityDict["city"]["spellcasting"] = str(localSpellcasting)
         print("CITY SPELLCASTING: {}".format(self.cityDict["city"]["spellcasting"]))  # DEBUGGING
+
+
+    def _rando_city_npcs(self):
+        """Randomize NPCs and add them to cityDict as a list"""
+        # PREPARE LIST
+        self.cityDict["city"]["npcs"] = []
+
+        # CALCUALTE NPCs
+        # Adept 1d6 + community modifier (Task 5-6)
+        # Alchemist 1d4 + community modifier (Class)
+        # Aristocrat 1d4 + community modifier (Task 5-6)
+        # Barbarian* 1d4 + community modifier (Class)
+        self._rando_city_npc_barbarians()
+        # Bard 1d6 + community modifier (Class)
+        self._rando_city_npc_bards()
+        # Champion (Paladin) 1d3 + community modifier (Class)
+        self._rando_city_npc_champions()
+        # Cleric 1d6 + community modifier (Class)
+        self._rando_city_npc_clerics()
+        # Commoner 4d4 + community modifier (Task 5-6)
+        # Druid 1d6 + community modifier (Class)
+        self._rando_city_npc_druids()
+        # Expert 3d4 + community modifier (Task 5-6)
+        # Fighter 1d8 + community modifier (Class)
+        self._rando_city_npc_fighters()
+        # Monk* 1d4 + community modifier (Class)
+        self._rando_city_npc_monks()
+        # Ranger 1d3 + community modifier (Class)
+        self._rando_city_npc_rangers()
+        # Rogue 1d8 + community modifier (Class)
+        self._rando_city_npc_rogues()
+        # Sorcerer 1d4 + community modifier (Class)
+        self._rando_city_npc_sorcerers()
+        # Warrior 2d4 + community modifier (Task 5-6)
+        # Wizard 1d4 + community modifier (Class)
+        self._rando_city_npc_wizards()
+
+        # Remaining Population
+        # TO DO: DON'T DO NOW...
+        # Take the remaining population after all other characters are generated
+        # and divide it up so that 91% are commoners, 5% are warriors, 3%
+        # are experts, and the remaining 1% is equally divided between
+        # aristocrats and adepts (0.5% each)
+
+
+    def _rando_city_npc_barbarians(self):
+        # LOCAL VARIABLES
+        upperLimit = 4  # Barbarian* 1d4
+        charLevel = None  # Barbarian* 1d4 + community modifier
+
+        # CALCULATE TOTAL
+        # Adjust limit
+        if self._are_barbarians_common():
+            upperLimit = 8
+        # Calculate level
+        charLevel = rand_integer(1, upperLimit) + self.baseCityModifier
+
+
+    def _are_barbarians_common(self):
+        return self._determine_human_barbarian_average() >= self._determine_human_ethnic_average()
+
+
+    def _determine_human_ethnic_average(self):
+        """Return the average of all human ethnic percentages"""
+        return 1.136  # Hard-coded value based on test_city.yml
+
+
+    def _determine_human_barbarian_average(self):
+        """Return the total percent of Kellid and Ulfen ethnic percentages"""
+        return 1.136 * 2  # Hard-coded value based on test_city.yml
+
+
+    def _rando_city_npc_bards(self):
+        pass
+
+
+    def _rando_city_npc_champions(self):
+        pass
+
+
+    def _rando_city_npc_clerics(self):
+        pass
+
+
+    def _rando_city_npc_druids(self):
+        pass
+
+
+    def _rando_city_npc_fighters(self):
+        pass
+
+
+    def _rando_city_npc_monks(self):
+        pass
+
+
+    def _rando_city_npc_rangers(self):
+        pass
+
+
+    def _rando_city_npc_rogues(self):
+        pass
+
+
+    def _rando_city_npc_sorcerers(self):
+        pass
+
+
+    def _rando_city_npc_wizards(self):
+        pass
 
 
     def _calc_city_modifier_corruption(self):
