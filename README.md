@@ -78,8 +78,8 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 10. Update remaining settlement status
 
-	[ ] 1. Spellcasting (e.g., Magial government)<br>
-	[ ] 2. Base Value (e.g., Notorious quality)<br>
+	[ ] 1. Spellcasting (e.g., Magical government)<br>
+	[X] 2. Base Value (e.g., Notorious quality) (Accomplished in 5-4)<br>
 	[ ] 3. Purchase Limit (e.g., Prosperous)<br>
 
 11. Support new city functionality
