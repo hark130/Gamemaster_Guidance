@@ -53,7 +53,6 @@ class GG_City:
         self.calcBaseValue = False
         self.calcMagicItems = False
         self.calcNPCs = False
-        self.calcSpellcasting = False
         self.calcType = False
 
 
@@ -348,8 +347,8 @@ class GG_City:
         # Always calculate purchase limit
         self._calc_city_purchase_limit()
 
-        if self.calcSpellcasting:
-            self.calcSpellcasting = False
+        # Always calculate spellcasting
+        self._calc_city_spellcasting()
 
         # Magic Items
         # NPCs
@@ -499,6 +498,32 @@ class GG_City:
         self.cityDict["city"]["purchase_limit"] = str(int(localPurchaseLimit))
         # print("CITY PURCHASE LIMIT: {}".format(self.cityDict["city"]["purchase_limit"]))  # DEBUGGING
 
+
+    def _calc_city_spellcasting(self):
+        """Calcualte city's spellcasting, adjust for qualities/disadvantages, then store it in city dict"""
+        # LOCAL VARIABLES
+        localSpellcasting = self.settlementStatistics[self.cityDict["city"]["type"]]["Spellcasting"]
+
+        # CALCULATE ADJUSTMENTS
+        # Government
+        if self.cityDict["city"]["government"] == "Magical":
+            localSpellcasting += 1
+
+        # Qualities
+        if "Academic" in self.cityDict["city"]["qualities"]:
+            localSpellcasting += 1
+        if "Holy Site" in self.cityDict["city"]["qualities"]:
+            localSpellcasting += 2
+        if "Magically Attuned" in self.cityDict["city"]["qualities"]:
+            localSpellcasting += 2
+        if "Pious" in self.cityDict["city"]["qualities"]:
+            localSpellcasting += 1
+        if "Superstitious" in self.cityDict["city"]["qualities"]:
+            localSpellcasting -= 2
+
+        # DONE
+        self.cityDict["city"]["spellcasting"] = str(localSpellcasting)
+        print("CITY SPELLCASTING: {}".format(self.cityDict["city"]["spellcasting"]))  # DEBUGGING
 
 
     def _calc_city_modifier_corruption(self):
