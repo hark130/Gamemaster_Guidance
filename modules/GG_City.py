@@ -62,7 +62,7 @@ class GG_City:
     def load(self):
         """Entry level method: validate and parse the dictionary"""
         self._validate_city()  # Verify all input
-        print("ENTERING GG_City.load()")  # DEBUGGING
+        # print("ENTERING GG_City.load()")  # DEBUGGING
         self._complete_city()  # Fill in the blanks
         self._parse_city()     # Load the city into attributes
 
@@ -328,7 +328,7 @@ class GG_City:
             self._rando_city_qualities()
             self.randoQualities = False
 
-        print("CALC BASE VALUE: {}".format(self.calcBaseValue))  # DEBUGGING
+        # print("CALC BASE VALUE: {}".format(self.calcBaseValue))  # DEBUGGING
         if self.calcBaseValue:
             self._calc_city_base_value()
             self.calcBaseValue = False
@@ -446,10 +446,10 @@ class GG_City:
         localBaseValue = localBaseValue * adjustPercent * .01
 
         # DONE
-        print("ADJUST BY {} PERCENTAGE".format(adjustPercent * .01))
-        print("RAW BASE VALUE: {}".format(localBaseValue))  # DEBUGGING
+        # print("ADJUST BY {} PERCENTAGE".format(adjustPercent * .01))
+        # print("RAW BASE VALUE: {}".format(localBaseValue))  # DEBUGGING
         self.cityDict["city"]["base_value"] = str(int(localBaseValue))
-        print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
+        # print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
 
 
     def _calc_city_modifiers(self):
