@@ -70,9 +70,9 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 	[X] 1. Base Value (completed in 5-4)<br>
 	[ ] 2. Magic Items<br>
-	[ ] 3. Modifiers<br>
+	[X] 3. Modifiers (Accomplished(?) in 5-4)<br>
 	[ ] 4. NPCs<br>
-	[ ] 5. Purchase Limit<br>
+	[X] 5. Purchase Limit (Accomplished(?) in 5-4)<br>
 	[ ] 6. Spellcasting<br>
 	[X] 7. Type (completed in 5-4)<br>
 

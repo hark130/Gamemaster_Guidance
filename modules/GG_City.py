@@ -223,12 +223,12 @@ class GG_City:
         # Magic Items
 
         # Modifiers
-        # NOTE: I think I want to REcalculate all modifiers regardless of what's in the config file
+        # NOTE: REcalculate all modifiers regardless of what's in the config file
 
         # NPCs
 
         # Purchase Limit
-        # NOTE: I think I want to REcalculate all purchase limits regardless of what's in the config file
+        # NOTE: REcalculate all purchase limits regardless of what's in the config file
 
         # Spellcasting
 
