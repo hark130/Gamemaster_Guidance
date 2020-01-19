@@ -10,7 +10,6 @@ def parse_arguments(argList):
     """Returns script arguments in a dictionary"""
     # LOCAL VARIABLES
     retDict = {}
-    # print(argList)  # DEBUGGING
 
     try:
         opts, args = getopt.getopt(argList[1:], "hc:", ["cityfile="])
@@ -24,7 +23,5 @@ def parse_arguments(argList):
                 sys.exit()
             elif opt in ("-c", "--cityfile"):
                 retDict["cityfile"] = arg
-        # if "cityfile" in retDict.keys():
-        #     print("City file is: %s" % retDict["cityfile"])  # DEBUGGING
 
     return retDict
