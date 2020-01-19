@@ -88,3 +88,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 	[ ] 1. Print city information in a standardized format<br>
 	[ ] 2. Add a city section to the menu<br>
+
+12. Miscellaneous
+
+    [ ] 1. Don't print notes for characters if there are no notes<br>
