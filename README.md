@@ -50,6 +50,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards<br>
 		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes<br>
 	[ ] 5. Finish the implementation of "parse_city" method in GG_City<br>
+	[ ] 6. Update NPC generation of "NPC Classes" (e.g., Adept, Warrior) once Paizo releases them for 2nd edition
 
 6. Add "quirks" to character creation
 
