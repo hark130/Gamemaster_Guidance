@@ -228,6 +228,7 @@ class GG_City:
         # NPCs
 
         # Purchase Limit
+        # NOTE: I think I want to REcalculate all purchase limits regardless of what's in the config file
 
         # Spellcasting
 
@@ -347,15 +348,15 @@ class GG_City:
         if self.calcNPCs:
             self.calcNPCs = False
 
-        if self.calcPurchaseLimit:
-            self.calcPurchaseLimit = False
+        # Always calculate purchase limit
+        self._calc_city_purchase_limit()
+        self.calcPurchaseLimit = False
 
         if self.calcSpellcasting:
             self.calcSpellcasting = False
 
         # Magic Items
         # NPCs
-        # Purchase Limit
         # Spellcasting
 
 
@@ -469,6 +470,39 @@ class GG_City:
         self._calc_city_modifier_lore()
         #     society:
         self._calc_city_modifier_society()
+
+
+    def _calc_city_purchase_limit(self):
+        """Calcualte city's purchase limit, adjust for qualities/disadvantages, then store it in city dict"""
+        # LOCAL VARIABLES
+        localPurchaseLimit = self.settlementStatistics[self.cityDict["city"]["type"]]["Purchase Limit"]
+        adjustPercent = 100
+
+        # CALCULATE ADJUSTMENTS
+        # Qualities
+        if "Magically Attuned" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 20
+        if "Notorious" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 50
+        if "Prosperous" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 50
+
+        # Disadvantages
+        try:
+            if "Impoverished" in self.cityDict["city"]["disadvantages"]:
+                adjustPercent -= 50
+        except:
+            pass  # Disadvantages are not mandatory
+
+        # ADJUST BASE LIMIT
+        localPurchaseLimit = localPurchaseLimit * adjustPercent * .01
+
+        # DONE
+        # print("ADJUST BY {} PERCENTAGE".format(adjustPercent * .01))
+        # print("RAW PURCHASE LIMIT: {}".format(localPurchaseLimit))  # DEBUGGING
+        self.cityDict["city"]["purchase_limit"] = str(int(localPurchaseLimit))
+        # print("CITY PURCHASE LIMIT: {}".format(self.cityDict["city"]["purchase_limit"]))  # DEBUGGING
+
 
 
     def _calc_city_modifier_corruption(self):
