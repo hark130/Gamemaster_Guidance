@@ -23,7 +23,6 @@ class GG_Ancestry:
         self.notes = None
 
         # Ancestry
-        print(race)  # DEBUGGING
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
         elif race:
@@ -32,7 +31,6 @@ class GG_Ancestry:
             self._rando_ancestry()
         # Randomize a Human ethnicity and subgroup (if appropriate)
         if self.ancestry == "Human":
-            print("GG_Ancestry.__init__() 'Human' code block")  # DEBUGGING
             self._rando_human_ethnicity()
             if self.ethnicity == "Nidalese":
                 self.ethnicity = "Taldan"  # Fix this in User Story #8
@@ -88,9 +86,6 @@ class GG_Ancestry:
 
 
     def _rando_name(self):
-        print("ANCESTRY: {}".format(self.ancestry))
-        print("ETHNICITY: {}".format(self.ethnicity))
-        print("SUBGROUP: {}".format(self.subgroup))
         self._rando_given_name()
         self._rando_surname()
         # Tian-Shu list their surname in front of their birth name.
@@ -309,7 +304,6 @@ class GG_Ancestry:
 
     def _rando_human_ethnicity(self):
         """Initialize the ethnicity attribute"""
-        print("Entering GG_Ancestry._rando_human_ethnicity()")  # DEBUGGING
         self.ethnicity = self._get_human_ethnicity()
 
 
@@ -324,13 +318,11 @@ class GG_Ancestry:
 
     def _get_human_ethnicity(self):
         """Randomly select a Human ethnicity"""
-        print("Entering GG_Ancestry._get_human_ethnicity()")  # DEBUGGING
         humanEthnicity = "Nidalese"  # See: User Story 8
 
         while humanEthnicity == "Nidalese":
             humanEthnicity = random.choice(self.humanEthnicities)
 
-        print("HUMAN ETHNICITY: {}".format(humanEthnicity))  # DEBUGGING
         return humanEthnicity
 
 
