@@ -756,13 +756,3 @@ class GG_City:
         if not randoRace:
             raise RuntimeError("Race not found")
         return randoRace
-
-
-
-
-
-
-
-
-
-
