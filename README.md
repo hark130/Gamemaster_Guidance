@@ -73,7 +73,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[X] 3. Modifiers (Accomplished(?) in 5-4)<br>
 	[ ] 4. NPCs<br>
 	[X] 5. Purchase Limit (Accomplished(?) in 5-4)<br>
-	[ ] 6. Spellcasting<br>
+	[X] 6. Spellcasting (Accomplished(?) in 5-4)<br>
 	[X] 7. Type (completed in 5-4)<br>
 
 10. Update remaining settlement status
