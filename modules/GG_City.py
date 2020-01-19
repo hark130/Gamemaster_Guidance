@@ -52,9 +52,7 @@ class GG_City:
         # Use these attributes to indicate a value should be calculated prior to parsing
         self.calcBaseValue = False
         self.calcMagicItems = False
-        self.calcModifiers = False
         self.calcNPCs = False
-        self.calcPurchaseLimit = False
         self.calcSpellcasting = False
         self.calcType = False
 
@@ -343,14 +341,12 @@ class GG_City:
 
         # Always calculate modifiers
         self._calc_city_modifiers()
-        self.calcModifiers = False
 
         if self.calcNPCs:
             self.calcNPCs = False
 
         # Always calculate purchase limit
         self._calc_city_purchase_limit()
-        self.calcPurchaseLimit = False
 
         if self.calcSpellcasting:
             self.calcSpellcasting = False
