@@ -1032,3 +1032,32 @@ class GG_City:
         if not randoRace:
             raise RuntimeError("Race not found")
         return randoRace
+
+
+    def print_city_details(self):
+        # GENERAL
+        # Name
+        # Region
+        # Alignment
+        # Type
+        # Modifiers
+        # Qualities
+        # Danger
+        # Disadvantages
+
+
+
+        # Magic Items
+        
+        # Spellcasting
+
+        # DEMOGRAPHICS
+        # Government
+        # Population (Ancestry breakdown)
+        # NPCs
+
+        # MARKETPLACE
+        # Base Value
+        # Purchase Limit
+
+        pass
