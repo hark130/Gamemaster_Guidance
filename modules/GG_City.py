@@ -3,6 +3,7 @@ from . GG_Rando import rand_float, rand_integer
 from . import GG_Yaml
 
 
+import inflect
 import locale
 import math
 import random
@@ -685,18 +686,19 @@ class GG_City:
 
         # CALCULATE LEVELS
         for _ in range(self.npcMultiplier):
-            print("_rando_npc_class ITERATION NUMBER: {}".format(_ + 1))  # DEBUGGING
+            # print("_rando_npc_class ITERATION NUMBER: {}".format(_ + 1))  # DEBUGGING
             numOfThatLevel = 1  # Reset temp variable
             charLevel = self._calc_highest_level(numDice, numFaces)
-            print("HIGHEST LEVEL: {}".format(charLevel))  # DEBUGGING
+            # print("HIGHEST LEVEL: {}".format(charLevel))  # DEBUGGING
             levelDict[charLevel] += numOfThatLevel
             while charLevel >= 2:
                 charLevel = math.ceil(charLevel / 2)
                 numOfThatLevel *= 2
                 levelDict[charLevel] += numOfThatLevel
-            print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
+            # print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
 
         print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
+        self._translate_level_dict_into_npc_list(className, levelDict)
 
 
     def _calc_highest_level(self, numDice, numFaces):
@@ -711,6 +713,28 @@ class GG_City:
 
         # DONE
         return runningTotal
+
+
+    def _translate_level_dict_into_npc_list(self, className, levelDict):
+        # LOCAL VARIABLES
+        sortedDictKeys = list(levelDict.keys())
+        sortedDictKeys.sort(reverse=True)
+        npcListEntry = ""
+        numToWord = inflect.engine()
+        # print(sortedDictKeys)  # DEBUGGING
+
+        for level in sortedDictKeys:
+            if levelDict[level] > 0:
+                npcListEntry = numToWord.number_to_words(levelDict[level]).capitalize() + " " + numToWord.ordinal(level) + " level " + className
+                if levelDict[level] > 1:
+                    npcListEntry = npcListEntry + "s"
+
+                print(npcListEntry)  # DEBUGGING
+
+
+        # p = inflect.engine()
+        # p.number_to_words(123).capitalize()
+
 
 
     def _calc_city_modifier_corruption(self):
