@@ -608,14 +608,13 @@ class GG_City:
     def _rando_city_npc_barbarians(self):
         # LOCAL VARIABLES
         upperLimit = 4  # Barbarian* 1d4
-        charLevel = None  # Barbarian* 1d4 + community modifier
 
         # CALCULATE TOTAL
         # Adjust limit
         if self._are_barbarians_common():
             upperLimit = 8
         # Rando levels
-        self._rando_npc_class("barbarian", 1, 8)
+        self._rando_npc_class("barbarian", 1, upperLimit)
 
 
     def _are_barbarians_common(self):
