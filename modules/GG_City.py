@@ -62,6 +62,7 @@ class GG_City:
     def load(self):
         """Entry level method: validate and parse the dictionary"""
         self._validate_city()  # Verify all input
+        print("ENTERING GG_City.load()")  # DEBUGGING
         self._complete_city()  # Fill in the blanks
         self._parse_city()     # Load the city into attributes
 
@@ -327,6 +328,7 @@ class GG_City:
             self._rando_city_qualities()
             self.randoQualities = False
 
+        print("CALC BASE VALUE: {}".format(self.calcBaseValue))  # DEBUGGING
         if self.calcBaseValue:
             self._calc_city_base_value()
             self.calcBaseValue = False
@@ -351,7 +353,6 @@ class GG_City:
         if self.calcSpellcasting:
             self.calcSpellcasting = False
 
-        # Base Value
         # Magic Items
         # NPCs
         # Purchase Limit
@@ -412,8 +413,43 @@ class GG_City:
 
 
     def _calc_city_base_value(self):
-        self.cityDict["city"]["base_value"] = str(self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"])
-        # print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
+        """Calcualte city's base value, adjust for qualities/disadvantages, then store it in city dict"""
+        # LOCAL VARIABLES
+        localBaseValue = self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"]
+        adjustPercent = 100
+
+        # CALCULATE ADJUSTMENTS
+        # Qualities
+        if "Magically Attuned" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 20
+        if "Notorious" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 30
+        if "Prosperous" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 30
+        if "Strategic Location" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 10
+        if "Tourist Attraction" in self.cityDict["city"]["qualities"]:
+            adjustPercent += 20
+
+        # Disadvantages
+        try:
+            if "Hunted" in self.cityDict["city"]["disadvantages"]:
+                adjustPercent -= 20
+            if "Impoverished" in self.cityDict["city"]["disadvantages"]:
+                adjustPercent -= 50
+            if "Plagued" in self.cityDict["city"]["disadvantages"]:
+                adjustPercent -= 20
+        except:
+            pass  # Disadvantages are not mandatory
+
+        # ADJUST BASE VALUE
+        localBaseValue = localBaseValue * adjustPercent * .01
+
+        # DONE
+        print("ADJUST BY {} PERCENTAGE".format(adjustPercent * .01))
+        print("RAW BASE VALUE: {}".format(localBaseValue))  # DEBUGGING
+        self.cityDict["city"]["base_value"] = str(int(localBaseValue))
+        print("CITY BASE VALUE: {}".format(self.cityDict["city"]["base_value"]))  # DEBUGGING
 
 
     def _calc_city_modifiers(self):
