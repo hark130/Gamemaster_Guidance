@@ -82,6 +82,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 1. Spellcasting (e.g., Magical government)<br>
 	[X] 2. Base Value (e.g., Notorious quality) (Accomplished in 5-4)<br>
 	[ ] 3. Purchase Limit (e.g., Prosperous)<br>
+	[ ] 4. Danger<br>
 
 11. Support new city functionality
 
