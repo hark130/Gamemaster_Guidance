@@ -4,6 +4,7 @@ from . import GG_Yaml
 
 
 import locale
+import math
 import random
 
 
@@ -545,6 +546,9 @@ class GG_City:
         # PREPARE LIST
         self.cityDict["city"]["npcs"] = []
 
+        # UPDATE MULTIPLIER
+        self._update_city_npc_multiplier()
+
         # CALCUALTE NPCs
         # Adept 1d6 + community modifier (Task 5-6)
         # Alchemist 1d4 + community modifier (Class)
@@ -583,6 +587,23 @@ class GG_City:
         # aristocrats and adepts (0.5% each)
 
 
+    def _update_city_npc_multiplier(self):
+        # LOCAL VARIABLES
+        cityType = self.cityDict["city"]["type"]
+
+        # UPDATE MULTIPLIER
+        if cityType == "Metropolis":
+            self.npcMultiplier = 4
+        elif cityType == "Large City":
+            self.npcMultiplier = 3
+        elif cityType == "Small City":
+            self.npcMultiplier = 2
+        elif cityType:
+            self.npcMultiplier = 1
+        else:
+            raise RuntimeError("Invalid city type found in cityDict")
+
+
     def _rando_city_npc_barbarians(self):
         # LOCAL VARIABLES
         upperLimit = 4  # Barbarian* 1d4
@@ -592,8 +613,8 @@ class GG_City:
         # Adjust limit
         if self._are_barbarians_common():
             upperLimit = 8
-        # Calculate level
-        charLevel = rand_integer(1, upperLimit) + self.baseCityModifier
+        # Rando levels
+        self._rando_npc_class("barbarian", 1, 8)
 
 
     def _are_barbarians_common(self):
@@ -602,11 +623,13 @@ class GG_City:
 
     def _determine_human_ethnic_average(self):
         """Return the average of all human ethnic percentages"""
+        # TO DO: DON'T DO NOW... Define this
         return 1.136  # Hard-coded value based on test_city.yml
 
 
     def _determine_human_barbarian_average(self):
         """Return the total percent of Kellid and Ulfen ethnic percentages"""
+        # TO DO: DON'T DO NOW... Define this
         return 1.136 * 2  # Hard-coded value based on test_city.yml
 
 
@@ -648,6 +671,46 @@ class GG_City:
 
     def _rando_city_npc_wizards(self):
         pass
+
+
+    def _rando_npc_class(self, className, numDice, numFaces):
+        # LOCAL VARIABLES
+        levelDict = {}
+        charLevel = 1  # Current level being enumerated for this class
+        numOfThatLevel = 1  # Number of NPCs at level "charLevel"
+
+        # Initialize the dictionary
+        for level in range(1, 21):
+            levelDict[level] = 0  # Initialize each level
+
+        # CALCULATE LEVELS
+        for _ in range(self.npcMultiplier):
+            print("_rando_npc_class ITERATION NUMBER: {}".format(_ + 1))  # DEBUGGING
+            numOfThatLevel = 1  # Reset temp variable
+            charLevel = self._calc_highest_level(numDice, numFaces)
+            print("HIGHEST LEVEL: {}".format(charLevel))  # DEBUGGING
+            levelDict[charLevel] += numOfThatLevel
+            while charLevel >= 2:
+                charLevel = math.ceil(charLevel / 2)
+                numOfThatLevel *= 2
+                levelDict[charLevel] += numOfThatLevel
+            print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
+
+        print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
+
+
+    def _calc_highest_level(self, numDice, numFaces):
+        """Return the highest NPC level given numDice-d-numFaces + self.baseCityModifier"""
+        # LOCAL VARIABLES
+        runningTotal = 0
+
+        # ADD IT UP
+        for _ in range(numDice):
+            runningTotal += rand_integer(1, numFaces)
+        runningTotal += self.baseCityModifier
+
+        # DONE
+        return runningTotal
 
 
     def _calc_city_modifier_corruption(self):
