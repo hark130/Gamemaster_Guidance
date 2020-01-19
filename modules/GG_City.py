@@ -587,6 +587,14 @@ class GG_City:
         # are experts, and the remaining 1% is equally divided between
         # aristocrats and adepts (0.5% each)
 
+        # Add Notes
+        # TO DO: DON'T DO NOW
+        # Randomize who the town guard is
+
+        # DEBUGGING
+        # for entry in self.cityDict["city"]["npcs"]:
+        #     print(entry)  # DEBUGGING
+
 
     def _update_city_npc_multiplier(self):
         # LOCAL VARIABLES
@@ -634,43 +642,93 @@ class GG_City:
 
 
     def _rando_city_npc_bards(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 6  # Bard 1d6
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("bard", 1, upperLimit)
 
 
     def _rando_city_npc_champions(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 3  # Champion (Paladin) 1d3
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("champion", 1, upperLimit)
 
 
     def _rando_city_npc_clerics(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 6  # Cleric 1d6
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("cleric", 1, upperLimit)
 
 
     def _rando_city_npc_druids(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 6  # Druid 1d6
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("druid", 1, upperLimit)
 
 
     def _rando_city_npc_fighters(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 8  # Fighter 1d8
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("fighter", 1, upperLimit)
 
 
     def _rando_city_npc_monks(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 4  # Monk* 1d4
+
+        # CALCULATE TOTAL
+        # Adjust limit
+        if self._are_monks_common():
+            upperLimit = 8
+        # Rando levels
+        self._rando_npc_class("monk", 1, upperLimit)
+
+
+    def _are_monks_common(self):
+        """Determine if monk-centric races/ethnicities/subgroups are common"""
+        # TO DO: DON'T DO NOW... Define this
+        return False  # Hard-coded value based on test_city.yml
 
 
     def _rando_city_npc_rangers(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 3  # Ranger 1d3
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("ranger", 1, upperLimit)
 
 
     def _rando_city_npc_rogues(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 8  # Rogue 1d8
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("rogue", 1, upperLimit)
 
 
     def _rando_city_npc_sorcerers(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 4  # Sorcerer 1d4
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("sorcerer", 1, upperLimit)
 
 
     def _rando_city_npc_wizards(self):
-        pass
+        # LOCAL VARIABLES
+        upperLimit = 4  # Wizard 1d4
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("wizard", 1, upperLimit)
 
 
     def _rando_npc_class(self, className, numDice, numFaces):
@@ -696,7 +754,7 @@ class GG_City:
                 levelDict[charLevel] += numOfThatLevel
             # print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
 
-        print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
+        # print("LEVEL DICTIONARY: {}".format(levelDict))  # DEBUGGING
         self._translate_level_dict_into_npc_list(className, levelDict)
 
 
