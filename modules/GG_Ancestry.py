@@ -23,11 +23,13 @@ class GG_Ancestry:
         self.notes = None
 
         # Ancestry
+        print(race)  # DEBUGGING
         if race and race not in self.supportedAncestry:
             raise RuntimeError("Unsupported race")
-        elif race is "Human":
+        elif race == "Human":
+            print("GG_Ancestry.__init__() 'Human' code block")  # DEBUGGING
             self._rando_human_ethnicity()
-            if self.ethnicity is "Nidalese":
+            if self.ethnicity == "Nidalese":
                 self.ethnicity = "Taldan"  # Fix this in User Story #8
             self.ancestry = race
         elif race:
@@ -85,28 +87,31 @@ class GG_Ancestry:
 
 
     def _rando_name(self):
+        print("ANCESTRY: {}".format(self.ancestry))
+        print("ETHNICITY: {}".format(self.ethnicity))
+        print("SUBGROUP: {}".format(self.subgroup))
         self._rando_given_name()
         self._rando_surname()
         # Tian-Shu list their surname in front of their birth name.
-        if self.subgroup is "Shu":
+        if self.subgroup == "Shu":
             self.fullName = "%s %s" % (self.surname, self.givenName)
         else:
             self.fullName = "%s %s" % (self.givenName, self.surname)
 
 
     def _rando_given_name(self):
-        if self.ancestry is "Gnome" or self.ancestry is "Goblin":
+        if self.ancestry == "Gnome" or self.ancestry == "Goblin":
             self.givenName = self._get_default_given_name()
         elif self.ancestry == "Half-Elf":
             self._rando_half_elf_given_name()
-        elif self.gender is self.genderList[0]:
+        elif self.gender == self.genderList[0]:
             self._rando_male_given_name()
         else:
             self._rando_female_given_name()
 
 
     def _get_default_given_name(self):
-        if self.ancestry is "Human":
+        if self.ancestry == "Human":
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name.txt"
@@ -123,7 +128,7 @@ class GG_Ancestry:
             self.ancestry = "Human"
             # Determine ethnicity
             humanEthnicity = self._get_human_ethnicity()
-            if humanEthnicity is "Nidalese":
+            if humanEthnicity == "Nidalese":
                 humanEthnicity = "Taldan"
             self.ethnicity = humanEthnicity
             # Determine subgroup
@@ -160,9 +165,9 @@ class GG_Ancestry:
 
 
     def _get_male_given_name(self):       
-        if self.ancestry is "Human":
+        if self.ancestry == "Human":
             if self.subgroup:
-                if self.subgroup is "Mauxi":
+                if self.subgroup == "Mauxi":
                     dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Given_Name-Male.txt"
                 else:
                     dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Male.txt"
@@ -178,9 +183,9 @@ class GG_Ancestry:
 
 
     def _get_female_given_name(self):
-        if self.ancestry is "Human":
+        if self.ancestry == "Human":
             if self.subgroup:
-                if self.subgroup is "Mauxi":
+                if self.subgroup == "Mauxi":
                     dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Given_Name-Female.txt"
                 else:
                     dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Female.txt"
@@ -192,13 +197,13 @@ class GG_Ancestry:
 
 
     def _rando_surname(self):
-        if self.ancestry is "Elf":
+        if self.ancestry == "Elf":
             self._rando_elf_surname()
-        elif self.ancestry is "Dwarf":
+        elif self.ancestry == "Dwarf":
             self._rando_dwarf_surname()
-        elif self.ancestry is "Gnome" or self.ancestry is "Goblin" or self.ancestry == "Half-Orc":
+        elif self.ancestry == "Gnome" or self.ancestry == "Goblin" or self.ancestry == "Half-Orc":
             self.surname = ""
-        elif self.ancestry is "Human":
+        elif self.ancestry == "Human":
             self.surname = self._get_human_surname()
         elif self.ancestry == "Half-Elf":
             self.surname = self._get_half_elf_surname()
@@ -241,21 +246,21 @@ class GG_Ancestry:
 
 
     def _get_human_surname(self):
-        if self.ethnicity is "Garundi":
+        if self.ethnicity == "Garundi":
             retSurname = "from %s" % self._rando_human_surname()
-        elif self.ethnicity is "Keleshite":
+        elif self.ethnicity == "Keleshite":
             retSurname = "al-%s %s %s al-%s" % (self._rando_human_surname(),
                                                 self._rando_human_surname(),
                                                 self._rando_human_surname(),
                                                 self._rando_human_surname())
-        elif self.ethnicity is "Kellid":
+        elif self.ethnicity == "Kellid":
             retSurname = ""
-        elif self.ethnicity is "Mwangi":
+        elif self.ethnicity == "Mwangi":
             retSurname = "from the %s" % self._get_subgroup_surname()
-        elif self.ethnicity is "Shoanti":
+        elif self.ethnicity == "Shoanti":
             retSurname = "%s of the %s" % (self._rando_human_surname(),
                                            self._get_shoanti_clan())
-        elif self.ethnicity is "Tian":
+        elif self.ethnicity == "Tian":
             retSurname = self._get_subgroup_surname()
         else:
             retSurname = self._rando_human_surname()
@@ -294,7 +299,7 @@ class GG_Ancestry:
 
 
     def _get_subgroup_surname(self):
-        if self.subgroup is "Mauxi":
+        if self.subgroup == "Mauxi":
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Surname.txt"
         else:
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Surname.txt"
@@ -303,6 +308,7 @@ class GG_Ancestry:
 
     def _rando_human_ethnicity(self):
         """Initialize the ethnicity attribute"""
+        print("Entering GG_Ancestry._rando_human_ethnicity()")  # DEBUGGING
         self.ethnicity = self._get_human_ethnicity()
 
 
@@ -317,11 +323,13 @@ class GG_Ancestry:
 
     def _get_human_ethnicity(self):
         """Randomly select a Human ethnicity"""
-        humanEthnicity = "Nidalese"
+        print("Entering GG_Ancestry._get_human_ethnicity()")  # DEBUGGING
+        humanEthnicity = "Nidalese"  # See: User Story 8
 
         while humanEthnicity == "Nidalese":
             humanEthnicity = random.choice(self.humanEthnicities)
 
+        print("HUMAN ETHNICITY: {}".format(humanEthnicity))  # DEBUGGING
         return humanEthnicity
 
 
@@ -349,7 +357,7 @@ class GG_Ancestry:
         # RANDOMIZE
         if self.ethnicity == "Mwangi":
             newSubgroup = self._get_mwangi_subgroup()
-        elif self.ethnicity is "Tian":
+        elif self.ethnicity == "Tian":
             newSubgroup = "Shu"  # See: User Story 7 for additional subgroups)
 
         return newSubgroup
