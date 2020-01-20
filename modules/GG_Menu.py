@@ -121,7 +121,8 @@ def rando_a_name():
 def print_city_menu():
     print("\n")
     print("  1. Print the city details")
-    print("  2. Clear screen")
+    print("  2. Print the NPCs")
+    print("  3. Clear screen")
     print(" 42. Main Menu")
     print("999. Exit")
     print("Choose an option [999]:")
@@ -138,6 +139,9 @@ def city_menu(cityObj):
             clear_screen()
             cityObj.print_city_details()
         elif userInput == 2:
+            clear_screen()
+            cityObj.print_city_npcs()
+        elif userInput == 3:
             clear_screen()
         elif userInput == 42:
             return userInput

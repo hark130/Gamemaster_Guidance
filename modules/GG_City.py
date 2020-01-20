@@ -1094,11 +1094,11 @@ class GG_City:
         # Population (Ancestry breakdown)
         print("{} {}".format("Population", self.population))
         # NPCs
-        # self._print_city_npcs()  # TOO VERBOSE
+        # self.print_city_npcs()  # TOO VERBOSE
         print("")
 
 
-    def _print_city_npcs(self):
+    def print_city_npcs(self):
         if self.npcs:
             print("NPCs")
             for npc in self.npcs:
