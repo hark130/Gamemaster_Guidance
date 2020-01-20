@@ -1094,7 +1094,7 @@ class GG_City:
         print("{} {}".format("Government", self.government))
         # Population (Ancestry breakdown)
         print("{} {}".format("Population", self.population))
-        print("{}".format(self._determine_ancestry_breakdown()))
+        print("BREAKDOWN: {}".format(self._determine_ancestry_breakdown()))
         # NPCs
         # self.print_city_npcs()  # TOO VERBOSE
         print("")
@@ -1122,7 +1122,10 @@ class GG_City:
         # LOCAL VARIABLES
         ancestryStr = ""
         ancestorDict = {}
+        valueList = []
 
+        # CONSTRUCT STRING
+        # 1. Calculate populations by ancestry
         for race in ancestryList:
             if race == "Human":
                 ancestorDict[race] = self._calc_total_human_population()
@@ -1132,6 +1135,41 @@ class GG_City:
         # DEBUGGING
         print("POPULATION: {}".format(self.population))  # DEBUGGING
         print("POPULATION DICT: {}".format(ancestorDict))  # DEBUGGING
+
+        # 2. Sort populations
+        valueList = list(ancestorDict.values())
+        valueList.sort(reverse=True)
+        print(valueList)  # DEBUGGING
+
+        # 3. Start forming the string
+        for index in range(numEntries):
+            if index > len(valueList) - 1:
+                break
+            ancestryStr = ancestryStr + self._form_one_ancestry_substring(ancestorDict, valueList[index])
+
+        # 4. Others
+        pass
+
+        # DONE
+        return ancestryStr
+
+
+    def _form_one_ancestry_substring(self, ancestorDict, topValue):
+        # LOCAL VARIABLES
+        ancestrySubstr = ""
+
+        # CONSTRUCT SUBSTRING
+        # Find it
+        for dictKey, dictValue in ancestorDict.items():
+            if dictValue == topValue:
+                ancestrySubstr = "{} {}".format(dictValue, dictKey)
+                if dictValue > 1:
+                    ancestrySubstr = ancestrySubstr + "s"
+            if ancestrySubstr:
+                break
+
+        # DONE
+        return ancestrySubstr
 
 
     def _calc_total_human_population(self):
