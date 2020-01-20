@@ -93,3 +93,5 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 12. Miscellaneous
 
     [ ] 1. Don't print notes for characters if there are no notes<br>
+    [ ] 2. BUG: REfactor GG_City DEMOGRAPHICS-Population string construction to use parsed attributes (raceLookup) instead of cityDict<br>
+    [ ] 3. BUG: Verify there's no way for calculated NPC levels to go below 0.  (e.g., smallest city type + lowest roll)
