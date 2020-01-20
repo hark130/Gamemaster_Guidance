@@ -1011,6 +1011,12 @@ class GG_City:
             GG_Yaml.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
         }
 
+        # GENERAL
+        self.baseValue = int(self.cityDict["city"]["base_value"])
+        self.purchaseLimit = int(self.cityDict["city"]["purchase_limit"])
+        self.spellcasting = int(self.cityDict["city"]["spellcasting"])
+
+
 
     def get_race_percent(self, raceName):
         """Return a race's percent"""
@@ -1091,6 +1097,10 @@ class GG_City:
         # Base Value
         # Purchase Limit
         # Spellcasting
+        print("{}: {} gp; {}: {} gp; {}: {};".format("Base Value", self.baseValue,
+                                                     "Purchase Limit", self.purchaseLimit,
+                                                     "Spellcasting", self.spellcasting))
+
         #
         # Magic Items
         pass
