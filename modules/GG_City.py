@@ -528,6 +528,10 @@ class GG_City:
         if "Superstitious" in self.cityDict["city"]["qualities"]:
             localSpellcasting -= 2
 
+        # Max Spell Level
+        if localSpellcasting > 10:
+            localSpellcasting = 10
+
         # DONE
         self.cityDict["city"]["spellcasting"] = str(localSpellcasting)
 
@@ -1103,5 +1107,4 @@ class GG_City:
 
         #
         # Magic Items
-        pass
-
+        # See: Task 5-7
