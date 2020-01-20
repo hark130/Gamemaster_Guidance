@@ -1038,26 +1038,30 @@ class GG_City:
         # GENERAL
         # Name
         # Region
+        #
         # Alignment
         # Type
+        #
         # Modifiers
+        #
         # Qualities
+        #
         # Danger
         # Disadvantages
 
 
-
-        # Magic Items
-        
-        # Spellcasting
-
         # DEMOGRAPHICS
         # Government
+        #
         # Population (Ancestry breakdown)
+        #
         # NPCs
 
         # MARKETPLACE
         # Base Value
         # Purchase Limit
+        # Spellcasting
+        #
+        # Magic Items
 
         pass
