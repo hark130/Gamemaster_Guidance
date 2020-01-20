@@ -1107,6 +1107,10 @@ class GG_City:
 
     def _print_city_marketplace_details(self):
         """Print city's base value, purchase limit, spellcasting, and magic items"""
+        # LOCAL VARIABLES
+        numToWord = inflect.engine()
+
+        # PRINT
         # Header
         print_header("MARKETPLACE")
         # Base Value
@@ -1114,7 +1118,7 @@ class GG_City:
         # Spellcasting
         print("{} {} gp; {} {} gp; {} {}".format("Base Value", self.baseValue,
                                                  "Purchase Limit", self.purchaseLimit,
-                                                 "Spellcasting", self.spellcasting))
+                                                 "Spellcasting", numToWord.ordinal(self.spellcasting)))
 
         # Magic Items
         # See: Task 5-7
