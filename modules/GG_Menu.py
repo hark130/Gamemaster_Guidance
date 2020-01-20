@@ -127,7 +127,7 @@ def print_city_menu():
     print("Choose an option [999]:")
 
 
-def city_menu(cityDict):
+def city_menu(cityObj):
     clear_screen()
     userInput = None  # Stores user input
 
@@ -135,7 +135,8 @@ def city_menu(cityDict):
         print_city_menu()
         userInput = read_user_input()
         if userInput == 1:
-            print("PRETEND THERE'S INFO HERE")
+            clear_screen()
+            cityObj.print_city_details()
         elif userInput == 2:
             clear_screen()
         elif userInput == 42:
