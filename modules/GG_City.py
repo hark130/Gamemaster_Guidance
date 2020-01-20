@@ -1023,6 +1023,7 @@ class GG_City:
         self.government = self.cityDict["city"]["government"]
         self.population = int(self.cityDict["city"]["population"])
         self.npcs = self.cityDict["city"]["npcs"]
+        self.cityType = self.cityDict["city"]["type"]
 
 
     def get_race_percent(self, raceName):
@@ -1093,9 +1094,63 @@ class GG_City:
         print("{} {}".format("Government", self.government))
         # Population (Ancestry breakdown)
         print("{} {}".format("Population", self.population))
+        print("{}".format(self._determine_ancestry_breakdown()))
         # NPCs
         # self.print_city_npcs()  # TOO VERBOSE
         print("")
+
+
+    def _determine_ancestry_breakdown(self):
+        """Return a city size based list of the top ancestries"""
+        # LOCAL VARIABLES
+        cityLookup = {
+                "Thorp":2, "Hamlet":2, "Village":3, "Small Town":3,
+                "Large Town":4, "Small City":4, "Large City":5, "Metropolis":5
+                }
+        numAncestries = cityLookup[self.cityType]
+        retStr = None
+
+        # CONSTRUCT STRING
+        retStr = self._construct_ancestry_string(numAncestries)
+
+        # DONE
+        return retStr
+
+
+    def _construct_ancestry_string(self, numEntries):
+        """Construct a string of the top numEntries ancestries, ending in other"""
+        # LOCAL VARIABLES
+        ancestryStr = ""
+        ancestorDict = {}
+
+        for race in ancestryList:
+            if race == "Human":
+                ancestorDict[race] = self._calc_total_human_population()
+            else:
+                ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
+
+        # DEBUGGING
+        print("POPULATION: {}".format(self.population))  # DEBUGGING
+        print("POPULATION DICT: {}".format(ancestorDict))  # DEBUGGING
+
+
+    def _calc_total_human_population(self):
+        """Return the total human population based on cityDict percentages and city population"""
+        # LOCAL VARIABLES
+        totalHumanPop = 0
+        totalHumanPer = 0.0
+
+        # CALCULATE
+        # Total Percent
+        for ethnicity in self.cityDict["city"]["ancestry"]["Human"]:
+            # print(type(ethnicity))  # DEBUGGING
+            # print(ethnicity)  # DEBUGGING
+            totalHumanPer += self.cityDict["city"]["ancestry"]["Human"][ethnicity]
+        # Total Population
+        totalHumanPop = int(totalHumanPer * self.population * .01)
+
+        # DONE
+        return totalHumanPop
 
 
     def print_city_npcs(self):
