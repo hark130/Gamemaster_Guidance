@@ -19,6 +19,16 @@ def get_key_value(theDict, theKey):
     return theValue
 
 
+def print_header(header):
+    # LOCAL VARIABLES
+    headerLen = len(header)
+    banner = "-" * headerLen
+
+    print(banner)
+    print(header)
+    print(banner)
+
+
 class GG_City:
     supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
     supportedGovernments = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
@@ -1036,6 +1046,17 @@ class GG_City:
 
     def print_city_details(self):
         # GENERAL
+        self._print_city_general_details()
+
+        # DEMOGRAPHICS
+        self._print_city_demographic_details()
+
+        # MARKETPLACE
+        self._print_city_marketplace_details()
+
+
+    def _print_city_general_details(self):
+        """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
         # Name
         # Region
         #
@@ -1048,20 +1069,29 @@ class GG_City:
         #
         # Danger
         # Disadvantages
+        pass
 
 
-        # DEMOGRAPHICS
+    def _print_city_demographic_details(self):
+        """Print city's government, population, and NPCs"""
+        # Header
+        print_header("DEMOGRAPHICS")
         # Government
         #
         # Population (Ancestry breakdown)
         #
         # NPCs
+        pass
 
-        # MARKETPLACE
+
+    def _print_city_marketplace_details(self):
+        """Print city's base value, purchase limit, spellcasting, and magic items"""
+        # Header
+        print_header("MARKETPLACE")
         # Base Value
         # Purchase Limit
         # Spellcasting
         #
         # Magic Items
-
         pass
+
