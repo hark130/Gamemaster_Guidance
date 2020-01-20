@@ -1019,7 +1019,10 @@ class GG_City:
         self.baseValue = int(self.cityDict["city"]["base_value"])
         self.purchaseLimit = int(self.cityDict["city"]["purchase_limit"])
         self.spellcasting = int(self.cityDict["city"]["spellcasting"])
-
+        # DEMOGRAPHICS
+        self.government = self.cityDict["city"]["government"]
+        self.population = int(self.cityDict["city"]["population"])
+        self.npcs = self.cityDict["city"]["npcs"]
 
 
     def get_race_percent(self, raceName):
@@ -1087,11 +1090,19 @@ class GG_City:
         # Header
         print_header("DEMOGRAPHICS")
         # Government
-        #
+        print("{} {}".format("Government", self.government))
         # Population (Ancestry breakdown)
-        #
+        print("{} {}".format("Population", self.population))
         # NPCs
-        pass
+        # self._print_city_npcs()  # TOO VERBOSE
+        print("")
+
+
+    def _print_city_npcs(self):
+        if self.npcs:
+            print("NPCs")
+            for npc in self.npcs:
+                print("    {}".format(npc))
 
 
     def _print_city_marketplace_details(self):
@@ -1101,10 +1112,9 @@ class GG_City:
         # Base Value
         # Purchase Limit
         # Spellcasting
-        print("{}: {} gp; {}: {} gp; {}: {};".format("Base Value", self.baseValue,
-                                                     "Purchase Limit", self.purchaseLimit,
-                                                     "Spellcasting", self.spellcasting))
+        print("{} {} gp; {} {} gp; {} {}".format("Base Value", self.baseValue,
+                                                 "Purchase Limit", self.purchaseLimit,
+                                                 "Spellcasting", self.spellcasting))
 
-        #
         # Magic Items
         # See: Task 5-7
