@@ -73,6 +73,7 @@ class GG_City:
         """Entry level method: validate and parse the dictionary"""
         self._validate_city()  # Verify all input
         self._complete_city()  # Fill in the blanks
+        # Everything prior to this method call should operate on the cityDict
         self._parse_city()     # Load the city into attributes
 
 
@@ -629,7 +630,7 @@ class GG_City:
         # GET AVERAGE
         # Total
         for humanEthnicity in humanEthnicityList:
-            runningPercentTotal += self.raceLookup[humanEthnicity]
+            runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
             ethnicTotal += 1
         # Average
         retAverage = runningPercentTotal / ethnicTotal
@@ -646,8 +647,9 @@ class GG_City:
         
         # GET AVERAGE
         # Total
-        runningPercentTotal += self.raceLookup[GG_CITY_RACE_KELLID]
-        runningPercentTotal += self.raceLookup[GG_CITY_RACE_ULFEN]
+        print(self.cityDict["city"]["ancestry"])  # DEBUGGING
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_KELLID]
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_ULFEN]
         # Average
         retAverage = runningPercentTotal / 2
         print("_determine_human_barbarian_average() returned: {}".format(retAverage))  # DEBUGGING
@@ -713,7 +715,7 @@ class GG_City:
 
 
     def _determine_human_monk_average(self):
-        return self.raceLookup[GG_Yaml.GG_CITY_RACE_TIAN]
+        return self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_TIAN]
     
     
     def _rando_city_npc_rangers(self):
@@ -1054,7 +1056,10 @@ class GG_City:
         self.population = int(self.cityDict["city"]["population"])
         self.npcs = self.cityDict["city"]["npcs"]
         self.qualities = self.cityDict["city"]["qualities"]
-        self.disadvantages = self.cityDict["city"]["disadvantages"]
+        try:
+            self.disadvantages = self.cityDict["city"]["disadvantages"]
+        except:
+            self.disadvantages = None  # Disadvantages are not mandatory
 
 
     def get_race_percent(self, raceName):
@@ -1117,9 +1122,10 @@ class GG_City:
         #
         # Danger
         # Disadvantages
-        print("Disadvantages:")
-        for cityDisadvantage in self.disadvantages:
-            print("    {}".format(cityDisadvantage))
+        if self.disadvantages:
+            print("Disadvantages:")
+            for cityDisadvantage in self.disadvantages:
+                print("    {}".format(cityDisadvantage))
 
 
     def _print_city_demographic_details(self):
