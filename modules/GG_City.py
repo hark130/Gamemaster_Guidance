@@ -633,14 +633,26 @@ class GG_City:
             ethnicTotal += 1
         # Average
         retAverage = runningPercentTotal / ethnicTotal
+        print("_determine_human_ethnic_average() returned: {}".format(retAverage))  # DEBUGGING
         
         return retAverage
 
 
     def _determine_human_barbarian_average(self):
         """Return the total percent of Kellid and Ulfen ethnic percentages"""
-        # TO DO: DON'T DO NOW... Define this
-        return 1.136 * 2  # Hard-coded value based on test_city.yml
+        # LOCAL VARIABLES
+        runningPercentTotal = 0.0
+        retAverage = 0.0
+        
+        # GET AVERAGE
+        # Total
+        runningPercentTotal += self.raceLookup[GG_CITY_RACE_KELLID]
+        runningPercentTotal += self.raceLookup[GG_CITY_RACE_ULFEN]
+        # Average
+        retAverage = runningPercentTotal / 2
+        print("_determine_human_barbarian_average() returned: {}".format(retAverage))  # DEBUGGING
+        
+        return retAverage
 
 
     def _rando_city_npc_bards(self):
