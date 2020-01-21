@@ -1016,14 +1016,18 @@ class GG_City:
         }
 
         # GENERAL
+        self.name = self.cityDict["city"]["name"]
+        self.region = self.cityDict["city"]["region"]
+        self.alignment = self.cityDict["city"]["alignment"]
+        self.cityType = self.cityDict["city"]["type"]
         self.baseValue = int(self.cityDict["city"]["base_value"])
         self.purchaseLimit = int(self.cityDict["city"]["purchase_limit"])
         self.spellcasting = int(self.cityDict["city"]["spellcasting"])
-        # DEMOGRAPHICS
         self.government = self.cityDict["city"]["government"]
         self.population = int(self.cityDict["city"]["population"])
         self.npcs = self.cityDict["city"]["npcs"]
-        self.cityType = self.cityDict["city"]["type"]
+        self.qualities = self.cityDict["city"]["qualities"]
+        self.disadvantages = self.cityDict["city"]["disadvantages"]
 
 
     def get_race_percent(self, raceName):
@@ -1073,17 +1077,22 @@ class GG_City:
         """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
         # Name
         # Region
-        #
+        print("Name: {} Region: {}".format(self.name, self.region))
         # Alignment
         # Type
-        #
+        print("Alignment: {} Type: {}".format(self.alignment, self.cityType))
         # Modifiers
-        #
+        print("Modifiers:\n    TO DO: DON'T DO NOW")  # TO DO: DON'T DO NOW
         # Qualities
+        print("Qualities:")
+        for cityQuality in self.qualities:
+            print("    {}".format(cityQuality))
         #
         # Danger
         # Disadvantages
-        pass
+        print("Disadvantages:")
+        for cityDisadvantage in self.disadvantages:
+            print("    {}".format(cityDisadvantage))
 
 
     def _print_city_demographic_details(self):
