@@ -621,8 +621,20 @@ class GG_City:
 
     def _determine_human_ethnic_average(self):
         """Return the average of all human ethnic percentages"""
-        # TO DO: DON'T DO NOW... Define this
-        return 1.136  # Hard-coded value based on test_city.yml
+        # LOCAL VARIABLES
+        runningPercentTotal = 0.0
+        ethnicTotal = 0
+        retAverage = 0.0
+        
+        # GET AVERAGE
+        # Total
+        for humanEthnicity in humanEthnicityList:
+            runningPercentTotal += self.raceLookup[humanEthnicity]
+            ethnicTotal += 1
+        # Average
+        retAverage = runningPercentTotal / ethnicTotal
+        
+        return retAverage
 
 
     def _determine_human_barbarian_average(self):
