@@ -1123,6 +1123,7 @@ class GG_City:
         ancestryStr = ""
         ancestorDict = {}
         valueList = []
+        runningPopTotal = 0
 
         # CONSTRUCT STRING
         # 1. Calculate populations by ancestry
@@ -1146,9 +1147,10 @@ class GG_City:
             if index > len(valueList) - 1:
                 break
             ancestryStr = ancestryStr + self._form_one_ancestry_substring(ancestorDict, valueList[index])
+            runningPopTotal += valueList[index]  # Keep track of the population already accounted for to support "others"
 
         # 4. Others
-        pass
+        ancestryStr = ancestryStr + " Others: {}".format(self.population - runningPopTotal)
 
         # DONE
         return ancestryStr
