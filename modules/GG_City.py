@@ -709,10 +709,13 @@ class GG_City:
 
     def _are_monks_common(self):
         """Determine if monk-centric races/ethnicities/subgroups are common"""
-        # TO DO: DON'T DO NOW... Define this
-        return False  # Hard-coded value based on test_city.yml
+        return self._determine_human_monk_average() >= self._determine_human_ethnic_average()
 
 
+    def _determine_human_monk_average(self):
+        return self.raceLookup[GG_Yaml.GG_CITY_RACE_TIAN]
+    
+    
     def _rando_city_npc_rangers(self):
         # LOCAL VARIABLES
         upperLimit = 3  # Ranger 1d3
