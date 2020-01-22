@@ -635,7 +635,6 @@ class GG_City:
             ethnicTotal += 1
         # Average
         retAverage = runningPercentTotal / ethnicTotal
-        # print("_determine_human_ethnic_average() returned: {}".format(retAverage))  # DEBUGGING
         
         return retAverage
 
@@ -648,12 +647,10 @@ class GG_City:
         
         # GET AVERAGE
         # Total
-        # print(self.cityDict["city"]["ancestry"])  # DEBUGGING
         runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_KELLID]
         runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_ULFEN]
         # Average
         retAverage = runningPercentTotal / 2
-        # print("_determine_human_barbarian_average() returned: {}".format(retAverage))  # DEBUGGING
         
         return retAverage
 
@@ -1231,13 +1228,9 @@ class GG_City:
             else:
                 ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
 
-        # print("POPULATION: {}".format(self.population))  # DEBUGGING
-        # print("POPULATION DICT: {}".format(ancestorDict))  # DEBUGGING
-
         # 2. Sort populations
         valueList = list(ancestorDict.values())
         valueList.sort(reverse=True)
-        # print(valueList)  # DEBUGGING
 
         # 3. Start forming the string
         for index in range(numEntries):
@@ -1283,8 +1276,6 @@ class GG_City:
         # CALCULATE
         # Total Percent
         for ethnicity in self.cityDict["city"]["ancestry"]["Human"]:
-            # print(type(ethnicity))  # DEBUGGING
-            # print(ethnicity)  # DEBUGGING
             totalHumanPer += self.cityDict["city"]["ancestry"]["Human"][ethnicity]
         # Total Population
         totalHumanPop = int(totalHumanPer * self.population * .01)
