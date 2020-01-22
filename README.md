@@ -45,10 +45,14 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[X] 1. Take an argument (setting configuration file)<br>
 	[X] 2. Parse yaml configuration file<br>
 	[X] 3. Create GG_city class to parse city input<br>
-	[ ] 4. Expand GG_city class to determine city attributes<br>
+	[X] 4. Expand GG_city class to determine city attributes<br>
 		- http://legacy.aonprd.com/gameMasteryGuide/settlements.html<br>
 		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards<br>
 		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes<br>
+	[X] 5. Finish the implementation of "parse_city" method in GG_City (finished? in 11-2)<br>
+	[ ] 6. Update NPC generation of "NPC Classes" (e.g., Adept, Warrior) once Paizo releases them for 2nd edition
+	[ ] 7. Add support for magic item generation.  While you're at it, add functionality to print the magic items in the Marketplace as well.<br>
+	[ ] 8. Add support for user-driven "Notable NPCs".  Don't make it mandatory.  Print it if available under DEMOGRAPHICS.<br>
 
 6. Add "quirks" to character creation
 
@@ -64,3 +68,33 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 8. Human ethnicity Nidalese
 
 	[ ] 1. Find and implement character functionality for the Nidalese ethnicity (missing?!)<br>
+
+9. Double back and implement the "validate defined" method for the "GG City" class
+
+	[X] 1. Base Value (completed in 5-4)<br>
+	[ ] 2. Magic Items (always recalculate?)<br>
+	[X] 3. Modifiers (Accomplished(?) in 5-4)<br>
+	[X] 4. NPCs (Accomplished in 5-4)<br>
+	[X] 5. Purchase Limit (Accomplished(?) in 5-4)<br>
+	[X] 6. Spellcasting (Accomplished(?) in 5-4)<br>
+	[X] 7. Type (completed in 5-4)<br>
+
+10. Update remaining settlement status
+
+	[X] 1. Spellcasting (e.g., Magical government) (Accomplished in 5-4)<br>
+	[X] 2. Base Value (e.g., Notorious quality) (Accomplished in 5-4)<br>
+	[X] 3. Purchase Limit (e.g., Prosperous) (Accomplished in 5-4)<br>
+	[ ] 4. Danger<br>
+
+11. Support new city functionality
+
+	[X] 1. Print city information in a standardized format (Implemented in 11-2)<br>
+	[X] 2. Add a city section to the menu<br>
+
+12. Miscellaneous
+
+    [ ] 1. AESTHETIC: Don't print notes for characters if there are no notes<br>
+    [ ] 2. BUG: REfactor GG_City DEMOGRAPHICS-Population string construction to use parsed attributes (raceLookup) instead of cityDict<br>
+    [ ] 3. BUG: Verify there's no way for calculated NPC levels to go below 0.  (e.g., smallest city type + lowest roll)
+    [ ] 4. AESTHETIC: Properly pluralize ancestries when calculating Demographic Populations in GG_City's "print city details" functionality
+    [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!

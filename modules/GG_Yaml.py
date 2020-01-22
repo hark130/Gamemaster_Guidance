@@ -4,7 +4,7 @@ import yaml
 GG_CITY_KEY = "city"
 GG_CITY_NAME_KEY = "name"
 GG_CITY_REGION_KEY = "region"
-GG_CITY_RACE_KEY = "ethnicity"
+GG_CITY_RACE_KEY = "ancestry"
 GG_CITY_RACE_DWARF = "Dwarf"
 GG_CITY_RACE_ELF = "Elf"
 GG_CITY_RACE_GNOME = "Gnome"
@@ -33,6 +33,7 @@ def parse_yaml(filename):
         with open(filename, "r") as inFile:
             yamlDict = yaml.load(inFile, Loader=yaml.FullLoader)
     except Exception as err:
-        print(format(err))  # DEBUGGING
+        print(format(err))
+        raise err
 
     return yamlDict
