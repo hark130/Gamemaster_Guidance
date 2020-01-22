@@ -1,4 +1,5 @@
-from . GG_Globals import ancestryList, citySizeLimits, humanEthnicityList
+from collections import OrderedDict
+from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList
 from . GG_Rando import rand_float, rand_integer
 from . import GG_Yaml
 
@@ -1056,6 +1057,22 @@ class GG_City:
         self.population = int(self.cityDict["city"]["population"])
         self.npcs = self.cityDict["city"]["npcs"]
         self.qualities = self.cityDict["city"]["qualities"]
+
+        # MODIFIERS
+        self.cityCorruption = int(self.cityDict["city"]["modifiers"]["corruption"])
+        self.cityCrime = int(self.cityDict["city"]["modifiers"]["crime"])
+        self.cityEconomy = int(self.cityDict["city"]["modifiers"]["economy"])
+        self.cityLaw = int(self.cityDict["city"]["modifiers"]["law"])
+        self.cityLore = int(self.cityDict["city"]["modifiers"]["lore"])
+        self.citySociety = int(self.cityDict["city"]["modifiers"]["society"])
+        self.modifierLookup = OrderedDict([("Corruption", self.cityCorruption),
+                                           ("Crime", self.cityCrime),
+                                           ("Economy", self.cityEconomy),
+                                           ("Law", self.cityLaw),
+                                           ("Lore", self.cityLore),
+                                           ("Society", self.citySociety)])
+
+        # DISADVANTAGES
         try:
             self.disadvantages = self.cityDict["city"]["disadvantages"]
         except:
@@ -1108,24 +1125,63 @@ class GG_City:
     def _print_city_general_details(self):
         """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
         # Name
+        print_header(self.name.upper())
+
         # Region
-        print("Name: {} Region: {}".format(self.name, self.region))
+        print("Region {}".format(self.region))
+
         # Alignment
         # Type
-        print("Alignment: {} Type: {}".format(self.alignment, self.cityType))
+        print("{} {}".format(self.alignment, self.cityType.lower()))
+
         # Modifiers
-        print("Modifiers:\n    TO DO: DON'T DO NOW")  # TO DO: DON'T DO NOW
+        self._print_city_modifiers()
+
         # Qualities
-        print("Qualities:")
-        for cityQuality in self.qualities:
-            print("    {}".format(cityQuality))
-        #
+        self._print_city_qualities()
+
         # Danger
+        # See: Task 10-4
+
         # Disadvantages
+        self._print_city_disadvantages()
+
+        # DONE
+        print("")
+
+
+    def _print_city_modifiers(self):
+        # LOCAL VARIABLES
+        modifierString = ""
+
+        # PRINT
+        for modifier in cityModifierList:
+            modifierString = modifierString + "{} {:+d}; ".format(modifier, self.modifierLookup[modifier])
+        modifierString = modifierString[:len(modifierString)-2]  # Trim off the end
+        print(modifierString)
+
+
+    def _print_city_qualities(self):
+        # LOCAL VARIABLES
+        qualitiesString = ""
+
+        # PRINT
+        for cityQuality in self.qualities:
+            qualitiesString = qualitiesString + cityQuality.lower() + ", "
+        qualitiesString = qualitiesString[:len(qualitiesString)-2]  # Trim the trailing comma
+        print("Qualities {}".format(qualitiesString))
+
+
+    def _print_city_disadvantages(self):
+        # LOCAL VARIABLES
+        disadvantagesString = ""
+
+        # PRINT
         if self.disadvantages:
-            print("Disadvantages:")
             for cityDisadvantage in self.disadvantages:
-                print("    {}".format(cityDisadvantage))
+                disadvantagesString = disadvantagesString + cityDisadvantage.lower() + ", "
+            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]  # Trim the trailing comma
+            print("Disadvantages {}".format(disadvantagesString))
 
 
     def _print_city_demographic_details(self):
@@ -1135,8 +1191,8 @@ class GG_City:
         # Government
         print("{} {}".format("Government", self.government))
         # Population (Ancestry breakdown)
-        print("{} {}".format("Population", self.population))
-        print("BREAKDOWN: {}".format(self._determine_ancestry_breakdown()))
+        print("{} {} ({})".format("Population", self.population,
+            self._determine_ancestry_breakdown()))
         # NPCs
         # self.print_city_npcs()  # TOO VERBOSE
         print("")
@@ -1175,24 +1231,26 @@ class GG_City:
             else:
                 ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
 
-        # DEBUGGING
-        print("POPULATION: {}".format(self.population))  # DEBUGGING
-        print("POPULATION DICT: {}".format(ancestorDict))  # DEBUGGING
+        # print("POPULATION: {}".format(self.population))  # DEBUGGING
+        # print("POPULATION DICT: {}".format(ancestorDict))  # DEBUGGING
 
         # 2. Sort populations
         valueList = list(ancestorDict.values())
         valueList.sort(reverse=True)
-        print(valueList)  # DEBUGGING
+        # print(valueList)  # DEBUGGING
 
         # 3. Start forming the string
         for index in range(numEntries):
             if index > len(valueList) - 1:
                 break
-            ancestryStr = ancestryStr + self._form_one_ancestry_substring(ancestorDict, valueList[index])
+            ancestryStr = ancestryStr + " " + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
             runningPopTotal += valueList[index]  # Keep track of the population already accounted for to support "others"
 
         # 4. Others
-        ancestryStr = ancestryStr + " Others: {}".format(self.population - runningPopTotal)
+        ancestryStr = ancestryStr + " {} {}".format(self.population - runningPopTotal, "other")
+
+        # 5. Trim
+        ancestryStr = ancestryStr[1:]
 
         # DONE
         return ancestryStr
