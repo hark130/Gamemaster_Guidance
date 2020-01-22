@@ -635,7 +635,7 @@ class GG_City:
             ethnicTotal += 1
         # Average
         retAverage = runningPercentTotal / ethnicTotal
-        print("_determine_human_ethnic_average() returned: {}".format(retAverage))  # DEBUGGING
+        # print("_determine_human_ethnic_average() returned: {}".format(retAverage))  # DEBUGGING
         
         return retAverage
 
@@ -648,12 +648,12 @@ class GG_City:
         
         # GET AVERAGE
         # Total
-        print(self.cityDict["city"]["ancestry"])  # DEBUGGING
+        # print(self.cityDict["city"]["ancestry"])  # DEBUGGING
         runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_KELLID]
         runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_ULFEN]
         # Average
         retAverage = runningPercentTotal / 2
-        print("_determine_human_barbarian_average() returned: {}".format(retAverage))  # DEBUGGING
+        # print("_determine_human_barbarian_average() returned: {}".format(retAverage))  # DEBUGGING
         
         return retAverage
 
