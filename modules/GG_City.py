@@ -1,4 +1,5 @@
-from . GG_Globals import ancestryList, citySizeLimits, humanEthnicityList
+from collections import OrderedDict
+from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList
 from . GG_Rando import rand_float, rand_integer
 from . import GG_Yaml
 
@@ -17,6 +18,16 @@ def get_key_value(theDict, theKey):
         theValue = float(0.0)
 
     return theValue
+
+
+def print_header(header):
+    # LOCAL VARIABLES
+    headerLen = len(header)
+    banner = "-" * headerLen
+
+    print(banner)
+    print(header)
+    print(banner)
 
 
 class GG_City:
@@ -63,6 +74,7 @@ class GG_City:
         """Entry level method: validate and parse the dictionary"""
         self._validate_city()  # Verify all input
         self._complete_city()  # Fill in the blanks
+        # Everything prior to this method call should operate on the cityDict
         self._parse_city()     # Load the city into attributes
 
 
@@ -518,6 +530,10 @@ class GG_City:
         if "Superstitious" in self.cityDict["city"]["qualities"]:
             localSpellcasting -= 2
 
+        # Max Spell Level
+        if localSpellcasting > 10:
+            localSpellcasting = 10
+
         # DONE
         self.cityDict["city"]["spellcasting"] = str(localSpellcasting)
 
@@ -607,14 +623,36 @@ class GG_City:
 
     def _determine_human_ethnic_average(self):
         """Return the average of all human ethnic percentages"""
-        # TO DO: DON'T DO NOW... Define this
-        return 1.136  # Hard-coded value based on test_city.yml
+        # LOCAL VARIABLES
+        runningPercentTotal = 0.0
+        ethnicTotal = 0
+        retAverage = 0.0
+        
+        # GET AVERAGE
+        # Total
+        for humanEthnicity in humanEthnicityList:
+            runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
+            ethnicTotal += 1
+        # Average
+        retAverage = runningPercentTotal / ethnicTotal
+        
+        return retAverage
 
 
     def _determine_human_barbarian_average(self):
         """Return the total percent of Kellid and Ulfen ethnic percentages"""
-        # TO DO: DON'T DO NOW... Define this
-        return 1.136 * 2  # Hard-coded value based on test_city.yml
+        # LOCAL VARIABLES
+        runningPercentTotal = 0.0
+        retAverage = 0.0
+        
+        # GET AVERAGE
+        # Total
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_KELLID]
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_ULFEN]
+        # Average
+        retAverage = runningPercentTotal / 2
+        
+        return retAverage
 
 
     def _rando_city_npc_bards(self):
@@ -671,10 +709,13 @@ class GG_City:
 
     def _are_monks_common(self):
         """Determine if monk-centric races/ethnicities/subgroups are common"""
-        # TO DO: DON'T DO NOW... Define this
-        return False  # Hard-coded value based on test_city.yml
+        return self._determine_human_monk_average() >= self._determine_human_ethnic_average()
 
 
+    def _determine_human_monk_average(self):
+        return self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_TIAN]
+    
+    
     def _rando_city_npc_rangers(self):
         # LOCAL VARIABLES
         upperLimit = 3  # Ranger 1d3
@@ -1001,6 +1042,39 @@ class GG_City:
             GG_Yaml.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
         }
 
+        # GENERAL
+        self.name = self.cityDict["city"]["name"]
+        self.region = self.cityDict["city"]["region"]
+        self.alignment = self.cityDict["city"]["alignment"]
+        self.cityType = self.cityDict["city"]["type"]
+        self.baseValue = int(self.cityDict["city"]["base_value"])
+        self.purchaseLimit = int(self.cityDict["city"]["purchase_limit"])
+        self.spellcasting = int(self.cityDict["city"]["spellcasting"])
+        self.government = self.cityDict["city"]["government"]
+        self.population = int(self.cityDict["city"]["population"])
+        self.npcs = self.cityDict["city"]["npcs"]
+        self.qualities = self.cityDict["city"]["qualities"]
+
+        # MODIFIERS
+        self.cityCorruption = int(self.cityDict["city"]["modifiers"]["corruption"])
+        self.cityCrime = int(self.cityDict["city"]["modifiers"]["crime"])
+        self.cityEconomy = int(self.cityDict["city"]["modifiers"]["economy"])
+        self.cityLaw = int(self.cityDict["city"]["modifiers"]["law"])
+        self.cityLore = int(self.cityDict["city"]["modifiers"]["lore"])
+        self.citySociety = int(self.cityDict["city"]["modifiers"]["society"])
+        self.modifierLookup = OrderedDict([("Corruption", self.cityCorruption),
+                                           ("Crime", self.cityCrime),
+                                           ("Economy", self.cityEconomy),
+                                           ("Law", self.cityLaw),
+                                           ("Lore", self.cityLore),
+                                           ("Society", self.citySociety)])
+
+        # DISADVANTAGES
+        try:
+            self.disadvantages = self.cityDict["city"]["disadvantages"]
+        except:
+            self.disadvantages = None  # Disadvantages are not mandatory
+
 
     def get_race_percent(self, raceName):
         """Return a race's percent"""
@@ -1032,3 +1106,205 @@ class GG_City:
         if not randoRace:
             raise RuntimeError("Race not found")
         return randoRace
+
+
+    def print_city_details(self):
+        # GENERAL
+        self._print_city_general_details()
+
+        # DEMOGRAPHICS
+        self._print_city_demographic_details()
+
+        # MARKETPLACE
+        self._print_city_marketplace_details()
+
+
+    def _print_city_general_details(self):
+        """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
+        # Name
+        print_header(self.name.upper())
+
+        # Region
+        print("Region {}".format(self.region))
+
+        # Alignment
+        # Type
+        print("{} {}".format(self.alignment, self.cityType.lower()))
+
+        # Modifiers
+        self._print_city_modifiers()
+
+        # Qualities
+        self._print_city_qualities()
+
+        # Danger
+        # See: Task 10-4
+
+        # Disadvantages
+        self._print_city_disadvantages()
+
+        # DONE
+        print("")
+
+
+    def _print_city_modifiers(self):
+        # LOCAL VARIABLES
+        modifierString = ""
+
+        # PRINT
+        for modifier in cityModifierList:
+            modifierString = modifierString + "{} {:+d}; ".format(modifier, self.modifierLookup[modifier])
+        modifierString = modifierString[:len(modifierString)-2]  # Trim off the end
+        print(modifierString)
+
+
+    def _print_city_qualities(self):
+        # LOCAL VARIABLES
+        qualitiesString = ""
+
+        # PRINT
+        for cityQuality in self.qualities:
+            qualitiesString = qualitiesString + cityQuality.lower() + ", "
+        qualitiesString = qualitiesString[:len(qualitiesString)-2]  # Trim the trailing comma
+        print("Qualities {}".format(qualitiesString))
+
+
+    def _print_city_disadvantages(self):
+        # LOCAL VARIABLES
+        disadvantagesString = ""
+
+        # PRINT
+        if self.disadvantages:
+            for cityDisadvantage in self.disadvantages:
+                disadvantagesString = disadvantagesString + cityDisadvantage.lower() + ", "
+            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]  # Trim the trailing comma
+            print("Disadvantages {}".format(disadvantagesString))
+
+
+    def _print_city_demographic_details(self):
+        """Print city's government, population, and NPCs"""
+        # Header
+        print_header("DEMOGRAPHICS")
+        # Government
+        print("{} {}".format("Government", self.government))
+        # Population (Ancestry breakdown)
+        print("{} {} ({})".format("Population", self.population,
+            self._determine_ancestry_breakdown()))
+        # NPCs
+        # self.print_city_npcs()  # TOO VERBOSE
+        print("")
+
+
+    def _determine_ancestry_breakdown(self):
+        """Return a city size based list of the top ancestries"""
+        # LOCAL VARIABLES
+        cityLookup = {
+                "Thorp":2, "Hamlet":2, "Village":3, "Small Town":3,
+                "Large Town":4, "Small City":4, "Large City":5, "Metropolis":5
+                }
+        numAncestries = cityLookup[self.cityType]
+        retStr = None
+
+        # CONSTRUCT STRING
+        retStr = self._construct_ancestry_string(numAncestries)
+
+        # DONE
+        return retStr
+
+
+    def _construct_ancestry_string(self, numEntries):
+        """Construct a string of the top numEntries ancestries, ending in other"""
+        # LOCAL VARIABLES
+        ancestryStr = ""
+        ancestorDict = {}
+        valueList = []
+        runningPopTotal = 0
+
+        # CONSTRUCT STRING
+        # 1. Calculate populations by ancestry
+        for race in ancestryList:
+            if race == "Human":
+                ancestorDict[race] = self._calc_total_human_population()
+            else:
+                ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
+
+        # 2. Sort populations
+        valueList = list(ancestorDict.values())
+        valueList.sort(reverse=True)
+
+        # 3. Start forming the string
+        for index in range(numEntries):
+            if index > len(valueList) - 1:
+                break
+            ancestryStr = ancestryStr + " " + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
+            runningPopTotal += valueList[index]  # Keep track of the population already accounted for to support "others"
+
+        # 4. Others
+        ancestryStr = ancestryStr + " {} {}".format(self.population - runningPopTotal, "other")
+
+        # 5. Trim
+        ancestryStr = ancestryStr[1:]
+
+        # DONE
+        return ancestryStr
+
+
+    def _form_one_ancestry_substring(self, ancestorDict, topValue):
+        # LOCAL VARIABLES
+        ancestrySubstr = ""
+
+        # CONSTRUCT SUBSTRING
+        # Find it
+        for dictKey, dictValue in ancestorDict.items():
+            if dictValue == topValue:
+                ancestrySubstr = "{} {}".format(dictValue, dictKey)
+                if dictValue > 1:
+                    ancestrySubstr = ancestrySubstr + "s"
+            if ancestrySubstr:
+                break
+
+        # DONE
+        return ancestrySubstr
+
+
+    def _calc_total_human_population(self):
+        """Return the total human population based on cityDict percentages and city population"""
+        # LOCAL VARIABLES
+        totalHumanPop = 0
+        totalHumanPer = 0.0
+
+        # CALCULATE
+        # Total Percent
+        for ethnicity in self.cityDict["city"]["ancestry"]["Human"]:
+            totalHumanPer += self.cityDict["city"]["ancestry"]["Human"][ethnicity]
+        # Total Population
+        totalHumanPop = int(totalHumanPer * self.population * .01)
+
+        # DONE
+        return totalHumanPop
+
+
+    def print_city_npcs(self):
+        if self.npcs:
+            print("NPCs")
+            for npc in self.npcs:
+                print("    {}".format(npc))
+
+
+    def _print_city_marketplace_details(self):
+        """Print city's base value, purchase limit, spellcasting, and magic items"""
+        # LOCAL VARIABLES
+        numToWord = inflect.engine()
+
+        # PRINT
+        # Header
+        print_header("MARKETPLACE")
+        # Base Value
+        # Purchase Limit
+        # Spellcasting
+        print("{} {} gp; {} {} gp; {} {}".format("Base Value", self.baseValue,
+                                                 "Purchase Limit", self.purchaseLimit,
+                                                 "Spellcasting", numToWord.ordinal(self.spellcasting)))
+
+        # Magic Items
+        # See: Task 5-7

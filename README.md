@@ -49,8 +49,10 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		- http://legacy.aonprd.com/gameMasteryGuide/settlements.html<br>
 		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards<br>
 		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes<br>
-	[ ] 5. Finish the implementation of "parse_city" method in GG_City<br>
+	[X] 5. Finish the implementation of "parse_city" method in GG_City (finished? in 11-2)<br>
 	[ ] 6. Update NPC generation of "NPC Classes" (e.g., Adept, Warrior) once Paizo releases them for 2nd edition
+	[ ] 7. Add support for magic item generation.  While you're at it, add functionality to print the magic items in the Marketplace as well.<br>
+	[ ] 8. Add support for user-driven "Notable NPCs".  Don't make it mandatory.  Print it if available under DEMOGRAPHICS.<br>
 
 6. Add "quirks" to character creation
 
@@ -86,5 +88,13 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 11. Support new city functionality
 
-	[ ] 1. Print city information in a standardized format<br>
-	[ ] 2. Add a city section to the menu<br>
+	[X] 1. Print city information in a standardized format (Implemented in 11-2)<br>
+	[X] 2. Add a city section to the menu<br>
+
+12. Miscellaneous
+
+    [ ] 1. AESTHETIC: Don't print notes for characters if there are no notes<br>
+    [ ] 2. BUG: REfactor GG_City DEMOGRAPHICS-Population string construction to use parsed attributes (raceLookup) instead of cityDict<br>
+    [ ] 3. BUG: Verify there's no way for calculated NPC levels to go below 0.  (e.g., smallest city type + lowest roll)
+    [ ] 4. AESTHETIC: Properly pluralize ancestries when calculating Demographic Populations in GG_City's "print city details" functionality
+    [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!
