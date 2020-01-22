@@ -98,3 +98,8 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 3. BUG: Verify there's no way for calculated NPC levels to go below 0.  (e.g., smallest city type + lowest roll)
     [ ] 4. AESTHETIC: Properly pluralize ancestries when calculating Demographic Populations in GG_City's "print city details" functionality
     [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!
+
+## NOTES
+
+* git branch --merged | egrep -v "(^\*|master|dev|development)" | xargs git branch -d
+* git remote prune origin
