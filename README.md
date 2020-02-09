@@ -50,7 +50,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 		- https://www.d20pfsrd.com/gamemastering/other-rules/kingdom-building/settlements/#Guards_Guards<br>
 		- Use D&D 3.5 DM's Guide "Generating Towns" (P. 137) to randomize NPCs levels/classes<br>
 	[X] 5. Finish the implementation of "parse_city" method in GG_City (finished? in 11-2)<br>
-	[ ] 6. Update NPC generation of "NPC Classes" (e.g., Adept, Warrior) once Paizo releases them for 2nd edition
+	[ ] 6. Update NPC generation of "NPC Classes" (e.g., Adept, Warrior) once Paizo releases them for 2nd edition<br>
 	[ ] 7. Add support for magic item generation.  While you're at it, add functionality to print the magic items in the Marketplace as well.<br>
 	[ ] 8. Add support for user-driven "Notable NPCs".  Don't make it mandatory.  Print it if available under DEMOGRAPHICS.<br>
 
