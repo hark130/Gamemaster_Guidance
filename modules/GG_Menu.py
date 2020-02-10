@@ -176,11 +176,19 @@ def city_menu(cityObj):
         print_city_menu()
         userInput = read_user_input()
         if userInput == 1:
-            clear_screen()
-            cityObj.print_city_details()
+            if cityObj:
+                clear_screen()
+                cityObj.print_city_details()
+            else:
+                print("\nNo city config provided")
+                return 999
         elif userInput == 2:
-            clear_screen()
-            cityObj.print_city_npcs()
+            if cityObj:
+                clear_screen()
+                cityObj.print_city_npcs()
+            else:
+                print("\nNo city config provided")
+                return 999
         elif userInput == 3:
             clear_screen()
         elif userInput == 42:
