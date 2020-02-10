@@ -48,6 +48,7 @@ class GG_City:
         self.cityDict = cityDict
         self.baseCityModifier = None
         self.npcMultiplier = 1  # Large cities can have multiple high-level NPCs
+        self.npcClassLevels = {}  # class:totals for population
 
         # Use these attributes to indicate a value should be randomized prior to parsing
         self.randoDisadvantage = False  # Randomize a disadvantage
@@ -361,9 +362,10 @@ class GG_City:
         # TO DO: DON'T DO NOW
 
         # NPCs
-        if self.calcNPCs:
-            self._rando_city_npcs()
-            self.calcNPCs = False
+        # Moved randomization validation downwards
+        # Some 'consumers' of the GG_City class need some randomized totals regardless of what's already been calculated
+        self._rando_city_npcs()
+        self.calcNPCs = False
 
 
     def _calc_city_type(self):
@@ -533,11 +535,11 @@ class GG_City:
 
     def _rando_city_npcs(self):
         """Randomize NPCs and add them to cityDict as a list"""
-        # PREPARE LIST
-        self.cityDict["city"]["npcs"] = []
-
-        # UPDATE MULTIPLIER
-        self._update_city_npc_multiplier()
+        if self.calcNPCs:
+            # PREPARE LIST
+            self.cityDict["city"]["npcs"] = []
+            # UPDATE MULTIPLIER
+            self._update_city_npc_multiplier()
 
         # CALCUALTE NPCs
         # Adept 1d6 + community modifier (Task 5-6)
@@ -761,7 +763,11 @@ class GG_City:
                 numOfThatLevel *= 2
                 levelDict[charLevel] += numOfThatLevel
 
-        self._translate_level_dict_into_npc_list(className, levelDict)
+        # Validation of calcualting NPCs moved down to ensure this class always...
+        if self.calcNPCs:
+            self._translate_level_dict_into_npc_list(className, levelDict)
+        # ...calculates the total 'population' of each class for the sake of class-based randomization
+        self._update_npc_class_totals(className, levelDict)
 
 
     def _calc_highest_level(self, numDice, numFaces):
@@ -791,6 +797,16 @@ class GG_City:
                 if levelDict[level] > 1:
                     npcListEntry = npcListEntry + "s"
                 self.cityDict["city"]["npcs"].append(npcListEntry)
+
+
+    def _update_npc_class_totals(className, levelDict):
+        # LOCAL VARIABLES
+        classTotal = 0
+
+        for value in levelDict.values():
+            classTotal += value
+
+        self.npcClassLevels[className] = {"Total":classTotal, "Dict":levelDict}
 
 
     def _calc_city_modifier_corruption(self):
