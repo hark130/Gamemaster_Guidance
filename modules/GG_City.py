@@ -72,6 +72,60 @@ class GG_City:
         self._parse_city()     # Load the city into attributes
 
 
+    def get_race_percent(self, raceName):
+        """Return a race's percent"""
+        return self.raceLookup[raceName]
+
+
+    def rando_city_race(self):
+        # LOCAL VARIABLES
+        totalPercent = float(0.0)
+        randoRace = None
+
+        # DETERMINE RACE
+        # Add total percents
+        for percentValue in self.raceLookup.values():
+            totalPercent += percentValue
+        if totalPercent <= 0.0:
+            raise RuntimeError("Race percentages not found")
+        # Rando a number
+        randoPercent = rand_float(0.0, totalPercent)
+        # Find the match
+        totalPercent = 0.0
+        for race, percent in self.raceLookup.items():
+            totalPercent += percent
+            if randoPercent <= totalPercent:
+                randoRace = race
+                break
+
+        # DONE
+        if not randoRace:
+            raise RuntimeError("Race not found")
+        return randoRace
+
+
+    def print_city_details(self):
+        # GENERAL
+        self._print_city_general_details()
+
+        # DEMOGRAPHICS
+        self._print_city_demographic_details()
+
+        # MARKETPLACE
+        self._print_city_marketplace_details()
+
+
+    def print_city_npcs(self):
+        if self.npcs:
+            print("NPCs")
+            for npc in self.npcs:
+                print("    {}".format(npc))
+
+
+    def rando_npc_class_level(self):
+        pass
+
+
     def _validate_city(self):
         """Validate the contents of cityDict"""
         self._validate_mandatory()
@@ -538,12 +592,13 @@ class GG_City:
         if self.calcNPCs:
             # PREPARE LIST
             self.cityDict["city"]["npcs"] = []
-            # UPDATE MULTIPLIER
-            self._update_city_npc_multiplier()
+        # UPDATE MULTIPLIER
+        self._update_city_npc_multiplier()
 
         # CALCUALTE NPCs
         # Adept 1d6 + community modifier (Task 5-6)
         # Alchemist 1d4 + community modifier (Class)
+        self._rando_city_npc_alchemists()
         # Aristocrat 1d4 + community modifier (Task 5-6)
         # Barbarian* 1d4 + community modifier (Class)
         self._rando_city_npc_barbarians()
@@ -598,6 +653,14 @@ class GG_City:
             self.npcMultiplier = 1
         else:
             raise RuntimeError("Invalid city type found in cityDict")
+
+
+    def _rando_city_npc_alchemists(self):
+        # LOCAL VARIABLES
+        upperLimit = 4  # Alchemist 1d4
+
+        # CALCULATE TOTAL
+        self._rando_npc_class("alchemist", 1, upperLimit)
 
 
     def _rando_city_npc_barbarians(self):
@@ -1085,49 +1148,6 @@ class GG_City:
             self.disadvantages = None  # Disadvantages are not mandatory
 
 
-    def get_race_percent(self, raceName):
-        """Return a race's percent"""
-        return self.raceLookup[raceName]
-
-
-    def rando_city_race(self):
-        # LOCAL VARIABLES
-        totalPercent = float(0.0)
-        randoRace = None
-
-        # DETERMINE RACE
-        # Add total percents
-        for percentValue in self.raceLookup.values():
-            totalPercent += percentValue
-        if totalPercent <= 0.0:
-            raise RuntimeError("Race percentages not found")
-        # Rando a number
-        randoPercent = rand_float(0.0, totalPercent)
-        # Find the match
-        totalPercent = 0.0
-        for race, percent in self.raceLookup.items():
-            totalPercent += percent
-            if randoPercent <= totalPercent:
-                randoRace = race
-                break
-
-        # DONE
-        if not randoRace:
-            raise RuntimeError("Race not found")
-        return randoRace
-
-
-    def print_city_details(self):
-        # GENERAL
-        self._print_city_general_details()
-
-        # DEMOGRAPHICS
-        self._print_city_demographic_details()
-
-        # MARKETPLACE
-        self._print_city_marketplace_details()
-
-
     def _print_city_general_details(self):
         """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
         # Name
@@ -1291,13 +1311,6 @@ class GG_City:
 
         # DONE
         return totalHumanPop
-
-
-    def print_city_npcs(self):
-        if self.npcs:
-            print("NPCs")
-            for npc in self.npcs:
-                print("    {}".format(npc))
 
 
     def _print_city_marketplace_details(self):
