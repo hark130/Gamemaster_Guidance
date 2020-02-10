@@ -124,8 +124,49 @@ class GG_City:
 
 
     def rando_npc_class_level(self):
-        """Randomize a class and level based on city statistics: Tuple(("class", "level"))"""
-        pass
+        """Randomize a class and level based on city statistics: tuple(("class": str, level: int))"""
+        # LOCAL VARIABLES
+        currNpcPop = 0  # Sum of all the classes from self.npcClassLevels
+        randoCitizen = 0  # Random citizen
+        # currentPopCeil = 0  # Highest current citizen number
+        localClass = None  # Random citizen's class
+        LocalLevel = None  # Random citizen's level
+
+        # RANDOMIZE CITIZEN
+        # 1. Add up all the class totals
+        for nclValue in self.npcClassLevels.values():
+            currNpcPop += nclValue["Total"]
+
+        # 2. Randomize citizen number
+        print(f"POPULATION: {self.population} ACTUAL POP: {currNpcPop}")  # DEBUGGING
+        # randoCitizen = rand_integer(1, self.population)
+        randoCitizen = rand_integer(1, currNpcPop)
+
+        # 3. Look up that citizen's class
+        print(self.npcClassLevels)  # DEBUGGING
+        # self.npcClassLevels[className] = {"Total":classTotal, "Dict":levelDict}
+        for (nclKey, nclValue) in self.npcClassLevels.items():
+            print(f"CURRENT CITIZEN NUMBER: {randoCitizen}")  # DEBUGGING
+            # currentPopCeil += nclValue["Total"]
+            # if randoCitizen <= currentPopCeil:
+            print(f"Key: {nclKey} Value: {nclValue}")  # DEBUGGING
+            if randoCitizen <= self.npcClassLevels[nclKey]["Total"]:
+                localClass = nclKey  # Found the class
+                print(f"Class: {localClass}")  # DEBUGGING
+                # 3. Look up that citizen's level
+                for (nclvKey, nclvValue) in nclValue["Dict"].items():
+                    if randoCitizen <= nclvValue:
+                        localLevel = nclvKey
+                        print(f"Level: {localLevel}")  # DEBUGGING
+                        return tuple((localClass, localLevel))
+                    else:
+                        randoCitizen -= nclvValue
+            else:
+                randoCitizen -= nclValue["Total"]
+
+        print(f"CITIZEN NUMBER: {randoCitizen}")  # DEBUGGING
+        print(f"CITY POPULATION: {self.population}")  # DEBUGGING
+        raise RuntimeError("Citizen number was greater than the population")
 
 
     def _validate_city(self):
@@ -245,12 +286,13 @@ class GG_City:
         except:
             self.randoPopulation = True
         else:
-            try:
-                temp = locale.atoi(population)
-            except Exception as err:
-                print("Invalid population: {}".format(population))
-                print(repr(err))
-                raise err
+            if not isinstance(population, int):
+                try:
+                    temp = locale.atoi(population)
+                except Exception as err:
+                    print("Invalid population: {}".format(population))
+                    print(repr(err))
+                    raise err
 
 
     def _validate_qualities(self):
@@ -427,7 +469,9 @@ class GG_City:
     def _calc_city_type(self):
         """Calculate and store the city type into cityDict"""
         # Get Population
-        population = locale.atoi(self.cityDict["city"]["population"])
+        population = self.cityDict["city"]["population"]
+        if not isinstance(population, int):
+            population = locale.atoi(population)
 
         # Translate Population to Type
         if population <= 20:
@@ -643,32 +687,40 @@ class GG_City:
     def _rando_remaining_npc_population(self):
         # LOCAL VARIABLES
         currentRemainingPop = int(self.cityDict["city"]["population"])
+        print(f"TOTAL CITY POPULATION: {self.population}")  # DEBUGGING
+        print(f"STARTING 'REMAINING' POPULATION: {currentRemainingPop}")  # DEBUGGING
         remainderDict = {"aristocrat":0, "adept":0, "expert":0, "warrior":0, "commoner":0}
 
         # 1. Determine remaining population
         for valueDict in self.npcClassLevels.values():
             currentRemainingPop -= valueDict["Total"]
-
-        # 2. Calcualate remaining totals
-        remainderDict["aristocrat"] = int(currentRemainingPop * .005)
-        remainderDict["adept"] = int(currentRemainingPop * .005)
-        remainderDict["expert"] = int(currentRemainingPop * .03)
-        remainderDict["warrior"] = int(currentRemainingPop * .05)
-        remainderDict["commoner"] = (currentRemainingPop \
-                                        - remainderDict["aristocrat"] - remainderDict["adept"] \
-                                        - remainderDict["expert"] - remainderDict["warrior"])
+        print(f"STARTING REMAINING POPULATION: {currentRemainingPop}")  # DEBUGGING
+        # Account for underflow population
+        if currentRemainingPop > 0:
+            # 2. Calcualate remaining totals
+            remainderDict["aristocrat"] = int(currentRemainingPop * .005)
+            remainderDict["adept"] = int(currentRemainingPop * .005)
+            remainderDict["expert"] = int(currentRemainingPop * .03)
+            remainderDict["warrior"] = int(currentRemainingPop * .05)
+            remainderDict["commoner"] = (currentRemainingPop \
+                                            - remainderDict["aristocrat"] - remainderDict["adept"] \
+                                            - remainderDict["expert"] - remainderDict["warrior"])
+            assert ((remainderDict["aristocrat"] + remainderDict["adept"] + remainderDict["expert"] + remainderDict["warrior"] + remainderDict["commoner"]) == currentRemainingPop), "Remaining population miscalculation"
+        else:
+            for key in remainderDict.keys():
+                remainderDict[key] = 0
         print((remainderDict["aristocrat"] + remainderDict["adept"]
                + remainderDict["expert"] + remainderDict["warrior"]
-               + remainderDict["commoner"]))
-        print(currentRemainingPop)
-        print(remainderDict)
-        assert ((remainderDict["aristocrat"] + remainderDict["adept"]
-                 + remainderDict["expert"] + remainderDict["warrior"]
-                 + remainderDict["commoner"]) == currentRemainingPop), "Remaining population miscalculation"
+               + remainderDict["commoner"]))  # DEBUGGING
+        print(f"CURRENT REMAINING POPULATION: {currentRemainingPop}")  # DEBUGGING
+        print(f"REMAINDER DICT: {remainderDict}")  # DEBUGGING
+        print(f"SET NPC CLASS: {self.calcNPCs}")  # DEBUGGING
+
 
         # 3. Update NPC class levels
         for (key, value) in remainderDict.items():
-            self._set_npc_class(key, 1, value)
+            if value > 0:
+                self._set_npc_class(key, 1, value)
 
 
     def _update_city_npc_multiplier(self):
@@ -853,11 +905,12 @@ class GG_City:
         for _ in range(self.npcMultiplier):
             numOfThatLevel = 1  # Reset temp variable
             charLevel = self._calc_highest_level(numDice, numFaces)
-            levelDict[charLevel] += numOfThatLevel
-            while charLevel >= 2:
-                charLevel = math.ceil(charLevel / 2)
-                numOfThatLevel *= 2
+            if charLevel > 0:
                 levelDict[charLevel] += numOfThatLevel
+                while charLevel >= 2:
+                    charLevel = math.ceil(charLevel / 2)
+                    numOfThatLevel *= 2
+                    levelDict[charLevel] += numOfThatLevel
 
         # Validation of calcualting NPCs moved down to ensure this class always...
         if self.calcNPCs:
@@ -909,10 +962,15 @@ class GG_City:
         # LOCAL VARIABLES
         classTotal = 0
 
+        try:
+            print(f"BEFORE: {self.npcClassLevels[className]}")  # DEBUGGING
+        except:
+            pass  # Won't exist in the first pass
         for value in levelDict.values():
             classTotal += value
 
         self.npcClassLevels[className] = {"Total":classTotal, "Dict":levelDict}
+        print(f"AFTER:  {self.npcClassLevels[className]}")  # DEBUGGING
 
 
     def _calc_city_modifier_corruption(self):
