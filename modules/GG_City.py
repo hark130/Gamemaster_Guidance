@@ -1,13 +1,16 @@
+# Standard Imports
 from collections import OrderedDict
-from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList
-from . GG_Rando import rand_float, rand_integer
-from . import GG_Yaml
 
-
+# Third Party Imports
 import inflect
 import locale
 import math
 import random
+
+# Local Imports
+from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList, print_header
+from . GG_Rando import rand_float, rand_integer
+from . import GG_Yaml
 
 
 def get_key_value(theDict, theKey):
@@ -18,16 +21,6 @@ def get_key_value(theDict, theKey):
         theValue = float(0.0)
 
     return theValue
-
-
-def print_header(header):
-    # LOCAL VARIABLES
-    headerLen = len(header)
-    banner = "-" * headerLen
-
-    print(banner)
-    print(header)
-    print(banner)
 
 
 class GG_City:
