@@ -47,40 +47,6 @@ def print_race_menu():
     print("Choose an option [999]:")
 
 
-def rando_a_character(cityObj=None):
-    print_race_menu()
-    userInput = read_user_input()
-
-    try:
-        if userInput == 1:
-            character = GG_Character(cityObject=cityObj)
-        elif userInput == 2:
-            character = GG_Character(race="Dwarf")
-        elif userInput == 3:
-            character = GG_Character(race="Elf")
-        elif userInput == 4:
-            character = GG_Character(race="Gnome")
-        elif userInput == 5:
-            character = GG_Character(race="Goblin")
-        elif userInput == 6:
-            character = GG_Character(race="Halfling")
-        elif userInput == 7:
-            character = GG_Character(race="Human")
-        elif userInput == 8:
-            character = GG_Character(race="Half-Elf")
-        elif userInput == 9:
-            character = GG_Character(race="Half-Orc")
-        elif userInput == 42:
-            return userInput
-        else:
-            return 999
-    except RuntimeError as err:
-        print(format(err))
-    else:
-        if character:
-            character.print_character()
-
-
 def rando_a_name():
     print_race_menu()
     userInput = read_user_input()
@@ -116,6 +82,40 @@ def rando_a_name():
             print("\n" + charName.return_full_name() + "\n")
 
     return userInput
+
+
+def rando_a_character(cityObj=None):
+    print_race_menu()
+    userInput = read_user_input()
+
+    try:
+        if userInput == 1:
+            character = GG_Character(cityObject=cityObj)
+        elif userInput == 2:
+            character = GG_Character(race="Dwarf")
+        elif userInput == 3:
+            character = GG_Character(race="Elf")
+        elif userInput == 4:
+            character = GG_Character(race="Gnome")
+        elif userInput == 5:
+            character = GG_Character(race="Goblin")
+        elif userInput == 6:
+            character = GG_Character(race="Halfling")
+        elif userInput == 7:
+            character = GG_Character(race="Human")
+        elif userInput == 8:
+            character = GG_Character(race="Half-Elf")
+        elif userInput == 9:
+            character = GG_Character(race="Half-Orc")
+        elif userInput == 42:
+            return userInput
+        else:
+            return 999
+    except RuntimeError as err:
+        print(format(err))
+    else:
+        if character:
+            character.print_character()
 
 
 def print_city_menu():
@@ -164,8 +164,9 @@ def menu(cityDict=None):
         print("\n")
         print("  1. Randomize a name")
         print("  2. Randomize a character")
-        print("  3. City menu")
-        print("  4. Clear screen")
+        print("  3. Randomize a bounty")
+        print("  4. City menu")
+        print("  5. Clear screen")
         print("999. Exit")
         print("Choose an option [999]:")
         userInput = read_user_input()
@@ -174,8 +175,10 @@ def menu(cityDict=None):
         elif userInput == 2:
             userInput = rando_a_character(cityObj)
         elif userInput == 3:
-            userInput = city_menu(cityObj)
+            pass
         elif userInput == 4:
+            userInput = city_menu(cityObj)
+        elif userInput == 5:
             clear_screen()
         else:
             break
