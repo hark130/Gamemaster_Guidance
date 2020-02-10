@@ -52,10 +52,10 @@ class GG_Bounty(GG_Character):
     def print_private_details(self):
         print_header("Private Details")
         self.print_bounty_class()
-        self.print_bounty_level()
 
     def print_gm_details(self):
         print_header("GM Details")
+        self.print_bounty_level()
         self.print_notes()
         self.print_traits()
 
