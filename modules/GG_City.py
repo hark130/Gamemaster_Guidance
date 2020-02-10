@@ -49,6 +49,7 @@ class GG_City:
         self.baseCityModifier = None
         self.npcMultiplier = 1  # Large cities can have multiple high-level NPCs
         self.npcClassLevels = {}  # class:totals for population
+        self.population = 0  # Store total population here
 
         # Use these attributes to indicate a value should be randomized prior to parsing
         self.randoDisadvantage = False  # Randomize a disadvantage
@@ -123,6 +124,7 @@ class GG_City:
 
 
     def rando_npc_class_level(self):
+        """Randomize a class and level based on city statistics: Tuple(("class", "level"))"""
         pass
 
 
@@ -627,15 +629,46 @@ class GG_City:
         self._rando_city_npc_wizards()
 
         # Remaining Population
-        # TO DO: DON'T DO NOW...
         # Take the remaining population after all other characters are generated
         # and divide it up so that 91% are commoners, 5% are warriors, 3%
         # are experts, and the remaining 1% is equally divided between
         # aristocrats and adepts (0.5% each)
+        self._rando_remaining_npc_population()
 
         # Add Notes
         # TO DO: DON'T DO NOW
         # Randomize who the town guard is
+
+
+    def _rando_remaining_npc_population(self):
+        # LOCAL VARIABLES
+        currentRemainingPop = int(self.cityDict["city"]["population"])
+        remainderDict = {"aristocrat":0, "adept":0, "expert":0, "warrior":0, "commoner":0}
+
+        # 1. Determine remaining population
+        for valueDict in self.npcClassLevels.values():
+            currentRemainingPop -= valueDict["Total"]
+
+        # 2. Calcualate remaining totals
+        remainderDict["aristocrat"] = int(currentRemainingPop * .005)
+        remainderDict["adept"] = int(currentRemainingPop * .005)
+        remainderDict["expert"] = int(currentRemainingPop * .03)
+        remainderDict["warrior"] = int(currentRemainingPop * .05)
+        remainderDict["commoner"] = (currentRemainingPop \
+                                        - remainderDict["aristocrat"] - remainderDict["adept"] \
+                                        - remainderDict["expert"] - remainderDict["warrior"])
+        print((remainderDict["aristocrat"] + remainderDict["adept"]
+               + remainderDict["expert"] + remainderDict["warrior"]
+               + remainderDict["commoner"]))
+        print(currentRemainingPop)
+        print(remainderDict)
+        assert ((remainderDict["aristocrat"] + remainderDict["adept"]
+                 + remainderDict["expert"] + remainderDict["warrior"]
+                 + remainderDict["commoner"]) == currentRemainingPop), "Remaining population miscalculation"
+
+        # 3. Update NPC class levels
+        for (key, value) in remainderDict.items():
+            self._set_npc_class(key, 1, value)
 
 
     def _update_city_npc_multiplier(self):
@@ -833,6 +866,16 @@ class GG_City:
         self._update_npc_class_totals(className, levelDict)
 
 
+    def _set_npc_class(self, className, charLevel, numOfThatLevel):
+        levelDict = {charLevel:numOfThatLevel}
+
+        # Validation of calcualting NPCs moved down to ensure this class always...
+        if self.calcNPCs:
+            self._translate_level_dict_into_npc_list(className, levelDict)
+        # ...calculates the total 'population' of each class for the sake of class-based randomization
+        self._update_npc_class_totals(className, levelDict)
+
+
     def _calc_highest_level(self, numDice, numFaces):
         """Return the highest NPC level given numDice-d-numFaces + self.baseCityModifier"""
         # LOCAL VARIABLES
@@ -862,7 +905,7 @@ class GG_City:
                 self.cityDict["city"]["npcs"].append(npcListEntry)
 
 
-    def _update_npc_class_totals(className, levelDict):
+    def _update_npc_class_totals(self, className, levelDict):
         # LOCAL VARIABLES
         classTotal = 0
 
