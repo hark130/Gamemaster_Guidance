@@ -22,8 +22,8 @@ class GG_Bounty(GG_Character):
         # GG_Bounty
         self._reward = None  # Bounty reward in gp
         self._wanted_status = None  # WANTED: Dead or Alive
-        self._class = None  # Bounty's character class
-        self._level = None  # Bounty's character level
+        self._class = None  # Bounty's character class as a str
+        self._level = None  # Bounty's character level as an int
 
         self._create_bounty()
 
@@ -79,4 +79,4 @@ class GG_Bounty(GG_Character):
 
     def print_bounty_level(self):
         """Print the bounty's character level"""
-        self._print_something("Level:", self._level)
+        self._print_something("Level:", str(self._level))
