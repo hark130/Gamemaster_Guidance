@@ -36,7 +36,7 @@ class GG_Bounty(GG_Character):
         self._rando_reward()
 
     def _rando_reward(self):
-        self._reward = 0
+        self._reward = self._level * 10
 
     def _rando_wanted_status(self):
         self._wanted_status = random.choice(self.supportedStates)
