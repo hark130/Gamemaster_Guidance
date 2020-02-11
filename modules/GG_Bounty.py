@@ -67,7 +67,7 @@ class GG_Bounty(GG_Character):
 
     def print_reward(self):
         """Print the bounty's reward"""
-        self._print_something("Reward:", str(self._reward))
+        self._print_something("Reward:", str(self._reward) + ' gp')
 
     def print_wanted_status(self):
         """Print the bounty's wanted status"""
