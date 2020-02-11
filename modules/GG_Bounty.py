@@ -11,6 +11,11 @@ from . GG_Globals import print_header
 from . GG_Rando import rand_percent
 
 
+def calculate_exponential_percent(num):
+    """Returns y if num were x on an exponential curve running through points (1, 10) and (20, 90)"""
+    return (10 / math.pow(9, 1/19)) * math.pow(math.pow(9, 1/19), num)
+
+
 class GG_Bounty(GG_Character):
     """Create and print a new bounty"""
 
@@ -43,7 +48,7 @@ class GG_Bounty(GG_Character):
     def _rando_wanted_status(self):
         # This equation returns (1, 10) through (20, 90)
         # Level 1 returns 10%, Level 20 returns 90%
-        chanceDOA = (10 / math.pow(9, 1/19)) * math.pow(math.pow(9, 1/19), self._level)
+        chanceDOA = calculate_exponential_percent(self._level)
         print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
         if rand_percent() <= chanceDOA:
             self._wanted_status = supportedStates[1]
