@@ -1,4 +1,5 @@
 # Standard Imports
+import math
 import random
 
 # Third Party Imports
@@ -7,6 +8,7 @@ import random
 # Local Imports
 from . GG_Character import GG_Character
 from . GG_Globals import print_header
+from . GG_Rando import rand_percent
 
 
 class GG_Bounty(GG_Character):
@@ -39,7 +41,14 @@ class GG_Bounty(GG_Character):
         self._reward = self._level * 10
 
     def _rando_wanted_status(self):
-        self._wanted_status = random.choice(self.supportedStates)
+        # This equation returns (1, 10) through (20, 90)
+        # Level 1 returns 10%, Level 20 returns 90%
+        chanceDOA = (10 / math.pow(9, 1/19)) * math.pow(math.pow(9, 1/19), self._level)
+        print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
+        if rand_percent() <= chanceDOA:
+            self._wanted_status = supportedStates[1]
+        else:
+            self._wanted_status = supportedStates[0]
 
     def print_public_details(self):
         print_header("Public Details")
