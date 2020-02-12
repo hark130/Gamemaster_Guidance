@@ -52,6 +52,7 @@ class GG_Bounty(GG_Character):
         os.path.join('databases', 'Crimes-03-Severe.txt'),
     ]
     crimeTypes = ['Minor', 'Lesser', 'Serious', 'Severe']
+    complicationDatabase = os.path.join('databases', 'Complications.txt')
 
     def __init__(self, race=None, sex=None, numTraits=3, cityObject=None, minLevel=1):
         """Class constructor"""
@@ -66,16 +67,19 @@ class GG_Bounty(GG_Character):
         self._crime_list = []  # List of bounty's crimes
         self._crime_type = None  # 0 - Minor, 1 - Lesser, 2 - Serious, 3 - Severe
         self._min_level = minLevel  # Minimum level
+        self._complications = []  # List of potential complications to spice up the bounty
         self._create_bounty()
 
     def _create_bounty(self):
-        # Level
+        # Class and Level
         (self._class, self._level) = self.cityObj.rando_npc_class_level(self._min_level)
         # Crime
         self._rando_crime()
         # Wanted Status
         self._rando_wanted_status()
         # Complications
+        self._rando_complications()
+        # Reward
         self._rando_reward()
 
     def _rando_crime(self):
@@ -101,12 +105,15 @@ class GG_Bounty(GG_Character):
         # This equation returns (1, 10) through (20, 90)
         # Level 1 returns 10%, Level 20 returns 90%
         chanceDOA = calculate_exponential_percent(self._level)
-        print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
+        # print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
         if rand_percent() <= chanceDOA:
             self._wanted_status = self.supportedStates[1]
         else:
             self._wanted_status = self.supportedStates[0]
 
+    def _rando_complications(self):
+        self._complications = pick_entries(self.complicationDatabase, 3)
+            
     def _rando_reward(self):
         # LOCAL VARIABLES
         aliveReward = self._level * 10  # Starting point
@@ -165,6 +172,7 @@ class GG_Bounty(GG_Character):
         self.print_bounty_level()
         self.print_notes()
         self.print_traits()
+        self.print_complications()
 
     def print_all_details(self):
         print_header("BOUNTY DETAILS")
@@ -193,6 +201,16 @@ class GG_Bounty(GG_Character):
                 self._print_something("Crimes:", self.crimeTypes[self._crime_type])
                 for crime in self._crime_list:
                     self._print_something("", crime)
+                    
+    def print_complications(self):
+        """Print the complications listed for the bounty"""
+        if self._complications:
+            if len(self._complications) == 1:
+                self._print_something("Complication:", self._complications[0])
+            else:
+                self._print_something("Complications:", "")
+                for complication in self._complications:
+                    self._print_something("", complication)
 
     def print_bounty_level(self):
         """Print the bounty's character level"""
