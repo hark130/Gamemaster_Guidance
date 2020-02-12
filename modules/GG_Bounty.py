@@ -1,5 +1,6 @@
 # Standard Imports
 import math
+import os
 import random
 
 # Third Party Imports
@@ -7,6 +8,7 @@ import random
 
 # Local Imports
 from . GG_Character import GG_Character
+from . GG_File_IO import pick_entries
 from . GG_Globals import print_header
 from . GG_Rando import rand_percent
 
@@ -21,6 +23,35 @@ class GG_Bounty(GG_Character):
 
     supportedStates = ["Alive", "Dead or Alive"]
     deadRewardPercents = [.25, .5, 1]
+    crimePercents = {
+        1: [75,  15,  5,   5 ],
+        2: [70,  17,  7,   6 ],
+        3: [65,  19,  9,   7 ],
+        4: [60,  21,  11,  8 ],
+        5: [55,  23,  13,  9 ],
+        6: [50,  25,  15,  10],
+        7: [45,  27,  17,  11],
+        8: [40,  29,  19,  12],
+        9: [35,  31,  21,  13],
+        10:[30,  33,  23,  14],
+        11:[25,  33,  25,  17],
+        12:[20,  31,  27,  22],
+        13:[15,  29,  29,  27],
+        14:[10,  27,  31,  32],
+        15:[5,   25,  33,  37],
+        16:[0,   23,  33,  44],
+        17:[0,   21,  31,  48],
+        18:[0,   19,  29,  52],
+        19:[0,   17,  27,  56],
+        20:[0,   15,  25,  60],
+    }
+    crimeDatabases = [
+        os.path.join('databases', 'Crimes-00-Minor.txt'),
+        os.path.join('databases', 'Crimes-01-Lesser.txt'),
+        os.path.join('databases', 'Crimes-02-Serious.txt'),
+        os.path.join('databases', 'Crimes-03-Severe.txt'),
+    ]
+    crimeTypes = ['Minor', 'Lesser', 'Serious', 'Severe']
 
     def __init__(self, race=None, sex=None, numTraits=3, cityObject=None):
         """Class constructor"""
@@ -32,16 +63,48 @@ class GG_Bounty(GG_Character):
         self._wanted_status = None  # WANTED: Dead or Alive
         self._class = None  # Bounty's character class as a str
         self._level = None  # Bounty's character level as an int
-
+        self._crime_list = []  # List of bounty's crimes
+        self._crime_type = None  # 0 - Minor, 1 - Lesser, 2 - Serious, 3 - Severe
         self._create_bounty()
 
     def _create_bounty(self):
         # Level
         (self._class, self._level) = self.cityObj.rando_npc_class_level()
+        # Crime
+        self._rando_crime()
         # Wanted Status
         self._rando_wanted_status()
         # Complications
         self._rando_reward()
+
+    def _rando_crime(self):
+        # LOCAL VARIABLES
+        levelPercents = self.crimePercents[self._level]
+        randoPercent = rand_percent()
+        runningPercent = 0
+        currIndex = -1
+
+        # Resolve Crime
+        for index in range(0,len(levelPercents)):
+            runningPercent += levelPercents[index]
+            if randoPercent <= runningPercent:
+                currIndex = index
+                self._crime_type = index
+                break
+        assert (currIndex > -1), 'Failed to randomize a crime'
+
+        # Randomize Crimes
+        self._crime_list = pick_entries(self.crimeDatabases[currIndex], 3)
+
+    def _rando_wanted_status(self):
+        # This equation returns (1, 10) through (20, 90)
+        # Level 1 returns 10%, Level 20 returns 90%
+        chanceDOA = calculate_exponential_percent(self._level)
+        print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
+        if rand_percent() <= chanceDOA:
+            self._wanted_status = self.supportedStates[1]
+        else:
+            self._wanted_status = self.supportedStates[0]
 
     def _rando_reward(self):
         # LOCAL VARIABLES
@@ -52,7 +115,7 @@ class GG_Bounty(GG_Character):
         
         # ADJUST REWARD
         # Standard Variance
-        # TO DO: DON'T DO NOW... We don't want the PCs deciphering NPC level based on bounty reward
+        aliveReward = aliveReward * (1 + (self._crime_type * .1))
         # Complications
         # TO DO: DON'T DO NOW
         # Wanted Status
@@ -83,16 +146,6 @@ class GG_Bounty(GG_Character):
         
         self._reward = deadReward + str(aliveReward)
 
-    def _rando_wanted_status(self):
-        # This equation returns (1, 10) through (20, 90)
-        # Level 1 returns 10%, Level 20 returns 90%
-        chanceDOA = calculate_exponential_percent(self._level)
-        print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
-        if rand_percent() <= chanceDOA:
-            self._wanted_status = self.supportedStates[1]
-        else:
-            self._wanted_status = self.supportedStates[0]
-
     def print_public_details(self):
         print_header("Public Details")
         self.print_name()
@@ -104,6 +157,7 @@ class GG_Bounty(GG_Character):
     def print_private_details(self):
         print_header("Private Details")
         self.print_bounty_class()
+        self.print_crimes()
 
     def print_gm_details(self):
         print_header("GM Details")
@@ -128,6 +182,16 @@ class GG_Bounty(GG_Character):
     def print_bounty_class(self):
         """Print the bounty's character class"""
         self._print_something("Class:", self._class)
+
+    def print_crimes(self):
+        """Print the crimes listed for the bounty"""
+        if self._crime_list:
+            if len(self._crime_list) == 1:
+                self._print_something("Crime:", self._crime_list[0] + f" {self.crimeTypes[self._crime_type]}")
+            else:
+                self._print_something("Crimes:", self.crimeTypes[self._crime_type])
+                for crime in self._crime_list:
+                    self._print_something("", crime)
 
     def print_bounty_level(self):
         """Print the bounty's character level"""
