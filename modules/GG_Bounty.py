@@ -56,7 +56,7 @@ class GG_Bounty(GG_Character):
         # Complications
         # TO DO: DON'T DO NOW
         # Wanted Status
-        if self._wanted_status == supportedStates[1]:
+        if self._wanted_status == self.supportedStates[1]:
             # Higher the number, less of a chance for a split
             splitChance = 100 - calculate_exponential_percent(self._level)
             # Randomize a percent
@@ -65,17 +65,17 @@ class GG_Bounty(GG_Character):
             if randPercent <= splitChance:
                 # Split
                 if (randPercent / 2) <= splitChance:
-                    deadReward = str(deadRewardPercents[0] * aliveReward)
+                    deadReward = str(self.deadRewardPercents[0] * aliveReward)
                     self.charAncestry._add_note('A low percent dead bounty could indicate a low level or dangerous criminal.  '
                                                 '(e.g., court wants to make a public example, already slated for execution, violent'
                                                 ', case/criminal is generating bad press)')
                 elif randPercent <= splitChance:
-                    deadReward = str(deadRewardPercents[1] * aliveReward)
+                    deadReward = str(self.deadRewardPercents[1] * aliveReward)
                     self.charAncestry._add_note('A mid percent dead bounty could indicate a dastardly or slippery felon.  '
                                                 '(e.g., bad crimes, mid-to-high level')
                 else:
                     # No split.  Dead bounty is the same reward as living.
-                    deadReward = str(deadRewardPercents[2] * aliveReward)
+                    deadReward = str(self.deadRewardPercents[2] * aliveReward)
                     self.charAncestry._add_note('Dead and Alive bounty rewards match.')
                     self.charAncestry._add_note('Perhaps, the mark is a nefarious or slippery villain. (e.g., egregious crimes, high level')
                     self.charAncestry._add_note('Maybe someone wants the mark permanently silenced. (e.g., innocent, knows something')
@@ -89,9 +89,9 @@ class GG_Bounty(GG_Character):
         chanceDOA = calculate_exponential_percent(self._level)
         print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
         if rand_percent() <= chanceDOA:
-            self._wanted_status = supportedStates[1]
+            self._wanted_status = self.supportedStates[1]
         else:
-            self._wanted_status = supportedStates[0]
+            self._wanted_status = self.supportedStates[0]
 
     def print_public_details(self):
         print_header("Public Details")
