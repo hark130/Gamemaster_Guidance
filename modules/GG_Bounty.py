@@ -53,7 +53,7 @@ class GG_Bounty(GG_Character):
     ]
     crimeTypes = ['Minor', 'Lesser', 'Serious', 'Severe']
 
-    def __init__(self, race=None, sex=None, numTraits=3, cityObject=None):
+    def __init__(self, race=None, sex=None, numTraits=3, cityObject=None, minLevel=1):
         """Class constructor"""
         # GG_Character
         super().__init__(race, sex, numTraits, cityObject)
@@ -65,11 +65,12 @@ class GG_Bounty(GG_Character):
         self._level = None  # Bounty's character level as an int
         self._crime_list = []  # List of bounty's crimes
         self._crime_type = None  # 0 - Minor, 1 - Lesser, 2 - Serious, 3 - Severe
+        self._min_level = minLevel  # Minimum level
         self._create_bounty()
 
     def _create_bounty(self):
         # Level
-        (self._class, self._level) = self.cityObj.rando_npc_class_level()
+        (self._class, self._level) = self.cityObj.rando_npc_class_level(self._min_level)
         # Crime
         self._rando_crime()
         # Wanted Status
@@ -128,23 +129,23 @@ class GG_Bounty(GG_Character):
             if randPercent <= splitChance:
                 # Split
                 if (randPercent / 2) <= splitChance:
-                    deadReward = str(self.deadRewardPercents[0] * aliveReward)
+                    deadReward = str(int(self.deadRewardPercents[0] * aliveReward))
                     self.charAncestry._add_note('A low percent dead bounty could indicate a low level or dangerous criminal.  '
                                                 '(e.g., court wants to make a public example, already slated for execution, violent'
                                                 ', case/criminal is generating bad press)')
                 elif randPercent <= splitChance:
-                    deadReward = str(self.deadRewardPercents[1] * aliveReward)
+                    deadReward = str(int(self.deadRewardPercents[1] * aliveReward))
                     self.charAncestry._add_note('A mid percent dead bounty could indicate a dastardly or slippery felon.  '
                                                 '(e.g., bad crimes, mid-to-high level')
                 else:
                     # No split.  Dead bounty is the same reward as living.
-                    deadReward = str(self.deadRewardPercents[2] * aliveReward)
+                    deadReward = str(int(self.deadRewardPercents[2] * aliveReward))
                     self.charAncestry._add_note('Dead and Alive bounty rewards match.')
                     self.charAncestry._add_note('Perhaps, the mark is a nefarious or slippery villain. (e.g., egregious crimes, high level')
                     self.charAncestry._add_note('Maybe someone wants the mark permanently silenced. (e.g., innocent, knows something')
                 deadReward = deadReward + '/'  # Truncate the "alive" reward later
         
-        self._reward = deadReward + str(aliveReward)
+        self._reward = deadReward + str(int(aliveReward))
 
     def print_public_details(self):
         print_header("Public Details")
