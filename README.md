@@ -28,7 +28,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 
 	[X] 1. Randomize a name<br>
 	[X] 2. Randomize a character<br>
-	[ ] 3. Randomize a bounty<br>
+	[X] 3. Randomize a bounty<br>
 
 3. Custom Exceptions for new classes
 
@@ -54,12 +54,13 @@ GM aid for Pathfinder 2nd Edition written in Python 3
 	[ ] 7. Add support for magic item generation.  While you're at it, add functionality to print the magic items in the Marketplace as well.<br>
 	[ ] 8. Add support for user-driven "Notable NPCs".  Don't make it mandatory.  Print it if available under DEMOGRAPHICS.<br>
 
-6. Add "quirks" to character creation
+6. Add more to character creation
 
-	[ ] 1. Use:<br>
+	[ ] 1. Add "quirks" to character creation.  Use:<br>
 		- https://nerdsonearth.com/2016/01/creating-memorable-npc-100-character-quirks/<br>
 		- http://dndspeak.com/2017/12/100-personality-quirks/<br>
 		- D&D 3.5 Dungeon Master's Guide P. 128<br>
+	[ ] 2. Add appearance notes to characer creation.  (e.g., neatly pressed clothes, worn and thin jacket, mismatched fashion)
 
 7. Expand the Human ethnicity of Tian
 
