@@ -155,7 +155,6 @@ class GG_Bounty(GG_Character):
         # This equation returns (1, 10) through (20, 90)
         # Level 1 returns 10%, Level 20 returns 90%
         chanceDOA = calculate_exponential_percent(self._level)
-        # print(f'LEVEL: {self._level} % DoA: {chanceDOA}')  # DEBUGGING
         if rand_percent() <= chanceDOA:
             self._wanted_status = self.supportedStates[1]
         else:
@@ -240,9 +239,11 @@ class GG_Bounty(GG_Character):
 
     def print_private_details(self):
         print_header("Private Details")
+        # Known by Union
         self.print_source()
-        self.print_bounty_class()
         self.print_crimes()
+        # Gather Information
+        self.print_bounty_class()
 
     def print_gm_details(self):
         print_header("GM Details")
