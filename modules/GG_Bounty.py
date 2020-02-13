@@ -10,7 +10,7 @@ import random
 from . GG_Character import GG_Character
 from . GG_File_IO import pick_entries
 from . GG_Globals import print_header
-from . GG_Rando import rand_percent
+from . GG_Rando import rand_integer, rand_percent
 
 
 def calculate_exponential_percent(num):
@@ -53,6 +53,53 @@ class GG_Bounty(GG_Character):
     ]
     crimeTypes = ['Minor', 'Lesser', 'Serious', 'Severe']
     complicationDatabase = os.path.join('databases', 'Complications.txt')
+    # {source:{probability:percent 1-100, notes:string}}
+    bountySources = {
+        'City guard':{
+            'Probability':40,
+            'Notes':'Low level crimes, guard being used as a front, or someone was bribed',
+        },
+        'Army':{
+            'Probability':25,
+            'Notes':'Escaped prison, war crimes, hated by army official, violated national law, '
+            'outside city limits, or someone was bribed/enticed/influenced',
+        },
+        'Black Collar Union':{
+            'Probability':10,
+            'Notes':'Former guildsman that seriously violated the code, find a missing guildsman, '
+            'murdered a guildsman, knows something about a missing/murdered guildsman, guild '
+            'was bribed/enticed/influenced to front a quiet abduction, do a favor for an ally, '
+            'or nab a mark at the behest of another guildhouse',
+        },
+        'Wealthy merchant':{
+            'Probability':5,
+            'Notes':'Criminal identified by police but not prioritized, front to find someone who '
+            'knows something, or high-level thief'
+        },
+        'Nobility':{
+            'Probability':5,
+            'Notes':'Intrigue, sweeten the pot to locate a criminal that wronged them, find '
+            'someone who knows something, bribed a magister for nefarious reasons or locate '
+            'fellow nobility run away/missing/kidnapped'
+        },
+        'Criminal':{
+            'Probability':5,
+            'Notes':'Easiest way to find someone is to pay someone and then get/kill/rescue '
+            'them.  Could be informant, spy, ally, or enemy.  Have someone always following the '
+            'PCs.  Actual source will be a front.'
+        },
+        'Clergy':{
+            'Probability':5,
+            'Notes':'Silence a witness, find evil, find a heretic, etc.  Good way for a church '
+            'to get work done without getting their hands dirty.  Source might actually be city.  '
+            'Maybe have the PCs feedbly followed.'
+        },
+        'Magister':{
+            'Probability':5,
+            'Notes':'Sometimes the court needs to get to the bottom of something.  Special '
+            'inquiry, official investigation, shady city guard, shady Black Jackets, etc.'
+        },
+    }
 
     def __init__(self, race=None, sex=None, numTraits=3, cityObject=None, minLevel=1):
         """Class constructor"""
@@ -68,6 +115,7 @@ class GG_Bounty(GG_Character):
         self._crime_type = None  # 0 - Minor, 1 - Lesser, 2 - Serious, 3 - Severe
         self._min_level = minLevel  # Minimum level
         self._complications = []  # List of potential complications to spice up the bounty
+        self._bounty_source = None  # Bounty's source as a str
         self._create_bounty()
 
     def _create_bounty(self):
@@ -81,6 +129,8 @@ class GG_Bounty(GG_Character):
         self._rando_complications()
         # Reward
         self._rando_reward()
+        # Bounty Source
+        self._rando_source()
 
     def _rando_crime(self):
         # LOCAL VARIABLES
@@ -154,6 +204,32 @@ class GG_Bounty(GG_Character):
         
         self._reward = deadReward + str(int(aliveReward))
 
+    def _rando_source(self):
+        # {source:{probability:percent 1-100, notes:string}}
+        # LOCAL VARIABLES
+        totalPercent = 0  # Add all the probabilities here
+        randoNum = 0  # Roll
+
+        # RANDOMIZE A SOURCE
+        # 1. Add all the probabilites
+        for bsValue in self.bountySources.values():
+            totalPercent += bsValue["Probability"]
+        # 2. Randomize a value
+        if totalPercent > 1:
+            randoNum = rand_integer(1, totalPercent)
+        else:
+            raise RuntimeError("Unable to find probabilites in the bounty source dictionary")
+        # 3. Find the entry
+        for (bsKey, bsValue) in self.bountySources.items():
+            if randoNum <= bsValue["Probability"]:
+                self._bounty_source = bsKey
+                self.charAncestry._add_note("Consider... " + bsValue["Notes"])
+                return
+            else:
+                randoNum -= bsValue["Probability"]
+
+        raise RuntimeError("Failed to find a bounty source entry")
+
     def print_public_details(self):
         print_header("Public Details")
         self.print_name()
@@ -164,6 +240,7 @@ class GG_Bounty(GG_Character):
 
     def print_private_details(self):
         print_header("Private Details")
+        self.print_source()
         self.print_bounty_class()
         self.print_crimes()
 
@@ -187,6 +264,10 @@ class GG_Bounty(GG_Character):
     def print_wanted_status(self):
         """Print the bounty's wanted status"""
         self._print_something("Wanted:", self._wanted_status)
+
+    def print_source(self):
+        """Print the source of this bounty"""
+        self._print_something("Wanted By:", self._bounty_source)
 
     def print_bounty_class(self):
         """Print the bounty's character class"""
