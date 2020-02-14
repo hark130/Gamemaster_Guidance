@@ -33,3 +33,7 @@ Mark saves the PC(s).
 Severe weather plagues the trip.
 Mark jumps off something high to escape. (e.g., cliff, waterfall)
 Lynch mob comes for the mark.
+Mark is hiding in subterranean city block.  (e.g., ancient neighborhood paved over, collapsed earthquake area)  Consider homeless, runaways, crimials, monsters, animals, hazards (e.g., tripping, disease, suffocation), etc.
+Mark is hiding in defunct/broken/shutdown/old aqueduct.  Consider homeless, runaways, crimials, monsters, animals, hazards (e.g., tripping, disease, suffocation), etc.
+Mark is hiding in sewer.  Consider homeless, runaways, crimials, monsters, animals, hazards (e.g., tripping, disease, suffocation), etc.
+Mark is hiding in underground labrynth/necropolis/mausoleum.  Consider homeless, runaways, crimials, monsters, animals, hazards (e.g., tripping, disease, suffocation), etc.
