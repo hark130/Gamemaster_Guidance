@@ -100,6 +100,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 4. AESTHETIC: Properly pluralize ancestries when calculating Demographic Populations in GG_City's "print city details" functionality<br>
     [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!<br>
     [ ] 6. AESTHETIC: Rename 'private' GG_City class attributes by prepending them with an underscore
+    [ ] 7. BUG: Bad things happen when you try to use new functionality without a city config file
 
 ## NOTES
 
