@@ -9,7 +9,7 @@ import random
 # Local Imports
 from . GG_Character import GG_Character
 from . GG_File_IO import pick_entries
-from . GG_Globals import print_header
+from . GG_Globals import classList, print_header
 from . GG_Rando import rand_integer, rand_percent
 
 
@@ -116,11 +116,17 @@ class GG_Bounty(GG_Character):
         self._min_level = minLevel  # Minimum level
         self._complications = []  # List of potential complications to spice up the bounty
         self._bounty_source = None  # Bounty's source as a str
+        assert self._min_level > 0, "Minimum level too low"
+        assert self._min_level <= 20, "Minimum level too high"
         self._create_bounty()
 
     def _create_bounty(self):
         # Class and Level
-        (self._class, self._level) = self.cityObj.rando_npc_class_level(self._min_level)
+        if self.cityObj:
+            (self._class, self._level) = self.cityObj.rando_npc_class_level(self._min_level)
+        else:
+            self._class = random.choice(classList)
+            self._level = rand_integer(self._min_level, 20)
         # Crime
         self._rando_crime()
         # Wanted Status
