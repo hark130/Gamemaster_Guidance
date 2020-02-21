@@ -1,0 +1,35 @@
+city:
+  name: Kerse
+  region: Druma
+  # Source: https://pathfinderwiki.com/wiki/Kerse
+  population: 18300
+  # Source: https://pathfinderwiki.com/wiki/Kerse
+  alignment: Lawful Neutral
+  # Source: https://pathfinderwiki.com/wiki/Kerse
+  government: Council
+  qualities:
+    - Holy Site
+    - Prosperous
+    - Superstitious
+    - Pious
+    - Strategic Location
+  ancestry:
+    Dwarf: 15
+    Elf: 2
+    Gnome: 2
+    Goblin: 2
+    Halfling: 5
+    Human:
+      Garundi: 0.625
+      Keleshite: 10
+      Kellid: 15
+      Mwangi: 0.625
+      Nidalese: 0.625
+      Shoanti: 0.625
+      Taldan: 40
+      Tian: 0.125
+      Ulfen: 0.625
+      Varisian: 1.125
+      Vudrani: 0.625
+    Half-Elf: 3
+    Half-Orc: 1
