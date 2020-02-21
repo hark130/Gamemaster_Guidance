@@ -101,6 +101,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!<br>
     [ ] 6. AESTHETIC: Rename 'private' GG_City class attributes by prepending them with an underscore
     [X] 7. BUG: Bad things happen when you try to use new functionality without a city config file
+    [ ] 8. BUG: Providing a population that contains a comma results in an error: ValueError: invalid literal for int() with base 10: '18,300'
 
 ## NOTES
 
