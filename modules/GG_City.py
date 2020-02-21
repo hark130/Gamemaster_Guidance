@@ -55,7 +55,7 @@ class GG_City:
         self.randoAlignment = False
         self.randoGovernment = False
         self.randoPopulation = False
-        self.randoQuality = False
+        self.randoQualities = False
 
         # Use these attributes to indicate a value should be calculated prior to parsing
         self.calcBaseValue = False
