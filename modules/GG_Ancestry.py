@@ -29,9 +29,14 @@ class GG_Ancestry:
         elif race:
             self.ancestry = race
         else:
-            self._rando_ancestry()
+            if self.cityObj:
+                self.ancestry = self.cityObj.rando_city_race()
+            else:
+                self._rando_ancestry()
         # Randomize a Human ethnicity and subgroup (if appropriate)
         if self.ancestry == "Human":
+            # NOTE: CONTINUE HERE.  CONSIDER MOVING CITYOBJ-BASED RANDOMIZATION TO A SEPARATE METHOD...
+            # ...OR A CONTROL FLOW METHOD THAT CALLS THE NO_CITY_RANDO OR CITY_RANDO METHODS
             self._rando_human_ethnicity()
             if self.ethnicity == "Nidalese":
                 self.ethnicity = "Taldan"  # Fix this in User Story #8
