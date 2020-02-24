@@ -158,21 +158,21 @@ def rando_a_bounty_race(cityObj=None):
         if userInput == 1:
             bounty = GG_Bounty(cityObject=cityObj)
         elif userInput == 2:
-            bounty = GG_Bounty(race="Dwarf")
+            bounty = GG_Bounty(race="Dwarf", cityObject=cityObj)
         elif userInput == 3:
-            bounty = GG_Bounty(race="Elf")
+            bounty = GG_Bounty(race="Elf", cityObject=cityObj)
         elif userInput == 4:
-            bounty = GG_Bounty(race="Gnome")
+            bounty = GG_Bounty(race="Gnome", cityObject=cityObj)
         elif userInput == 5:
-            bounty = GG_Bounty(race="Goblin")
+            bounty = GG_Bounty(race="Goblin", cityObject=cityObj)
         elif userInput == 6:
-            bounty = GG_Bounty(race="Halfling")
+            bounty = GG_Bounty(race="Halfling", cityObject=cityObj)
         elif userInput == 7:
-            bounty = GG_Bounty(race="Human")
+            bounty = GG_Bounty(race="Human", cityObject=cityObj)
         elif userInput == 8:
-            bounty = GG_Bounty(race="Half-Elf")
+            bounty = GG_Bounty(race="Half-Elf", cityObject=cityObj)
         elif userInput == 9:
-            bounty = GG_Bounty(race="Half-Orc")
+            bounty = GG_Bounty(race="Half-Orc", cityObject=cityObj)
         elif userInput == 42:
             return None
         else:
