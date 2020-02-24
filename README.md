@@ -99,10 +99,10 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 3. BUG: Verify there's no way for calculated NPC levels to go below 0.  (e.g., smallest city type + lowest roll)<br>
     [ ] 4. AESTHETIC: Properly pluralize ancestries when calculating Demographic Populations in GG_City's "print city details" functionality<br>
     [ ] 5. BUG?: Why am I printing things from the dictionary instead of parsing to class attributes and then printing?!<br>
-    [ ] 6. AESTHETIC: Rename 'private' GG_City class attributes by prepending them with an underscore
-    [X] 7. BUG: Bad things happen when you try to use new functionality without a city config file
-    [ ] 8. BUG: Providing a population that contains a comma results in an error: ValueError: invalid literal for int() with base 10: '18,300'
-    [ ] 9. BUG: GG_Ancestry doesn't use the city object to randomize ancestry.  That means bounties and characters aren't related to the city they're generated from.  FIX SOONEST!
+    [ ] 6. AESTHETIC: Rename 'private' GG_City class attributes by prepending them with an underscore<br>
+    [X] 7. BUG: Bad things happen when you try to use new functionality without a city config file<br>
+    [ ] 8. BUG: Providing a population that contains a comma results in an error: ValueError: invalid literal for int() with base 10: '18,300'<br>
+    [ ] 9. BUG: GG_Ancestry doesn't use the city object to randomize ancestry.  That means bounties and characters aren't related to the city they're generated from.  FIX SOONEST!<br>
 
 ## NOTES
 
