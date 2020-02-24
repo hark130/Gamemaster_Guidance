@@ -16,11 +16,12 @@ class GG_Ancestry:
     genderList = ["Male", "Female"]
 
 
-    def __init__(self, race=None, sex=None):
+    def __init__(self, race=None, sex=None, cityObject=None):
         """Class constructor"""
         self.ethnicity = None
         self.subgroup = None
         self.notes = None
+        self.cityObj = cityObject
 
         # Ancestry
         if race and race not in self.supportedAncestry:
