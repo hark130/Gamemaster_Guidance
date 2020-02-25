@@ -755,6 +755,18 @@ class GG_City:
     def _are_barbarians_common(self):
         return self._determine_human_barbarian_average() >= self._determine_human_ethnic_average()
 
+    def _total_human_ethnic_percentages(self):
+        """Return the total of all human ethnic percentages"""
+        # LOCAL VARIABLES
+        runningPercentTotal = 0.0
+        
+        # GET TOTAL
+        for humanEthnicity in humanEthnicityList:
+            runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
+            
+        # DONE
+        return runningPercentTotal
+    
     def _determine_human_ethnic_average(self):
         """Return the average of all human ethnic percentages"""
         # LOCAL VARIABLES
@@ -764,9 +776,8 @@ class GG_City:
         
         # GET AVERAGE
         # Total
-        for humanEthnicity in humanEthnicityList:
-            runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
-            ethnicTotal += 1
+        runningPercentTotal = self._total_human_ethnic_percentages()
+        ethnicTotal = len(humanEthnicityList)
         # Average
         retAverage = runningPercentTotal / ethnicTotal
         
