@@ -93,3 +93,9 @@ Buff
 Muscular
 Ripped
 Well built
+Short
+Tall
+Petite
+Average height
+Gigantic
+Towering
