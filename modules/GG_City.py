@@ -77,7 +77,6 @@ class GG_City:
     def rando_city_race(self):
         # LOCAL VARIABLES
         totalPercent = float(0.0)
-        randoRace = None
 
         # DETERMINE RACE
         # Add total percents
@@ -92,18 +91,14 @@ class GG_City:
         for race, percent in self.raceLookup.items():
             totalPercent += percent
             if randoPercent <= totalPercent:
-                randoRace = race
-                break
+                return race
 
         # DONE
-        if not randoRace:
-            raise RuntimeError("Race not found")
-        return randoRace
+        raise RuntimeError("Race not found")
     
     def rando_human_ethnicity(self):
         # LOCAL VARIABLES
         totalPercent = float(0.0)  # Running total of percentages
-        randoHumanEthnicity = None
 
         # DETERMINE ETHNICITY
         # Add total percents
@@ -112,14 +107,13 @@ class GG_City:
         randoPercent = rand_float(0.0, totalPercent)
         # Find the match
         totalPercent = 0.0
-#         for race, percent in self.raceLookup.items():
-#             totalPercent += percent
-#             if randoPercent <= totalPercent:
-#                 randoRace = race
-#                 break
+        for humanEthnicity in humanEthnicityList:
+            totalPercent += self.raceLookup[humanEthnicity]
+            if randoPercent <= totalPercent:
+                return humanEthnicity
 
         # DONE
-        
+        raise RuntimeError("Human ethnicity not found")
 
     def print_city_details(self):
         # GENERAL
