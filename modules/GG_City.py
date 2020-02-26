@@ -9,8 +9,8 @@ import random
 
 # Local Imports
 from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList, print_header
+from . import GG_Globals
 from . GG_Rando import rand_float, rand_integer
-from . import GG_Yaml
 
 
 def get_key_value(theDict, theKey):
@@ -812,8 +812,8 @@ class GG_City:
         
         # GET AVERAGE
         # Total
-        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_KELLID]
-        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_ULFEN]
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_KELLID]
+        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_ULFEN]
         # Average
         retAverage = runningPercentTotal / 2
         
@@ -870,7 +870,7 @@ class GG_City:
         return self._determine_human_monk_average() >= self._determine_human_ethnic_average()
 
     def _determine_human_monk_average(self):
-        return self.cityDict["city"]["ancestry"]["Human"][GG_Yaml.GG_CITY_RACE_TIAN]
+        return self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_TIAN]
     
     def _rando_city_npc_rangers(self):
         # LOCAL VARIABLES
@@ -1163,49 +1163,49 @@ class GG_City:
 
     def _parse_city(self):
         """Parse the cityDict contents into attributes"""
-        detailsDict = self.cityDict[GG_Yaml.GG_CITY_KEY]
-        cityEthnicity = detailsDict[GG_Yaml.GG_CITY_RACE_KEY]
+        detailsDict = self.cityDict[GG_Globals.GG_CITY_KEY]
+        cityEthnicity = detailsDict[GG_Globals.GG_CITY_RACE_KEY]
 
-        self.name = detailsDict[GG_Yaml.GG_CITY_NAME_KEY]
-        self.region = detailsDict[GG_Yaml.GG_CITY_REGION_KEY]
-        self.dwarfPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_DWARF)
-        self.elfPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_ELF)
-        self.gnomePercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_GNOME)
-        self.goblinPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_GOBLIN)
-        self.halflingPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_HALFLING)
-        self.garundiPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_GARUNDI)
-        self.keleshitePercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_KELESHITE)
-        self.kellidPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_KELLID)
-        self.mwangiPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_MWANGI)
-        self.nidalesePercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_NIDALESE)
-        self.shoantiPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_SHOANTI)
-        self.taldanPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_TALDAN)
-        self.tianPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_TIAN)
-        self.ulfenPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_ULFEN)
-        self.varisianPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_VARISIAN)
-        self.vudraniPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_VUDRANI)
-        self.halfElfPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_HALF_ELF)
-        self.halfOrcPercent = get_key_value(cityEthnicity, GG_Yaml.GG_CITY_RACE_HALF_ORC)
+        self.name = detailsDict[GG_Globals.GG_CITY_NAME_KEY]
+        self.region = detailsDict[GG_Globals.GG_CITY_REGION_KEY]
+        self.dwarfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_DWARF)
+        self.elfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_ELF)
+        self.gnomePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GNOME)
+        self.goblinPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GOBLIN)
+        self.halflingPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALFLING)
+        self.garundiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GARUNDI)
+        self.keleshitePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_KELESHITE)
+        self.kellidPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_KELLID)
+        self.mwangiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_MWANGI)
+        self.nidalesePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_NIDALESE)
+        self.shoantiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_SHOANTI)
+        self.taldanPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_TALDAN)
+        self.tianPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_TIAN)
+        self.ulfenPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_ULFEN)
+        self.varisianPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_VARISIAN)
+        self.vudraniPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_VUDRANI)
+        self.halfElfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ELF)
+        self.halfOrcPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ORC)
 
         self.raceLookup = {
-            GG_Yaml.GG_CITY_RACE_DWARF:self.dwarfPercent,
-            GG_Yaml.GG_CITY_RACE_ELF:self.elfPercent,
-            GG_Yaml.GG_CITY_RACE_GNOME:self.gnomePercent,
-            GG_Yaml.GG_CITY_RACE_GOBLIN:self.goblinPercent,
-            GG_Yaml.GG_CITY_RACE_HALFLING:self.halflingPercent,
-            GG_Yaml.GG_CITY_RACE_GARUNDI:self.garundiPercent,
-            GG_Yaml.GG_CITY_RACE_KELESHITE:self.keleshitePercent,
-            GG_Yaml.GG_CITY_RACE_KELLID:self.kellidPercent,
-            GG_Yaml.GG_CITY_RACE_MWANGI:self.mwangiPercent,
-            GG_Yaml.GG_CITY_RACE_NIDALESE:self.nidalesePercent,
-            GG_Yaml.GG_CITY_RACE_SHOANTI:self.shoantiPercent,
-            GG_Yaml.GG_CITY_RACE_TALDAN:self.taldanPercent,
-            GG_Yaml.GG_CITY_RACE_TIAN:self.tianPercent,
-            GG_Yaml.GG_CITY_RACE_ULFEN:self.ulfenPercent,
-            GG_Yaml.GG_CITY_RACE_VARISIAN:self.varisianPercent,
-            GG_Yaml.GG_CITY_RACE_VUDRANI:self.vudraniPercent,
-            GG_Yaml.GG_CITY_RACE_HALF_ELF:self.halfElfPercent,
-            GG_Yaml.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
+            GG_Globals.GG_CITY_RACE_DWARF:self.dwarfPercent,
+            GG_Globals.GG_CITY_RACE_ELF:self.elfPercent,
+            GG_Globals.GG_CITY_RACE_GNOME:self.gnomePercent,
+            GG_Globals.GG_CITY_RACE_GOBLIN:self.goblinPercent,
+            GG_Globals.GG_CITY_RACE_HALFLING:self.halflingPercent,
+            GG_Globals.GG_CITY_RACE_GARUNDI:self.garundiPercent,
+            GG_Globals.GG_CITY_RACE_KELESHITE:self.keleshitePercent,
+            GG_Globals.GG_CITY_RACE_KELLID:self.kellidPercent,
+            GG_Globals.GG_CITY_RACE_MWANGI:self.mwangiPercent,
+            GG_Globals.GG_CITY_RACE_NIDALESE:self.nidalesePercent,
+            GG_Globals.GG_CITY_RACE_SHOANTI:self.shoantiPercent,
+            GG_Globals.GG_CITY_RACE_TALDAN:self.taldanPercent,
+            GG_Globals.GG_CITY_RACE_TIAN:self.tianPercent,
+            GG_Globals.GG_CITY_RACE_ULFEN:self.ulfenPercent,
+            GG_Globals.GG_CITY_RACE_VARISIAN:self.varisianPercent,
+            GG_Globals.GG_CITY_RACE_VUDRANI:self.vudraniPercent,
+            GG_Globals.GG_CITY_RACE_HALF_ELF:self.halfElfPercent,
+            GG_Globals.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
         }
 
         # GENERAL
