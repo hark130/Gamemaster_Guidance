@@ -1,0 +1,32 @@
+# Adjectives used to describe the structure of a face
+square
+round
+oblong
+oval
+elongated
+narrow
+heart-shaped
+catlike
+wolfish
+high forehead
+broad forehead
+prominent brow ridge
+protruding brow bone
+sharp cheekbones
+high cheekbones
+angular cheekbones
+hollow cheeks
+square jaw
+chiseled
+sculpted
+craggy
+soft
+jowly
+jutting chin
+pointed chin
+weak chin
+receding chin
+double chin
+cleft chin
+dimple in chin
+visible Adam’s apple
