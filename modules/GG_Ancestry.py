@@ -320,7 +320,7 @@ class GG_Ancestry:
     
     def _rando_human_city_ethnicity(self):
         """Initialize the ethnicity attribute from the city object"""
-        self.ethnicity = self._get_human_ethnicity()  # PLACEHOLDER TIL GG_CITY FUNCTIONALITY IS FINISHED
+        self.ethnicity = self.cityObj.rando_human_ethnicity()
         
 
     def _rando_mwangi_subgroup(self):
