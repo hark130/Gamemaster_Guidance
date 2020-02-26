@@ -1,0 +1,49 @@
+# Adjectives used to generally describe skin
+# Some of these are better for the face, and some are better for other parts of the body.
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+lined
+wrinkled
+seamed
+leathery
+sagging
+drooping
+loose
+clear
+smooth
+silken
+satiny
+dry
+flaky
+scaly
+delicate
+thin
+translucent
+luminescent
+baby-soft
+flawless
+poreless
+with large pores
+glowing
+dewy
+dull
+velvety
+fuzzy
+rough
+uneven
+mottled
+dimpled
+doughy
+firm
+freckled
+pimply
+pockmarked
+blemished
+pitted
+scarred
+bruised
+veined
+scratched
+sunburned
+weather-beaten
+raw
+tattooed
