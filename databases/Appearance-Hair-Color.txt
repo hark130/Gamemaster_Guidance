@@ -41,3 +41,12 @@ flaxen
 fair-haired
 bleached
 platinum
+# Copied from: https://examples.yourdictionary.com/examples-of-physical-characteristics.html
+Blond
+Fair
+Auburn
+Red
+Brown
+Black
+Grey
+White
