@@ -75,3 +75,21 @@ Herculean
 broad-shouldered
 sloping shoulders
 bowlegged
+# Copied from: https://examples.yourdictionary.com/examples-of-physical-characteristics.html
+Plump
+Stocky
+Overweight
+Fat
+Pudgy
+Medium build
+Athletic
+Slender
+Lanky
+Fit
+Slim
+Trim
+Skinny
+Buff
+Muscular
+Ripped
+Well built
