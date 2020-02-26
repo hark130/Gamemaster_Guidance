@@ -25,7 +25,7 @@ class GG_Ancestry:
 
         # Ancestry
         if race and race not in self.supportedAncestry:
-            raise RuntimeError("Unsupported race")
+            raise RuntimeError(f"Unsupported race: {race}")
         elif race:
             self.ancestry = race
         else:
