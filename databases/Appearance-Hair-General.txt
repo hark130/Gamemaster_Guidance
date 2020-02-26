@@ -61,3 +61,15 @@ bouncy
 wispy
 fine
 thinning
+# Copied from: https://examples.yourdictionary.com/examples-of-physical-characteristics.html
+Long
+Puffy
+Matted
+Short
+Curly
+Frizzy
+Wavy
+Permed
+Straight
+Bald
+Receding
