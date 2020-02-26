@@ -1,0 +1,13 @@
+# Facial Hair (or lack thereof)
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+clean-shaven
+smooth-shaven
+beard
+neckbeard
+goatee
+moustache
+sideburns
+mutton-chop sideburns
+stubble
+a few days’ growth of beard
+five o’ clock shadow
