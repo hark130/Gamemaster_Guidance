@@ -1,4 +1,5 @@
 # Adjectives used to describe the structure of a face
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
 square
 round
 oblong
