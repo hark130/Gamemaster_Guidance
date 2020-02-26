@@ -47,3 +47,10 @@ sunburned
 weather-beaten
 raw
 tattooed
+# Copied from: https://examples.yourdictionary.com/examples-of-physical-characteristics.html
+Bronzed
+Tan
+Pimply
+Freckles
+Spots
+Pimples
