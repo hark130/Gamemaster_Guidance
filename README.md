@@ -102,7 +102,8 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 6. AESTHETIC: Rename 'private' GG_City class attributes by prepending them with an underscore<br>
     [X] 7. BUG: Bad things happen when you try to use new functionality without a city config file<br>
     [ ] 8. BUG: Providing a population that contains a comma results in an error: ValueError: invalid literal for int() with base 10: '18,300'<br>
-    [ ] 9. BUG: GG_Ancestry doesn't use the city object to randomize ancestry.  That means bounties and characters aren't related to the city they're generated from.  FIX SOONEST!<br>
+    [X] 9. BUG: GG_Ancestry doesn't use the city object to randomize ancestry.  That means bounties and characters aren't related to the city they're generated from.  FIX SOONEST!<br>
+    [ ] 10. BUG: Some names have two spaces in them and it's annoying<br>
 
 ## NOTES
 

@@ -16,25 +16,31 @@ class GG_Ancestry:
     genderList = ["Male", "Female"]
 
 
-    def __init__(self, race=None, sex=None):
+    def __init__(self, race=None, sex=None, cityObject=None):
         """Class constructor"""
         self.ethnicity = None
         self.subgroup = None
         self.notes = None
+        self.cityObj = cityObject
 
         # Ancestry
         if race and race not in self.supportedAncestry:
-            raise RuntimeError("Unsupported race")
+            raise RuntimeError(f"Unsupported race: {race}")
         elif race:
             self.ancestry = race
         else:
-            self._rando_ancestry()
+            if self.cityObj:
+                self._rando_city_ancestry()
+            else:
+                self._rando_ancestry()
         # Randomize a Human ethnicity and subgroup (if appropriate)
-        if self.ancestry == "Human":
+        if self.ancestry == "Human" and self.cityObj:
+            self._rando_human_city_ethnicity()
+        elif self.ancestry == "Human":
             self._rando_human_ethnicity()
-            if self.ethnicity == "Nidalese":
-                self.ethnicity = "Taldan"  # Fix this in User Story #8
-            self._rando_human_subgroup()
+        if self.ethnicity == "Nidalese":
+            self.ethnicity = "Taldan"  # Fix this in User Story #8
+        self._rando_human_subgroup()
 
         # Gender
         if sex and sex not in self.genderList:
@@ -76,6 +82,11 @@ class GG_Ancestry:
         """Initialize the ancestry attribute"""
         self.ancestry = random.choice(self.supportedAncestry)
 
+
+    def _rando_city_ancestry(self):
+        """Initialize the ancestry attribute using city object"""
+        self.ancestry = self.cityObj.rando_city_race()
+        
 
     def _rando_gender(self):
         """Initialize the gender attribute"""
@@ -306,6 +317,11 @@ class GG_Ancestry:
         """Initialize the ethnicity attribute"""
         self.ethnicity = self._get_human_ethnicity()
 
+    
+    def _rando_human_city_ethnicity(self):
+        """Initialize the ethnicity attribute from the city object"""
+        self.ethnicity = self.cityObj.rando_human_ethnicity()
+        
 
     def _rando_mwangi_subgroup(self):
         """Initialize the subgroup attribute"""

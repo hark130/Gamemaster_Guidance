@@ -97,21 +97,21 @@ def rando_a_character(cityObj=None):
         if userInput == 1:
             character = GG_Character(cityObject=cityObj)
         elif userInput == 2:
-            character = GG_Character(race="Dwarf")
+            character = GG_Character(race="Dwarf", cityObject=cityObj)
         elif userInput == 3:
-            character = GG_Character(race="Elf")
+            character = GG_Character(race="Elf", cityObject=cityObj)
         elif userInput == 4:
-            character = GG_Character(race="Gnome")
+            character = GG_Character(race="Gnome", cityObject=cityObj)
         elif userInput == 5:
-            character = GG_Character(race="Goblin")
+            character = GG_Character(race="Goblin", cityObject=cityObj)
         elif userInput == 6:
-            character = GG_Character(race="Halfling")
+            character = GG_Character(race="Halfling", cityObject=cityObj)
         elif userInput == 7:
-            character = GG_Character(race="Human")
+            character = GG_Character(race="Human", cityObject=cityObj)
         elif userInput == 8:
-            character = GG_Character(race="Half-Elf")
+            character = GG_Character(race="Half-Elf", cityObject=cityObj)
         elif userInput == 9:
-            character = GG_Character(race="Half-Orc")
+            character = GG_Character(race="Half-Orc", cityObject=cityObj)
         elif userInput == 42:
             return userInput
         else:
@@ -158,21 +158,21 @@ def rando_a_bounty_race(cityObj=None):
         if userInput == 1:
             bounty = GG_Bounty(cityObject=cityObj)
         elif userInput == 2:
-            bounty = GG_Bounty(race="Dwarf")
+            bounty = GG_Bounty(race="Dwarf", cityObject=cityObj)
         elif userInput == 3:
-            bounty = GG_Bounty(race="Elf")
+            bounty = GG_Bounty(race="Elf", cityObject=cityObj)
         elif userInput == 4:
-            bounty = GG_Bounty(race="Gnome")
+            bounty = GG_Bounty(race="Gnome", cityObject=cityObj)
         elif userInput == 5:
-            bounty = GG_Bounty(race="Goblin")
+            bounty = GG_Bounty(race="Goblin", cityObject=cityObj)
         elif userInput == 6:
-            bounty = GG_Bounty(race="Halfling")
+            bounty = GG_Bounty(race="Halfling", cityObject=cityObj)
         elif userInput == 7:
-            bounty = GG_Bounty(race="Human")
+            bounty = GG_Bounty(race="Human", cityObject=cityObj)
         elif userInput == 8:
-            bounty = GG_Bounty(race="Half-Elf")
+            bounty = GG_Bounty(race="Half-Elf", cityObject=cityObj)
         elif userInput == 9:
-            bounty = GG_Bounty(race="Half-Orc")
+            bounty = GG_Bounty(race="Half-Orc", cityObject=cityObj)
         elif userInput == 42:
             return None
         else:
