@@ -1,0 +1,63 @@
+# Hair – General
+# I threw a few hairstyles in here, though not many.
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+long
+short
+shoulder-length
+loose
+limp
+dull
+shiny
+glossy
+sleek
+smooth
+luminous
+lustrous
+spiky
+stringy
+shaggy
+tangled
+messy
+tousled
+windblown
+unkempt
+bedhead
+straggly
+neatly combed
+parted
+slicked down / slicked back
+cropped
+clipped
+buzzed / buzz cut
+crewcut
+bob
+mullet
+curly
+bushy
+frizzy
+wavy
+straight
+lanky
+dry
+oily
+greasy
+layers
+corkscrews
+spirals
+ringlets
+braids
+widow’s peak
+bald
+shaved
+comb-over
+afro
+thick
+luxuriant
+voluminous
+full
+wild
+untamed
+bouncy
+wispy
+fine
+thinning
