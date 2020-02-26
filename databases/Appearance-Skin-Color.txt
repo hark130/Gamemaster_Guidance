@@ -34,3 +34,11 @@ florid
 russet
 tawny
 fawn
+# Copied from: https://examples.yourdictionary.com/examples-of-physical-characteristics.html
+Dark
+Light
+Fair
+Rosy
+Olive
+Pale
+Pasty
