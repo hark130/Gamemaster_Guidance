@@ -65,6 +65,7 @@ class GG_City:
 
     def load(self):
         """Entry level method: validate and parse the dictionary"""
+        # print("CALLED GG_CITY.LOAD()")  # DEBUGGING
         self._validate_city()  # Verify all input
         self._complete_city()  # Fill in the blanks
         # Everything prior to this method call should operate on the cityDict
@@ -103,12 +104,18 @@ class GG_City:
         # DETERMINE ETHNICITY
         # Add total percents
         totalPercent = self._total_human_ethnic_percentages()
+        print(f'CITY DICT: {self.cityDict}')  # DEBUGGING
+        print(f'RACE LOOKUP: {self.raceLookup}')  # DEBUGGING
+        print(f'TOTAL PERCENT: {totalPercent}')  # DEBUGGING
         # Rando a number
         randoPercent = rand_float(0.0, totalPercent)
+        print(f'RANDO PERCENT: {randoPercent}')  # DEBUGGING
         # Find the match
         totalPercent = 0.0
         for humanEthnicity in humanEthnicityList:
             totalPercent += self.raceLookup[humanEthnicity]
+            print(f'HUMAN ETHNICITY {humanEthnicity} has percent {self.raceLookup[humanEthnicity]}')  # DEBUGGING
+            print(f'TOTAL PERCENT: {totalPercent}')  # DEBUGGING
             if randoPercent <= totalPercent:
                 return humanEthnicity
 
@@ -1159,6 +1166,7 @@ class GG_City:
         """Parse the cityDict contents into attributes"""
         detailsDict = self.cityDict[GG_Globals.GG_CITY_KEY]
         cityEthnicity = detailsDict[GG_Globals.GG_CITY_RACE_KEY]
+        print(f'CITY ETHNICITY: {cityEthnicity}')  # DEBUGGING
 
         self.name = detailsDict[GG_Globals.GG_CITY_NAME_KEY]
         self.region = detailsDict[GG_Globals.GG_CITY_REGION_KEY]
@@ -1167,17 +1175,17 @@ class GG_City:
         self.gnomePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GNOME)
         self.goblinPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GOBLIN)
         self.halflingPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALFLING)
-        self.garundiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GARUNDI)
-        self.keleshitePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_KELESHITE)
-        self.kellidPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_KELLID)
-        self.mwangiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_MWANGI)
-        self.nidalesePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_NIDALESE)
-        self.shoantiPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_SHOANTI)
-        self.taldanPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_TALDAN)
-        self.tianPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_TIAN)
-        self.ulfenPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_ULFEN)
-        self.varisianPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_VARISIAN)
-        self.vudraniPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_VUDRANI)
+        self.garundiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_GARUNDI)
+        self.keleshitePercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_KELESHITE)
+        self.kellidPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_KELLID)
+        self.mwangiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_MWANGI)
+        self.nidalesePercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_NIDALESE)
+        self.shoantiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_SHOANTI)
+        self.taldanPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_TALDAN)
+        self.tianPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_TIAN)
+        self.ulfenPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_ULFEN)
+        self.varisianPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_VARISIAN)
+        self.vudraniPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_VUDRANI)
         self.halfElfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ELF)
         self.halfOrcPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ORC)
 
