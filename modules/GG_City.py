@@ -91,7 +91,10 @@ class GG_City:
         for race, percent in self.raceLookup.items():
             totalPercent += percent
             if randoPercent <= totalPercent:
-                return race
+                if race in humanEthnicityList:
+                    return GG_Globals.GG_CITY_RACE_HUMAN
+                else:
+                    return race
 
         # DONE
         raise RuntimeError("Race not found")
