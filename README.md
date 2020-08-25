@@ -104,6 +104,7 @@ GM aid for Pathfinder 2nd Edition written in Python 3
     [ ] 8. BUG: Providing a population that contains a comma results in an error: ValueError: invalid literal for int() with base 10: '18,300'<br>
     [X] 9. BUG: GG_Ancestry doesn't use the city object to randomize ancestry.  That means bounties and characters aren't related to the city they're generated from.  FIX SOONEST!<br>
     [ ] 10. BUG: Some names have two spaces in them and it's annoying<br>
+    [ ] 11. BUG: Oppara config file prints out "1092 Elfs; 1092 Elfs; -346 other" for City Details<br>
 
 ## NOTES
 

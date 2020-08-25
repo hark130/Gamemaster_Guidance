@@ -1,0 +1,33 @@
+city:
+  name: Oppara
+  region: Taldor
+  # Source: https://pathfinderwiki.com/wiki/Oppara
+  population: 109280
+  # Source: https://pathfinderwiki.com/wiki/Oppara
+  alignment: Neutral
+  # Source: https://pathfinderwiki.com/wiki/Oppara
+  government: Overlord
+  qualities:
+    - Academic
+    - Prosperous
+    - Strategic Location
+  ancestry:
+    Dwarf: 3.25
+    Elf: 1
+    Gnome: 2.25
+    Goblin: 0.5
+    Halfling: 0.25
+    Human:
+      Garundi: 1
+      Keleshite: 20
+      Kellid: 0.01
+      Mwangi: 1
+      Nidalese: 0.5
+      Shoanti: 0.05
+      Taldan: 70
+      Tian: 0.1
+      Ulfen: 0.01
+      Varisian: 0.05
+      Vudrani: 0.1
+    Half-Elf: 1
+    Half-Orc: 0.25
