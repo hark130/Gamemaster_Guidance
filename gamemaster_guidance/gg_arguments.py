@@ -1,33 +1,45 @@
-"""Implements the packages argument parser."""
+"""Implements the package's argument parser."""
 
 # Standard
-import getopt
-import sys
+from pathlib import Path
+from typing import Dict, Final
+import argparse
 # Third Party
 # Local
 
 
-def print_help(script_name):
-    """Print the usage message."""
-    print("\n" + script_name + " -c <cityfile>\n")
+# ARGUMENT DICTIONARY KEYS
+ARG_DICT_KEY_CITY: Final[str] = 'cityfile'  # -c, --cityfile
+ARG_DICT_KEY_GANG: Final[str] = 'gangfile'  # -g, --gangfile
 
 
-def parse_arguments(arg_list):
-    """Returns script arguments in a dictionary."""
-    # LOCAL VARIABLES
+def parse_arguments() -> Dict[str, Path]:
+    """Parses the arguments and returns the values in a dictionary."""
+    parser = argparse.ArgumentParser(prog='GAMEMASTER GUIDE (GAGU)',
+                                     description='Gamemaster aid for Pathfinder 2nd Edition')
+    parser.add_argument('-c', '--cityfile', action='store', required=False,
+                        help='Filename of a city configuration file')
+    parser.add_argument('-g', '--gangfile', action='store', required=False,
+                        help='Filename of a gang configuration file')
+    parsed_args = parser.parse_args()
     ret_dict = {}
 
-    try:
-        opts, _ = getopt.getopt(arg_list[1:], "hc:", ["cityfile="])
-    except getopt.GetoptError:
-        print_help(arg_list[0])
-        sys.exit(2)
-    else:
-        for opt, arg in opts:
-            if opt == "-h":
-                print_help(arg_list[0])
-                sys.exit()
-            elif opt in ("-c", "--cityfile"):
-                ret_dict["cityfile"] = arg
+    # City file
+    if parsed_args.cityfile:
+        ret_dict[ARG_DICT_KEY_CITY] = Path(parsed_args.cityfile)
+    # Gang file
+    if parsed_args.gangfile:
+        ret_dict[ARG_DICT_KEY_CITY] = Path(parsed_args.gangfile)
+
+    for value in ret_dict.values():
+        _validate_path(value)
 
     return ret_dict
+
+
+def _validate_path(filename: Path) -> None:
+    """Validate that filename exists as a file."""
+    if not filename.exists():
+        raise FileNotFoundError(f'Unable to find {filename.absolute()}')
+    if not filename.is_file():
+        raise OSError(f'{filename.absolute()} is not a file')
