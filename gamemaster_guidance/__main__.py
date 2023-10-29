@@ -2,7 +2,6 @@
 
 # Standard
 import locale
-import sys
 # Third Party
 # Local
 from gamemaster_guidance.gg_arguments import parse_arguments
