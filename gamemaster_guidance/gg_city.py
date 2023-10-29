@@ -9,6 +9,7 @@ import random
 from gamemaster_guidance.gg_globals import (ANCESTRY_LIST, CITY_MODIFIER_LIST, CITY_SIZE_LIMITS,
                                             HUMAN_ETHNICITY_LIST, print_header)
 from gamemaster_guidance.gg_rando import rand_float, rand_integer
+import gamemaster_guidance.gg_globals as GG_Globals  # For backwards compatibility
 
 
 def get_key_value(theDict, theKey):
