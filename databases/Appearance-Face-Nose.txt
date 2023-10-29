@@ -1,0 +1,21 @@
+# Nose
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+#
+# According to this article in the Daily Mail, there are fourteen kinds of noses.
+# http://www.dailymail.co.uk/sciencetech/article-2013699/There-14-types-nose--yours.html
+snub
+dainty
+button
+turned-up
+long
+broad
+thin
+straight
+pointed
+crooked
+aquiline
+Roman
+bulbous
+flared
+hawk
+strong

@@ -18,7 +18,7 @@ class GG_Character:
             race = self.cityObj.rando_city_race()
 
         # Ancestry
-        self.charAncestry = GG_Ancestry(race, sex)
+        self.charAncestry = GG_Ancestry(race, sex, cityObject)
         # Traits
         dbFilename = os.path.join(os.getcwd(), "databases", "Traits.txt")
         self.traitList = pick_entries(dbFilename, numTraits)

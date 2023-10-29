@@ -1,0 +1,115 @@
+# city:
+#   name: Some_City
+#   region: Some_Region
+#   ethnicity:
+#     Dwarf: 12.5
+#     Elf: 12.5
+#     Gnome: 12.5
+#     Goblin: 12.5
+#     Halfling: 12.5
+#     Human:
+#       Garundi: 1.136
+#       Keleshite: 1.136
+#       Kellid: 1.136
+#       Mwangi: 1.136
+#       Nidalese: 1.136
+#       Shoanti: 1.136
+#       Taldan: 1.136
+#       Tian: 1.136
+#       Ulfen: 1.136
+#       Varisian: 1.136
+#       Vudrani: 1.136
+#     Half-Elf: 12.5
+#     Half-Orc: 12.5
+
+city:
+  name: Some_Other_City
+  region: Some_Other_Region
+  ancestry:
+    Dwarf: 20
+    Elf: 5
+    Gnome: 10
+    Goblin: 2.5
+    Halfling: 15
+    Human:
+      Garundi: 2.5
+      Keleshite: 2.5
+      Kellid: 15
+      Mwangi: 2.5
+      Nidalese: 0
+      Shoanti: 2.5
+      Taldan: 5
+      Tian: 0
+      Ulfen: 5
+      Varisian: 2.5
+      Vudrani: 2.5
+    Half-Elf: 5
+    Half-Orc: 2.5
+
+# NOTE: The following entries are mandatory
+# city:
+#   name:
+#   region:
+#   ethnicity:
+#     Dwarf:
+#     Elf:
+#     Gnome:
+#     Goblin:
+#     Halfling:
+#     Human:
+#       Garundi:
+#       Keleshite:
+#       Kellid:
+#       Mwangi:
+#       Nidalese:
+#       Shoanti:
+#       Taldan:
+#       Tian:
+#       Ulfen:
+#       Varisian:
+#       Vudrani:
+#     Half-Elf:
+#     Half-Orc:
+
+# NOTE: The following entries are optional but will be defined if included blank
+#   disadvantages:
+
+# NOTE: The following entries will be randomized by Gamemaster_Guidance if missing
+#   alignment:
+#   government:
+  population: 100
+#   qualities:
+
+# NOTE: The following entries are defined by Gamemaster_Guidance.
+#   base_value:
+#   magic_items:
+#     minor:
+#     medium:
+#     major:
+#   modifiers:
+#     corruption:
+#     crime:
+#     economy:
+#     law:
+#     lore:
+#     society:
+#   npcs:
+#     Adept:
+#     Aristocrat:
+#     Barbarian:
+#     Bard:
+#     Cleric:
+#     Commoner:
+#     Druid:
+#     Expert:
+#     Fighter:
+#     Monk:
+#     Paladin:
+#     Ranger:
+#     Rogue:
+#     Sorcerer:
+#     Warrior:
+#     Wizard:
+#   purchase_limit:
+#   spellcasting:
+#   type:

@@ -1,0 +1,14 @@
+# Eyebrows
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+arched
+straight
+plucked
+sparse
+trim
+dark
+faint
+thin
+thick
+unruly
+bushy
+heavy
