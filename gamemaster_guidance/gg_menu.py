@@ -1,25 +1,34 @@
-# Standard Imports
+"""Implements command-line menu functionality for the package."""
+
+# Standard
+from collections import OrderedDict
+from typing import Final
 import subprocess
-
-# Third Party Imports
+# Third Party
 import platform
+# Local
+from gamemaster_guidance.gg_ancestry import GGAncestry
+from gamemaster_guidance.gg_bounty import GGBounty
+from gamemaster_guidance.gg_character import GGCharacter
+from gamemaster_guidance.gg_city import GG_City
 
-# Local Imports
-from . GG_Ancestry import GG_Ancestry
-from . GG_Bounty import GG_Bounty
-from . GG_Character import GG_Character
-from . GG_City import GG_City
+
+# Lookup of race menu selection to actual race
+RACE_DICT: Final[dict] = OrderedDict([(1, None), (2, 'Dwarf'), (3, 'Elf'), (4, 'Gnome'),
+                                      (5, 'Goblin'), (6, 'Halfling'), (7, 'Human'),
+                                      (8, 'Half-Elf'), (9, 'Half-Orc')])
 
 
 def clear_screen():
-    osName = platform.system()
-    if osName is "Linux" or osName is "Darwin":
-        command = "clear"
-    elif osName is "Windows":
-        command = "cls"
+    """Clear the screen in an operating system friendly way."""
+    os_name = platform.system()
+    if os_name in ('Linux', 'Darwin'):
+        command = 'clear'
+    elif os_name == 'Windows':
+        command = 'cls'
     else:
         for _ in range(0, 60):
-            print("\n")
+            print('\n')
         return
 
     subprocess.call([command], shell=True)
@@ -27,156 +36,130 @@ def clear_screen():
 
 def read_user_input():
     """Read an integer from user input.  Return -1 on error"""
-    userInput = input()
+    user_input = input()
     try:
-        userChoice = int(userInput)
-    except:
-        userChoice = int(-1)
+        user_choice = int(user_input)
+    except (TypeError, ValueError):
+        user_choice = int(-1)
 
-    return userChoice
+    return user_choice
 
 
 def print_race_menu():
-    print("\n")
-    print("  1. Random race")
-    print("  2. Dwarf")
-    print("  3. Elf")
-    print("  4. Gnome")
-    print("  5. Goblin")
-    print("  6. Halfling")
-    print("  7. Human")
-    print("  8. Half-Elf")
-    print("  9. Half-Orc")
-    print(" 42. Main Menu")
-    print("999. Exit")
-    print("Choose an option [999]:")
+    """Print a selection menu of races."""
+    print('\n')
+    for key, value in RACE_DICT.items():
+        if not value:
+            value = 'Random race'
+        print(f'  {key}. {value}')
+    print(' 42. Main Menu')
+    print('999. Exit')
+    print('Choose an option [999]:')
 
 
 def rando_a_name():
+    """Randomize and print a name based on the user's selected race."""
     print_race_menu()
-    userInput = read_user_input()
+    user_input = read_user_input()
 
     try:
-        if userInput == 1:
-            charName = GG_Ancestry()
-        elif userInput == 2:
-            charName = GG_Ancestry(race="Dwarf")
-        elif userInput == 3:
-            charName = GG_Ancestry(race="Elf")
-        elif userInput == 4:
-            charName = GG_Ancestry(race="Gnome")
-        elif userInput == 5:
-            charName = GG_Ancestry(race="Goblin")
-        elif userInput == 6:
-            charName = GG_Ancestry(race="Halfling")
-        elif userInput == 7:
-            charName = GG_Ancestry(race="Human")
-        elif userInput == 8:
-            charName = GG_Ancestry(race="Half-Elf")
-        elif userInput == 9:
-            charName = GG_Ancestry(race="Half-Orc")
-        elif userInput == 42:
-            return userInput
-        else:
-            raise SystemExit("Exiting Gamemaster Guidance")
+        if user_input in RACE_DICT.keys():
+            if not RACE_DICT[user_input]:
+                char_name = GGAncestry()
+            else:
+                char_name = GGAncestry(race=RACE_DICT[user_input])
+        elif user_input != 42:
+            raise SystemExit('Exiting Gamemaster Guidance')
     except RuntimeError as err:
         print(format(err))
         raise err
     else:
-        if charName:
-            print("\n" + charName.return_full_name() + "\n")
+        if char_name:
+            print(f'\n{char_name.return_full_name()}\n')
 
-    return userInput
+    return user_input
 
 
-def rando_a_character(cityObj=None):
+def rando_a_character(city_obj=None):
+    """Randomize and print a character based on ther user's selected race."""
     print_race_menu()
-    userInput = read_user_input()
+    user_input = read_user_input()
 
     try:
-        if userInput == 1:
-            character = GG_Character(cityObject=cityObj)
-        elif userInput == 2:
-            character = GG_Character(race="Dwarf", cityObject=cityObj)
-        elif userInput == 3:
-            character = GG_Character(race="Elf", cityObject=cityObj)
-        elif userInput == 4:
-            character = GG_Character(race="Gnome", cityObject=cityObj)
-        elif userInput == 5:
-            character = GG_Character(race="Goblin", cityObject=cityObj)
-        elif userInput == 6:
-            character = GG_Character(race="Halfling", cityObject=cityObj)
-        elif userInput == 7:
-            character = GG_Character(race="Human", cityObject=cityObj)
-        elif userInput == 8:
-            character = GG_Character(race="Half-Elf", cityObject=cityObj)
-        elif userInput == 9:
-            character = GG_Character(race="Half-Orc", cityObject=cityObj)
-        elif userInput == 42:
-            return userInput
-        else:
-            raise SystemExit("Exiting Gamemaster Guidance")
+        if user_input in RACE_DICT.keys():
+            if not RACE_DICT[user_input]:
+                character = GGCharacter(city_object=city_obj)
+            else:
+                character = GGCharacter(race=RACE_DICT[user_input], city_object=city_obj)
+        elif user_input != 42:
+            raise SystemExit('Exiting Gamemaster Guidance')
     except RuntimeError as err:
         print(format(err))
     else:
         if character:
             character.print_character()
 
+    return user_input
+
 
 def print_bounty_menu():
-    print("\n")
+    """Print the bounty menu."""
+    print('\n')
     print("  1. Choose bounty's minimum level")
     print("  2. Choose bounty's race")
-    print("  3. Clear screen")
-    print(" 42. Main Menu")
-    print("999. Exit")
-    print("Choose an option [999]:")
+    print('  3. Clear screen')
+    print(' 42. Main Menu')
+    print('999. Exit')
+    print('Choose an option [999]:')
 
 
-def rando_a_bounty_level(cityObj=None):
+def rando_a_bounty_level(city_obj=None):
+    """Read user's desired minimum bounty level and return a bounty object."""
     print("\nEnter bounty's minimum level:")
-    minimumLevel = read_user_input()
+    minimum_level = read_user_input()
 
-    if minimumLevel < 1:
-        raise RuntimeError("Level too low")
-    elif minimumLevel > 20:
-        raise RuntimeError("Level too high")
+    if minimum_level < 1:
+        raise RuntimeError('Level too low')
+    if minimum_level > 20:
+        raise RuntimeError('Level too high')
 
     try:
-        bounty = GG_Bounty(cityObject=cityObj, minLevel=minimumLevel)
+        bounty = GGBounty(city_object=city_obj, minLevel=minimum_level)
     except RuntimeError as err:
         print(format(err))
         bounty = None
 
     return bounty
 
-def rando_a_bounty_race(cityObj=None):
+
+def rando_a_bounty_race(city_obj=None):
+    """Randomize and print a bounty race based on ther user's selected race."""
     print_race_menu()
-    userInput = read_user_input()
+    user_input = read_user_input()
 
     try:
-        if userInput == 1:
-            bounty = GG_Bounty(cityObject=cityObj)
-        elif userInput == 2:
-            bounty = GG_Bounty(race="Dwarf", cityObject=cityObj)
-        elif userInput == 3:
-            bounty = GG_Bounty(race="Elf", cityObject=cityObj)
-        elif userInput == 4:
-            bounty = GG_Bounty(race="Gnome", cityObject=cityObj)
-        elif userInput == 5:
-            bounty = GG_Bounty(race="Goblin", cityObject=cityObj)
-        elif userInput == 6:
-            bounty = GG_Bounty(race="Halfling", cityObject=cityObj)
-        elif userInput == 7:
-            bounty = GG_Bounty(race="Human", cityObject=cityObj)
-        elif userInput == 8:
-            bounty = GG_Bounty(race="Half-Elf", cityObject=cityObj)
-        elif userInput == 9:
-            bounty = GG_Bounty(race="Half-Orc", cityObject=cityObj)
-        elif userInput == 42:
+        if user_input == 1:
+            bounty = GGBounty(city_object=city_obj)
+        elif user_input == 2:
+            bounty = GGBounty(race='Dwarf', city_object=city_obj)
+        elif user_input == 3:
+            bounty = GGBounty(race='Elf', city_object=city_obj)
+        elif user_input == 4:
+            bounty = GGBounty(race='Gnome', city_object=city_obj)
+        elif user_input == 5:
+            bounty = GGBounty(race='Goblin', city_object=city_obj)
+        elif user_input == 6:
+            bounty = GGBounty(race='Halfling', city_object=city_obj)
+        elif user_input == 7:
+            bounty = GGBounty(race='Human', city_object=city_obj)
+        elif user_input == 8:
+            bounty = GGBounty(race='Half-Elf', city_object=city_obj)
+        elif user_input == 9:
+            bounty = GGBounty(race='Half-Orc', city_object=city_obj)
+        elif user_input == 42:
             return None
         else:
-            raise SystemExit("Exiting Gamemaster Guidance")
+            raise SystemExit('Exiting Gamemaster Guidance')
     except RuntimeError as err:
         print(format(err))
         bounty = None
@@ -184,22 +167,23 @@ def rando_a_bounty_race(cityObj=None):
     return bounty
 
 
-def rando_a_bounty(cityObj=None):
+def rando_a_bounty(city_obj=None):
+    """Randomize a bounty menu item based on user input."""
     print_bounty_menu()
-    userInput = read_user_input()
+    user_input = read_user_input()
     bounty = None
 
     try:
-        if userInput == 1:
-            bounty = rando_a_bounty_level(cityObj)
-        elif userInput == 2:
-            bounty = rando_a_bounty_race(cityObj)
-        elif userInput == 3:
+        if user_input == 1:
+            bounty = rando_a_bounty_level(city_obj)
+        elif user_input == 2:
+            bounty = rando_a_bounty_race(city_obj)
+        elif user_input == 3:
             clear_screen()
-        elif userInput == 42:
+        elif user_input == 42:
             bounty = None
         else:
-            raise SystemExit("Exiting Gamemaster Guidance")
+            raise SystemExit('Exiting Gamemaster Guidance')
     except RuntimeError as err:
         print(format(err))
     else:
@@ -207,75 +191,81 @@ def rando_a_bounty(cityObj=None):
             clear_screen()
             bounty.print_all_details()
 
+    return user_input
+
+
 def print_city_menu():
-    print("\n")
-    print("  1. Print the city details")
-    print("  2. Print the NPCs")
-    print("  3. Clear screen")
-    print(" 42. Main Menu")
-    print("999. Exit")
-    print("Choose an option [999]:")
+    """Print the city menu."""
+    print('\n')
+    print('  1. Print the city details')
+    print('  2. Print the NPCs')
+    print('  3. Clear screen')
+    print(' 42. Main Menu')
+    print('999. Exit')
+    print('Choose an option [999]:')
 
 
-def city_menu(cityObj):
+def city_menu(city_obj):
+    """Print the city menu and read user input."""
     clear_screen()
-    userInput = None  # Stores user input
+    user_input = None  # Stores user input
 
-    while userInput != 999:
+    while user_input != 999:
         print_city_menu()
-        userInput = read_user_input()
-        if userInput == 1:
-            if cityObj:
+        user_input = read_user_input()
+        if user_input == 1:
+            if city_obj:
                 clear_screen()
-                cityObj.print_city_details()
+                city_obj.print_city_details()
             else:
-                print("\nNo city config provided")
+                print('\nNo city config provided')
                 return 999
-        elif userInput == 2:
-            if cityObj:
+        elif user_input == 2:
+            if city_obj:
                 clear_screen()
-                cityObj.print_city_npcs()
+                city_obj.print_city_npcs()
             else:
-                print("\nNo city config provided")
+                print('\nNo city config provided')
                 return 999
-        elif userInput == 3:
+        elif user_input == 3:
             clear_screen()
-        elif userInput == 42:
-            return userInput
+        elif user_input == 42:
+            return user_input
         else:
             return 999
 
 
-def menu(cityDict=None):
+def menu(city_dict=None):
+    """Top level menu."""
     clear_screen()
-    userInput = 0
-    cityObj = None
+    user_input = 0
+    city_obj = None
 
-    if cityDict:
-        cityObj = GG_City(cityDict)
-        cityObj.load()
+    if city_dict:
+        city_obj = GG_City(city_dict)
+        city_obj.load()
 
-    print("\nWelcome to Gamemaster Guidance")
+    print('\nWelcome to Gamemaster Guidance')
 
-    while userInput != 999:
-        print("\n")
-        print("  1. Randomize a name")
-        print("  2. Randomize a character")
-        print("  3. Randomize a bounty")
-        print("  4. City menu")
-        print("  5. Clear screen")
-        print("999. Exit")
-        print("Choose an option [999]:")
-        userInput = read_user_input()
-        if userInput == 1:
-            userInput = rando_a_name()
-        elif userInput == 2:
-            userInput = rando_a_character(cityObj)
-        elif userInput == 3:
-            userInput = rando_a_bounty(cityObj)
-        elif userInput == 4:
-            userInput = city_menu(cityObj)
-        elif userInput == 5:
+    while user_input != 999:
+        print('\n')
+        print('  1. Randomize a name')
+        print('  2. Randomize a character')
+        print('  3. Randomize a bounty')
+        print('  4. City menu')
+        print('  5. Clear screen')
+        print('999. Exit')
+        print('Choose an option [999]:')
+        user_input = read_user_input()
+        if user_input == 1:
+            user_input = rando_a_name()
+        elif user_input == 2:
+            user_input = rando_a_character(city_obj)
+        elif user_input == 3:
+            user_input = rando_a_bounty(city_obj)
+        elif user_input == 4:
+            user_input = city_menu(city_obj)
+        elif user_input == 5:
             clear_screen()
         else:
-            raise SystemExit("Exiting Gamemaster Guidance")
+            raise SystemExit('Exiting Gamemaster Guidance')
