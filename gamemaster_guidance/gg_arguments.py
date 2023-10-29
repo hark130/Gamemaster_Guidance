@@ -1,27 +1,33 @@
+"""Implements the packages argument parser."""
+
+# Standard
 import getopt
 import sys
+# Third Party
+# Local
 
 
-def print_help(scriptName):
-    print("\n" + scriptName + " -c <cityfile>\n")
+def print_help(script_name):
+    """Print the usage message."""
+    print("\n" + script_name + " -c <cityfile>\n")
 
 
-def parse_arguments(argList):
-    """Returns script arguments in a dictionary"""
+def parse_arguments(arg_list):
+    """Returns script arguments in a dictionary."""
     # LOCAL VARIABLES
-    retDict = {}
+    ret_dict = {}
 
     try:
-        opts, args = getopt.getopt(argList[1:], "hc:", ["cityfile="])
+        opts, _ = getopt.getopt(arg_list[1:], "hc:", ["cityfile="])
     except getopt.GetoptError:
-        print_help(argList[0])
+        print_help(arg_list[0])
         sys.exit(2)
     else:
         for opt, arg in opts:
             if opt == "-h":
-                print_help(argList[0])
+                print_help(arg_list[0])
                 sys.exit()
             elif opt in ("-c", "--cityfile"):
-                retDict["cityfile"] = arg
+                ret_dict["cityfile"] = arg
 
-    return retDict
+    return ret_dict
