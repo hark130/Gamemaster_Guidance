@@ -9,12 +9,12 @@ import random
 class GG_Ancestry:
     humanEthnicities = humanEthnicityList
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
-    shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)", "Shriikirri-Quah (Hawk Clan)",
-                    "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)", "Skoan-Quah (Skull Clan)",
-                    "Tamiir-Quah (Wind Clan)"]
+    shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)",
+                    "Shriikirri-Quah (Hawk Clan)",
+                    "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)",
+                    "Skoan-Quah (Skull Clan)", "Tamiir-Quah (Wind Clan)"]
     supportedAncestry = ancestryList
     genderList = ["Male", "Female"]
-
 
     def __init__(self, race=None, sex=None, cityObject=None):
         """Class constructor"""
@@ -53,48 +53,38 @@ class GG_Ancestry:
         # Name
         self._rando_name()
 
-
     def return_full_name(self):
         return self.fullName
-
 
     def return_race(self):
         return self.ancestry
 
-
     def return_ethnicity(self):
         return self.ethnicity
-
 
     def return_subgroup(self):
         return self.subgroup
 
-
     def return_sex(self):
         return self.gender
 
-
     def return_notes(self):
         return self.notes
-
 
     def _rando_ancestry(self):
         """Initialize the ancestry attribute"""
         self.ancestry = random.choice(self.supportedAncestry)
 
-
     def _rando_city_ancestry(self):
         """Initialize the ancestry attribute using city object"""
         self.ancestry = self.cityObj.rando_city_race()
-        
 
     def _rando_gender(self):
         """Initialize the gender attribute"""
         if rand_percent() < 51:
             self.gender = self.genderList[0]
         else:
-            self.gender = self.genderList[1]        
-
+            self.gender = self.genderList[1]
 
     def _rando_name(self):
         self._rando_given_name()
@@ -104,7 +94,6 @@ class GG_Ancestry:
             self.fullName = "%s %s" % (self.surname, self.givenName)
         else:
             self.fullName = "%s %s" % (self.givenName, self.surname)
-
 
     def _rando_given_name(self):
         if self.ancestry == "Gnome" or self.ancestry == "Goblin":
@@ -116,14 +105,12 @@ class GG_Ancestry:
         else:
             self._rando_female_given_name()
 
-
     def _get_default_given_name(self):
         if self.ancestry == "Human":
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
-
 
     def _rando_half_elf_given_name(self):
         # LOCAL VARIABLES
@@ -166,42 +153,41 @@ class GG_Ancestry:
         self.ethnicity = None
         self.subgroup = None
 
-
     def _rando_male_given_name(self):
         self.givenName = self._get_male_given_name()
 
-
-    def _get_male_given_name(self):       
+    def _get_male_given_name(self):
         if self.ancestry == "Human":
             if self.subgroup:
                 if self.subgroup == "Mauxi":
-                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Given_Name-Male.txt"
+                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity \
+                             + "-Bonuwat-Given_Name-Male.txt"
                 else:
-                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Male.txt"
+                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" \
+                             + self.subgroup + "-Given_Name-Male.txt"
             else:
                 dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Male.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name-Male.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
-
     def _rando_female_given_name(self):
         self.givenName = self._get_female_given_name()
-
 
     def _get_female_given_name(self):
         if self.ancestry == "Human":
             if self.subgroup:
                 if self.subgroup == "Mauxi":
-                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Given_Name-Female.txt"
+                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity \
+                             + "-Bonuwat-Given_Name-Female.txt"
                 else:
-                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Given_Name-Female.txt"
+                    dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" \
+                             + self.subgroup + "-Given_Name-Female.txt"
             else:
                 dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Given_Name-Female.txt"
         else:
             dbName = "Names-" + self.ancestry + "-Given_Name-Female.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
-
 
     def _rando_surname(self):
         if self.ancestry == "Elf":
@@ -216,7 +202,6 @@ class GG_Ancestry:
             self.surname = self._get_half_elf_surname()
         else:
             self.surname = self._get_default_surname()
-
 
     def _get_half_elf_surname(self):
         # LOCAL VARIABLES
@@ -237,7 +222,8 @@ class GG_Ancestry:
         elif randoChance <= 66:
             # Blank
             halfElfSurname = ""
-            self._add_note("Character has forgotten, hidden, denied, or does not know their surname")
+            self._add_note("Character has forgotten, hidden, denied, or "
+                           "does not know their surname")
         else:
             # Elf
             self.ancestry = "Elf"
@@ -250,7 +236,6 @@ class GG_Ancestry:
         self.subgroup = None
 
         return halfElfSurname
-
 
     def _get_human_surname(self):
         if self.ethnicity == "Garundi":
@@ -274,10 +259,8 @@ class GG_Ancestry:
 
         return retSurname
 
-
     def _rando_elf_surname(self):
         self.surname = self._get_elf_surname()
-
 
     def _get_elf_surname(self):
         elvenSurname = "%s of %s"
@@ -293,44 +276,37 @@ class GG_Ancestry:
 
         return elvenSurname % (relationship, father)
 
-
     def _rando_dwarf_surname(self):
         dwarfSurname = "of %s"
         dwarfClan = self._get_default_surname()
         self.surname = dwarfSurname % (dwarfClan)
 
-
     def _get_default_surname(self):
         dbName = "Names-" + self.ancestry + "-Surname.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
-
 
     def _get_subgroup_surname(self):
         if self.subgroup == "Mauxi":
             dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Bonuwat-Surname.txt"
         else:
-            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" + self.subgroup + "-Surname.txt"
+            dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-" \
+                     + self.subgroup + "-Surname.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
-
 
     def _rando_human_ethnicity(self):
         """Initialize the ethnicity attribute"""
         self.ethnicity = self._get_human_ethnicity()
 
-    
     def _rando_human_city_ethnicity(self):
         """Initialize the ethnicity attribute from the city object"""
         self.ethnicity = self.cityObj.rando_human_ethnicity()
-        
 
     def _rando_mwangi_subgroup(self):
         """Initialize the subgroup attribute"""
         self.subgroup = self._get_mwangi_subgroup()
 
-
     def _get_mwangi_subgroup(self):
         return random.choice(self.mwangiSubgroups)
-
 
     def _get_human_ethnicity(self):
         """Randomly select a Human ethnicity"""
@@ -341,22 +317,18 @@ class GG_Ancestry:
 
         return humanEthnicity
 
-
     def _get_shoanti_clan(self):
         """Return a Shoanti clan"""
         return random.choice(self.shoantiClans)
-
 
     def _rando_human_surname(self):
         """Return a Human surname based on ethnicity"""
         dbName = "Names-" + self.ancestry + "-" + self.ethnicity + "-Surname.txt"
         return pick_entry(os.path.join(os.getcwd(), "databases", dbName))
 
-
     def _rando_human_subgroup(self):
         """Initialize the subgroup attribute for a Human ethnicity, if applicable"""
         self.subgroup = self._get_human_subgroup()
-
 
     def _get_human_subgroup(self):
         """Randomize a subgroup for a Human ethnicity, if applicable"""
@@ -371,12 +343,11 @@ class GG_Ancestry:
 
         return newSubgroup
 
-
     def _add_note(self, oneNote):
         """Adds one note to the notes attribute"""
-        if isinstance (self.notes, list):
+        if isinstance(self.notes, list):
             self.notes.append(oneNote)
-        elif isinstance (self.notes, str):
+        elif isinstance(self.notes, str):
             self.notes = [self.notes] + [oneNote]
         else:
             self.notes = oneNote
