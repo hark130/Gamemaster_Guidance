@@ -1,0 +1,19 @@
+# Hands
+# Copied from: https://www.bryndonovan.com/2015/06/16/master-list-of-physical-descriptions/
+delicate
+small
+large
+square
+sturdy
+strong
+smooth
+rough
+calloused
+elegant
+plump
+manicured
+stubby fingers
+long fingers
+ragged nails
+grimy fingernails
+ink-stained
