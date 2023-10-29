@@ -1,16 +1,14 @@
-# Standard Imports
+# Standard
 from collections import OrderedDict
-
-# Third Party Imports
+# Third Party
 import inflect
 import locale
 import math
 import random
-
-# Local Imports
-from . GG_Globals import ancestryList, cityModifierList, citySizeLimits, humanEthnicityList, print_header
-from . import GG_Globals
-from . GG_Rando import rand_float, rand_integer
+# Local
+from gamemaster_guidance.gg_globals import (ANCESTRY_LIST, CITY_MODIFIER_LIST, CITY_SIZE_LIMITS,
+                                            HUMAN_ETHNICITY_LIST, print_header)
+from gamemaster_guidance.gg_rando import rand_float, rand_integer
 
 
 def get_key_value(theDict, theKey):
@@ -91,7 +89,7 @@ class GG_City:
         for race, percent in self.raceLookup.items():
             totalPercent += percent
             if randoPercent <= totalPercent:
-                if race in humanEthnicityList:
+                if race in HUMAN_ETHNICITY_LIST:
                     return GG_Globals.GG_CITY_RACE_HUMAN
                 else:
                     return race
@@ -110,7 +108,7 @@ class GG_City:
         randoPercent = rand_float(0.0, totalPercent)
         # Find the match
         totalPercent = 0.0
-        for humanEthnicity in humanEthnicityList:
+        for humanEthnicity in HUMAN_ETHNICITY_LIST:
             totalPercent += self.raceLookup[humanEthnicity]
             if randoPercent <= totalPercent:
                 return humanEthnicity
@@ -241,13 +239,13 @@ class GG_City:
         self._validate_ancestries()
 
     def _validate_ancestries(self):
-        for ancestry in ancestryList:
+        for ancestry in ANCESTRY_LIST:
             temp = self.cityDict["city"]["ancestry"][ancestry]
 
         self._validate_human_ethnicities()
 
     def _validate_human_ethnicities(self):
-        for ethnicity in humanEthnicityList:
+        for ethnicity in HUMAN_ETHNICITY_LIST:
             temp = self.cityDict["city"]["ancestry"]["Human"][ethnicity]
 
     def _validate_optional(self):
@@ -436,7 +434,7 @@ class GG_City:
 
     def _rando_population(self):
         """Randomizes a population into self.cityDict"""
-        self.cityDict["city"]["population"] = str(rand_integer(citySizeLimits[0], citySizeLimits[1]))
+        self.cityDict["city"]["population"] = str(rand_integer(CITY_SIZE_LIMITS[0], CITY_SIZE_LIMITS[1]))
 
     def _rando_disadvantage(self):
         """Randomize one disadvantage into self.cityDict"""
@@ -779,7 +777,7 @@ class GG_City:
         runningPercentTotal = 0.0
         
         # GET TOTAL
-        for humanEthnicity in humanEthnicityList:
+        for humanEthnicity in HUMAN_ETHNICITY_LIST:
             runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
             
         # DONE
@@ -795,7 +793,7 @@ class GG_City:
         # GET AVERAGE
         # Total
         runningPercentTotal = self._total_human_ethnic_percentages()
-        ethnicTotal = len(humanEthnicityList)
+        ethnicTotal = len(HUMAN_ETHNICITY_LIST)
         # Average
         retAverage = runningPercentTotal / ethnicTotal
         
@@ -1270,7 +1268,7 @@ class GG_City:
         modifierString = ""
 
         # PRINT
-        for modifier in cityModifierList:
+        for modifier in CITY_MODIFIER_LIST:
             modifierString = modifierString + "{} {:+d}; ".format(modifier, self.modifierLookup[modifier])
         modifierString = modifierString[:len(modifierString)-2]  # Trim off the end
         print(modifierString)
@@ -1335,7 +1333,7 @@ class GG_City:
 
         # CONSTRUCT STRING
         # 1. Calculate populations by ancestry
-        for race in ancestryList:
+        for race in ANCESTRY_LIST:
             if race == "Human":
                 ancestorDict[race] = self._calc_total_human_population()
             else:

@@ -6,20 +6,20 @@ import random
 # Third Party
 # Local
 from gamemaster_guidance.gg_file_io import pick_entry
-from gamemaster_guidance.gg_globals import ancestryList, humanEthnicityList
+from gamemaster_guidance.gg_globals import ANCESTRY_LIST, HUMAN_ETHNICITY_LIST
 from gamemaster_guidance.gg_rando import rand_percent
 
 
 # pylint: disable=too-many-instance-attributes
 class GGAncestry:
     """Generates Pathfinder 2e character ancestry data."""
-    humanEthnicities = humanEthnicityList
+    humanEthnicities = HUMAN_ETHNICITY_LIST
     mwangiSubgroups = ["Bekyar", "Bonuwat", "Mauxi", "Zenj"]
     shoantiClans = ["Lyrune-Quah (Moon Clan)", "Shadde-Quah (Axe Clan)",
                     "Shriikirri-Quah (Hawk Clan)",
                     "Shundar-Quah (Spire Clan)", "Sklar-Quah (Sun Clan)",
                     "Skoan-Quah (Skull Clan)", "Tamiir-Quah (Wind Clan)"]
-    supportedAncestry = ancestryList
+    supportedAncestry = ANCESTRY_LIST
     genderList = ["Male", "Female"]
 
     def __init__(self, race=None, sex=None, city_object=None):

@@ -7,10 +7,10 @@ import random
 
 
 # Local Imports
-from . GG_Character import GG_Character
-from . GG_File_IO import pick_entries
-from . GG_Globals import classList, print_header
-from . GG_Rando import rand_integer, rand_percent
+from gamemaster_guidance.gg_character import GGCharacter
+from gamemaster_guidance.gg_file_io import pick_entries
+from gamemaster_guidance.gg_globals import CLASS_LIST, print_header
+from gamemaster_guidance.gg_rando import rand_integer, rand_percent
 
 
 def calculate_exponential_percent(num):
@@ -18,7 +18,7 @@ def calculate_exponential_percent(num):
     return (10 / math.pow(9, 1/19)) * math.pow(math.pow(9, 1/19), num)
 
 
-class GG_Bounty(GG_Character):
+class GGBounty(GGCharacter):
     """Create and print a new bounty"""
 
     supportedStates = ["Alive", "Dead or Alive"]
@@ -101,10 +101,10 @@ class GG_Bounty(GG_Character):
         },
     }
 
-    def __init__(self, race=None, sex=None, numTraits=3, cityObject=None, minLevel=1):
+    def __init__(self, race=None, sex=None, numTraits=3, city_object=None, minLevel=1):
         """Class constructor"""
-        # GG_Character
-        super().__init__(race, sex, numTraits, cityObject)
+        # GGCharacter
+        super().__init__(race, sex, numTraits, city_object)
 
         # GG_Bounty
         self._reward = None  # Bounty reward in gp as a str
@@ -122,10 +122,10 @@ class GG_Bounty(GG_Character):
 
     def _create_bounty(self):
         # Class and Level
-        if self.cityObj:
-            (self._class, self._level) = self.cityObj.rando_npc_class_level(self._min_level)
+        if self.city_obj:
+            (self._class, self._level) = self.city_obj.rando_npc_class_level(self._min_level)
         else:
-            self._class = random.choice(classList)
+            self._class = random.choice(CLASS_LIST)
             self._level = rand_integer(self._min_level, 20)
         # Crime
         self._rando_crime()

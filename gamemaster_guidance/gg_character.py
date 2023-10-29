@@ -1,27 +1,29 @@
+# Standard
 import os
+# Third Party
+# Local
+from gamemaster_guidance.gg_ancestry import GGAncestry
+from gamemaster_guidance.gg_file_io import pick_entries
 
-from . GG_Ancestry import GG_Ancestry
-from . GG_File_IO import pick_entries
 
-
-class GG_Character:
+class GGCharacter:
     """Create and print a new character"""
     entryTitleWidth = 10  # Width of each printed entry's title
     entryFormatStr = "{:"+str(entryTitleWidth)+"}"
 
-    def __init__(self, race=None, sex=None, numTraits=3, cityObject=None):
+    def __init__(self, race=None, sex=None, num_traits=3, city_object=None):
         """Class constructor"""
         # City Stats
-        self.cityObj = cityObject
-        if self.cityObj and not race:
-            self.cityObj.load()
-            race = self.cityObj.rando_city_race()
+        self.city_obj = city_object
+        if self.city_obj and not race:
+            self.city_obj.load()
+            race = self.city_obj.rando_city_race()
 
         # Ancestry
-        self.charAncestry = GG_Ancestry(race, sex, cityObject)
+        self.charAncestry = GGAncestry(race, sex, city_object)
         # Traits
         dbFilename = os.path.join(os.getcwd(), "databases", "Traits.txt")
-        self.traitList = pick_entries(dbFilename, numTraits)
+        self.traitList = pick_entries(dbFilename, num_traits)
 
 
     def print_character(self):
