@@ -1,0 +1,32 @@
+city:
+  name: Kasai
+  region: Minkai
+  # Source: https://pathfinderwiki.com/wiki/Kasai
+  population: 164200
+  # Source: https://pathfinderwiki.com/wiki/Kasai
+  alignment: Lawful Neutral
+  # Source: https://pathfinderwiki.com/wiki/Kasai
+  government: Overlord
+  qualities:
+    - Prosperous
+  ancestry:
+    Dwarf: 0.02
+    Gnome: 0.01
+    Halfling: 0.01
+    Elf: 0.02
+    Half-Elf: 0.03
+    Human:
+      Garundi: 0.01
+      Keleshite: 0.01
+      Kellid: 0.01
+      Mwangi: 0.01
+      Nidalese: 0.01
+      Shoanti: 0.01
+      Taldan: 0.01
+      Tian: 95
+      Ulfen: 0.01
+      Varisian: 0.03
+      Vudrani: 0.01
+    Kitsune: 0.055
+    Tengu: 0.2
+    Wayang: 0.045
