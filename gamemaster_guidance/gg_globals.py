@@ -32,6 +32,7 @@ GG_CITY_RACE_HALF_ELF: Final[str] = 'Half-Elf'
 GG_CITY_RACE_HALF_ORC: Final[str] = 'Half-Orc'
 GG_CITY_RACE_KITSUNE: Final[str] = 'Kitsune'
 GG_CITY_RACE_TENGU: Final[str] = 'Tengu'
+GG_CITY_RACE_WAYANG: Final[str] = 'Wayang'
 HUMAN_ETHNICITY_LIST: Final[List] = [GG_CITY_RACE_GARUNDI, GG_CITY_RACE_KELESHITE,
                                      GG_CITY_RACE_KELLID, GG_CITY_RACE_MWANGI,
                                      GG_CITY_RACE_NIDALESE, GG_CITY_RACE_SHOANTI,
@@ -42,7 +43,7 @@ ANCESTRY_LIST: Final[List] = sorted([GG_CITY_RACE_DWARF, GG_CITY_RACE_ELF, GG_CI
                                      GG_CITY_RACE_GOBLIN, GG_CITY_RACE_HALFLING,
                                      GG_CITY_RACE_HUMAN, GG_CITY_RACE_HALF_ELF,
                                      GG_CITY_RACE_HALF_ORC, GG_CITY_RACE_KITSUNE,
-                                     GG_CITY_RACE_TENGU])
+                                     GG_CITY_RACE_TENGU, GG_CITY_RACE_WAYANG])
 CLASS_LIST: Final[List] = ['Adept', 'Alchemist', 'Aristocrat', 'Barbarian', 'Bard', 'Champion',
                            'Cleric', 'Commoner', 'Druid', 'Expert', 'Fighter', 'Monk', 'Ranger',
                            'Rogue', 'Sorcerer', 'Warrior', 'Wizard']
