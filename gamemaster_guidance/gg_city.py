@@ -1186,24 +1186,24 @@ class GG_City:
         self.halfOrcPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ORC)
 
         self.raceLookup = {
-            GG_Globals.GG_CITY_RACE_DWARF:self.dwarfPercent,
-            GG_Globals.GG_CITY_RACE_ELF:self.elfPercent,
-            GG_Globals.GG_CITY_RACE_GNOME:self.gnomePercent,
-            GG_Globals.GG_CITY_RACE_GOBLIN:self.goblinPercent,
-            GG_Globals.GG_CITY_RACE_HALFLING:self.halflingPercent,
-            GG_Globals.GG_CITY_RACE_GARUNDI:self.garundiPercent,
-            GG_Globals.GG_CITY_RACE_KELESHITE:self.keleshitePercent,
-            GG_Globals.GG_CITY_RACE_KELLID:self.kellidPercent,
-            GG_Globals.GG_CITY_RACE_MWANGI:self.mwangiPercent,
-            GG_Globals.GG_CITY_RACE_NIDALESE:self.nidalesePercent,
-            GG_Globals.GG_CITY_RACE_SHOANTI:self.shoantiPercent,
-            GG_Globals.GG_CITY_RACE_TALDAN:self.taldanPercent,
-            GG_Globals.GG_CITY_RACE_TIAN:self.tianPercent,
-            GG_Globals.GG_CITY_RACE_ULFEN:self.ulfenPercent,
-            GG_Globals.GG_CITY_RACE_VARISIAN:self.varisianPercent,
-            GG_Globals.GG_CITY_RACE_VUDRANI:self.vudraniPercent,
-            GG_Globals.GG_CITY_RACE_HALF_ELF:self.halfElfPercent,
-            GG_Globals.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
+            GG_Globals.GG_CITY_RACE_DWARF: self.dwarfPercent,
+            GG_Globals.GG_CITY_RACE_ELF: self.elfPercent,
+            GG_Globals.GG_CITY_RACE_GNOME: self.gnomePercent,
+            GG_Globals.GG_CITY_RACE_GOBLIN: self.goblinPercent,
+            GG_Globals.GG_CITY_RACE_HALFLING: self.halflingPercent,
+            GG_Globals.GG_CITY_RACE_GARUNDI: self.garundiPercent,
+            GG_Globals.GG_CITY_RACE_KELESHITE: self.keleshitePercent,
+            GG_Globals.GG_CITY_RACE_KELLID: self.kellidPercent,
+            GG_Globals.GG_CITY_RACE_MWANGI: self.mwangiPercent,
+            GG_Globals.GG_CITY_RACE_NIDALESE: self.nidalesePercent,
+            GG_Globals.GG_CITY_RACE_SHOANTI: self.shoantiPercent,
+            GG_Globals.GG_CITY_RACE_TALDAN: self.taldanPercent,
+            GG_Globals.GG_CITY_RACE_TIAN: self.tianPercent,
+            GG_Globals.GG_CITY_RACE_ULFEN: self.ulfenPercent,
+            GG_Globals.GG_CITY_RACE_VARISIAN: self.varisianPercent,
+            GG_Globals.GG_CITY_RACE_VUDRANI: self.vudraniPercent,
+            GG_Globals.GG_CITY_RACE_HALF_ELF: self.halfElfPercent,
+            GG_Globals.GG_CITY_RACE_HALF_ORC: self.halfOrcPercent
         }
 
         # GENERAL
@@ -1236,11 +1236,15 @@ class GG_City:
         # DISADVANTAGES
         try:
             self.disadvantages = self.cityDict["city"]["disadvantages"]
-        except:
+        except KeyError:
             self.disadvantages = None  # Disadvantages are not mandatory
 
     def _print_city_general_details(self):
-        """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
+        """Print city's details.
+
+        Print the city's name, region, alignment, type, modifiers, qualities, danger, and
+        disadvantages.
+        """
         # Name
         print_header(self.name.upper())
 
@@ -1272,7 +1276,8 @@ class GG_City:
 
         # PRINT
         for modifier in CITY_MODIFIER_LIST:
-            modifierString = modifierString + "{} {:+d}; ".format(modifier, self.modifierLookup[modifier])
+            modifierString = modifierString + "{} {:+d}; ".format(modifier,
+                                                                  self.modifierLookup[modifier])
         modifierString = modifierString[:len(modifierString)-2]  # Trim off the end
         print(modifierString)
 
@@ -1294,7 +1299,8 @@ class GG_City:
         if self.disadvantages:
             for cityDisadvantage in self.disadvantages:
                 disadvantagesString = disadvantagesString + cityDisadvantage.lower() + ", "
-            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]  # Trim the trailing comma
+            # Trim the trailing comma
+            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]
             print("Disadvantages {}".format(disadvantagesString))
 
     def _print_city_demographic_details(self):
@@ -1302,10 +1308,9 @@ class GG_City:
         # Header
         print_header("DEMOGRAPHICS")
         # Government
-        print("{} {}".format("Government", self.government))
+        print(f'Government {self.government}')
         # Population (Ancestry breakdown)
-        print("{} {} ({})".format("Population", self.population,
-            self._determine_ancestry_breakdown()))
+        print(f'Population {self.population} ({self._determine_ancestry_breakdown()})')
         # NPCs
         # self.print_city_npcs()  # TOO VERBOSE
         print("")
@@ -1314,8 +1319,8 @@ class GG_City:
         """Return a city size based list of the top ancestries"""
         # LOCAL VARIABLES
         cityLookup = {
-                "Thorp":2, "Hamlet":2, "Village":3, "Small Town":3,
-                "Large Town":4, "Small City":4, "Large City":5, "Metropolis":5
+                "Thorp": 2, "Hamlet": 2, "Village": 3, "Small Town": 3,
+                "Large Town": 4, "Small City": 4, "Large City": 5, "Metropolis": 5
                 }
         numAncestries = cityLookup[self.cityType]
         retStr = None
@@ -1341,8 +1346,8 @@ class GG_City:
                 ancestorDict[race] = self._calc_total_human_population()
             else:
                 try:
-                    ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] \
-                                         * .01 * self.population)
+                    ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race]
+                                             * .01 * self.population)
                 except KeyError:
                     ancestorDict[race] = 0  # Not found?  They don't live here.
 
@@ -1355,7 +1360,7 @@ class GG_City:
             if index > len(valueList) - 1:
                 break
             ancestryStr = ancestryStr + " " \
-                          + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
+                + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
             # Keep track of the population already accounted for to support "others"
             runningPopTotal += valueList[index]
 
@@ -1412,9 +1417,8 @@ class GG_City:
         # Base Value
         # Purchase Limit
         # Spellcasting
-        print("{} {} gp; {} {} gp; {} {}".format("Base Value", self.baseValue,
-                                                 "Purchase Limit", self.purchaseLimit,
-                                                 "Spellcasting", numToWord.ordinal(self.spellcasting)))
+        print(f'Base Value {self.baseValue} gp; Purchase Limit {self.purchaseLimit} gp; '
+              f'Spellcasting {numToWord.ordinal(self.spellcasting)}')
 
         # Magic Items
         # See: Task 5-7
