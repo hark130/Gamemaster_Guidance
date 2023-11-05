@@ -240,8 +240,10 @@ class GG_City:
         self._validate_ancestries()
 
     def _validate_ancestries(self):
-        for ancestry in ANCESTRY_LIST:
-            temp = self.cityDict["city"]["ancestry"][ancestry]
+        """Verifies all the ancestry entries in the city dict are in the ANCESTRY_LIST."""
+        for ancestry in self.cityDict["city"]["ancestry"].keys():
+            if ancestry not in ANCESTRY_LIST:
+                raise RuntimeError(f'Unsupported ancestry: {ancestry}')
 
         self._validate_human_ethnicities()
 
@@ -1338,7 +1340,11 @@ class GG_City:
             if race == "Human":
                 ancestorDict[race] = self._calc_total_human_population()
             else:
-                ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
+                try:
+                    ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] \
+                                         * .01 * self.population)
+                except KeyError:
+                    ancestorDict[race] = 0  # Not found?  They don't live here.
 
         # 2. Sort populations
         valueList = list(ancestorDict.values())
@@ -1348,8 +1354,10 @@ class GG_City:
         for index in range(numEntries):
             if index > len(valueList) - 1:
                 break
-            ancestryStr = ancestryStr + " " + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
-            runningPopTotal += valueList[index]  # Keep track of the population already accounted for to support "others"
+            ancestryStr = ancestryStr + " " \
+                          + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
+            # Keep track of the population already accounted for to support "others"
+            runningPopTotal += valueList[index]
 
         # 4. Others
         ancestryStr = ancestryStr + " {} {}".format(self.population - runningPopTotal, "other")
