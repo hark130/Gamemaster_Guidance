@@ -191,35 +191,21 @@ def rando_a_bounty(city_obj=None):
 
 def rando_a_bounty_race(city_obj=None):
     """Randomize and print a bounty race based on ther user's selected race."""
+    # LOCAL VARIABLES
+    bounty = None  # GGBounty() object
     print_race_menu()
     user_input = read_user_input()
 
     try:
-        if user_input == 1:
-            bounty = GGBounty(city_object=city_obj)
-        elif user_input == 2:
-            bounty = GGBounty(race='Dwarf', city_object=city_obj)
-        elif user_input == 3:
-            bounty = GGBounty(race='Elf', city_object=city_obj)
-        elif user_input == 4:
-            bounty = GGBounty(race='Gnome', city_object=city_obj)
-        elif user_input == 5:
-            bounty = GGBounty(race='Goblin', city_object=city_obj)
-        elif user_input == 6:
-            bounty = GGBounty(race='Halfling', city_object=city_obj)
-        elif user_input == 7:
-            bounty = GGBounty(race='Human', city_object=city_obj)
-        elif user_input == 8:
-            bounty = GGBounty(race='Half-Elf', city_object=city_obj)
-        elif user_input == 9:
-            bounty = GGBounty(race='Half-Orc', city_object=city_obj)
-        elif user_input == 42:
-            return None
-        else:
+        if user_input in RACE_DICT.keys():
+            if not RACE_DICT[user_input]:
+                bounty = GGBounty(city_object=city_obj)
+            else:
+                bounty = GGBounty(race=RACE_DICT[user_input], city_object=city_obj)
+        elif user_input != 42:
             raise SystemExit('Exiting Gamemaster Guidance')
     except RuntimeError as err:
         print(format(err))
-        bounty = None
 
     return bounty
 
