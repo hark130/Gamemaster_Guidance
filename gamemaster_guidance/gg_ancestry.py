@@ -205,15 +205,15 @@ class GGAncestry:
         return pick_entry(os.path.join(os.getcwd(), "databases", db_name))
 
     def _rando_surname(self):
-        if self.ancestry == "Elf":
+        if self.ancestry == 'Elf':
             self._rando_elf_surname()
-        elif self.ancestry == "Dwarf":
+        elif self.ancestry == 'Dwarf':
             self._rando_dwarf_surname()
-        elif self.ancestry in ('Gnome', 'Goblin', 'Half-Orc'):
+        elif self.ancestry in ('Gnome', 'Goblin', 'Half-Orc', 'Tengu'):
             self.surname = ''
-        elif self.ancestry == "Human":
+        elif self.ancestry == 'Human':
             self.surname = self._get_human_surname()
-        elif self.ancestry == "Half-Elf":
+        elif self.ancestry == 'Half-Elf':
             self.surname = self._get_half_elf_surname()
         else:
             self.surname = self._get_default_surname()

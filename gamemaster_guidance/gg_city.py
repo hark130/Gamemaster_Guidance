@@ -25,20 +25,28 @@ def get_key_value(theDict, theKey):
 class GG_City:
     supportedDisadvantages = ["Anarchy", "Cursed", "Hunted", "Impoverished", "Plagued"]
     supportedGovernments = ["Autocracy", "Council", "Magical", "Overlord", "Secret Syndicate"]
-    supportedQualities = ["Academic", "Holy Site", "Insular", "Magically Attuned", "Notorious", "Pious",
-                          "Prosperous", "Racially Intolerant", "Rumormongering Citizens",
+    supportedQualities = ["Academic", "Holy Site", "Insular", "Magically Attuned", "Notorious",
+                          "Pious", "Prosperous", "Racially Intolerant", "Rumormongering Citizens",
                           "Strategic Location", "Superstitious", "Tourist Attraction"]
     supportedEthics = ["Lawful", "Neutral", "Chaotic"]
     supportedMoralities = ["Good", "Neutral", "Evil"]
     settlementStatistics = {
-        "Thorp":{"Modifiers":-4,"Qualities":1,"Danger":-10,"Base Value":50,"Purchase Limit":500,"Spellcasting":1,"Base Value":50},
-        "Hamlet":{"Modifiers":-2,"Qualities":1,"Danger":-5,"Base Value":200,"Purchase Limit":1000,"Spellcasting":2,"Base Value":200},
-        "Village":{"Modifiers":-1,"Qualities":2,"Danger":0,"Base Value":500,"Purchase Limit":2500,"Spellcasting":3,"Base Value":500},
-        "Small Town":{"Modifiers":0,"Qualities":2,"Danger":0,"Base Value":1000,"Purchase Limit":5000,"Spellcasting":4,"Base Value":1000},
-        "Large Town":{"Modifiers":0,"Qualities":3,"Danger":5,"Base Value":2000,"Purchase Limit":10000,"Spellcasting":5,"Base Value":2000},
-        "Small City":{"Modifiers":1,"Qualities":4,"Danger":5,"Base Value":4000,"Purchase Limit":25000,"Spellcasting":6,"Base Value":4000},
-        "Large City":{"Modifiers":2,"Qualities":5,"Danger":10,"Base Value":8000,"Purchase Limit":50000,"Spellcasting":7,"Base Value":8000},
-        "Metropolis":{"Modifiers":4,"Qualities":6,"Danger":10,"Base Value":16000,"Purchase Limit":100000,"Spellcasting":8,"Base Value":16000}
+        "Thorp": {"Modifiers": -4, "Qualities": 1, "Danger": -10, "Base Value": 50,
+                  "Purchase Limit": 500, "Spellcasting": 1, "Base Value": 50},
+        "Hamlet": {"Modifiers": -2, "Qualities": 1, "Danger": -5, "Base Value": 200,
+                   "Purchase Limit": 1000, "Spellcasting": 2, "Base Value": 200},
+        "Village": {"Modifiers": -1, "Qualities": 2, "Danger": 0, "Base Value": 500,
+                    "Purchase Limit": 2500, "Spellcasting": 3, "Base Value": 500},
+        "Small Town": {"Modifiers": 0, "Qualities": 2,  "Danger": 0, "Base Value": 1000,
+                       "Purchase Limit": 5000, "Spellcasting": 4, "Base Value": 1000},
+        "Large Town": {"Modifiers": 0, "Qualities": 3, "Danger": 5, "Base Value": 2000,
+                       "Purchase Limit": 10000, "Spellcasting": 5, "Base Value": 2000},
+        "Small City": {"Modifiers": 1, "Qualities": 4, "Danger": 5, "Base Value": 4000,
+                       "Purchase Limit": 25000, "Spellcasting": 6, "Base Value": 4000},
+        "Large City": {"Modifiers": 2, "Qualities": 5, "Danger": 10, "Base Value": 8000,
+                       "Purchase Limit": 50000, "Spellcasting": 7, "Base Value": 8000},
+        "Metropolis": {"Modifiers": 4, "Qualities": 6, "Danger": 10, "Base Value": 16000,
+                       "Purchase Limit": 100000, "Spellcasting": 8, "Base Value": 16000}
     }
 
     def __init__(self, cityDict):
@@ -47,6 +55,7 @@ class GG_City:
         self.baseCityModifier = None
         self.npcMultiplier = 1  # Large cities can have multiple high-level NPCs
         self.npcClassLevels = {}  # class:totals for population
+        self.race_lookup = {}  # race:percentage dictionary defined by _parse_city()
         self.population = 0  # Store total population here
 
         # Use these attributes to indicate a value should be randomized prior to parsing
@@ -71,7 +80,7 @@ class GG_City:
 
     def get_race_percent(self, raceName):
         """Return a race's percent"""
-        return self.raceLookup[raceName]
+        return self.race_lookup[raceName]
 
     def rando_city_race(self):
         # LOCAL VARIABLES
@@ -79,7 +88,7 @@ class GG_City:
 
         # DETERMINE RACE
         # Add total percents
-        for percentValue in self.raceLookup.values():
+        for percentValue in self.race_lookup.values():
             totalPercent += percentValue
         if totalPercent <= 0.0:
             raise RuntimeError("Race percentages not found")
@@ -87,7 +96,7 @@ class GG_City:
         randoPercent = rand_float(0.0, totalPercent)
         # Find the match
         totalPercent = 0.0
-        for race, percent in self.raceLookup.items():
+        for race, percent in self.race_lookup.items():
             totalPercent += percent
             if randoPercent <= totalPercent:
                 if race in HUMAN_ETHNICITY_LIST:
@@ -97,7 +106,7 @@ class GG_City:
 
         # DONE
         raise RuntimeError("Race not found")
-    
+
     def rando_human_ethnicity(self):
         # LOCAL VARIABLES
         totalPercent = float(0.0)  # Running total of percentages
@@ -110,7 +119,7 @@ class GG_City:
         # Find the match
         totalPercent = 0.0
         for humanEthnicity in HUMAN_ETHNICITY_LIST:
-            totalPercent += self.raceLookup[humanEthnicity]
+            totalPercent += self.race_lookup[humanEthnicity]
             if randoPercent <= totalPercent:
                 return humanEthnicity
 
@@ -134,7 +143,10 @@ class GG_City:
                 print("    {}".format(npc))
 
     def rando_npc_class_level(self, minLevel=1):
-        """Randomize a class and level based on city statistics: tuple(("class": str, level: int))"""
+        """Randomize a class and level based on city statistics.
+
+        Randomize a class and level based on city statistics: tuple(("class": str, level: int)).
+        """
         # LOCAL VARIABLES
         retRando = None  # tuple(("class", level))
 
@@ -174,7 +186,7 @@ class GG_City:
             if nclValue["Total"] > 0:
                 for (nclvKey, nclvValue) in nclValue["Dict"].items():
                     if nclvKey >= minLevel and nclvValue > 0:
-                        retList.append({nclKey:nclValue})
+                        retList.append({nclKey: nclValue})
                         break
 
         # DONE
@@ -218,7 +230,8 @@ class GG_City:
                         else:
                             localCitNum -= number
 
-        raise RuntimeError(f"Unable to find citizen number {citizenNum} of minimum level {minLevel}")
+        raise RuntimeError(f'Unable to find citizen number {citizenNum} of '
+                           f'minimum level {minLevel}')
 
     def _validate_city(self):
         """Validate the contents of cityDict"""
@@ -240,8 +253,10 @@ class GG_City:
         self._validate_ancestries()
 
     def _validate_ancestries(self):
-        for ancestry in ANCESTRY_LIST:
-            temp = self.cityDict["city"]["ancestry"][ancestry]
+        """Verifies all the ancestry entries in the city dict are in the ANCESTRY_LIST."""
+        for ancestry in self.cityDict["city"]["ancestry"].keys():
+            if ancestry not in ANCESTRY_LIST:
+                raise RuntimeError(f'Unsupported ancestry: {ancestry}')
 
         self._validate_human_ethnicities()
 
@@ -271,7 +286,7 @@ class GG_City:
         # GET VALUE
         try:
             disad = self.cityDict["city"]["disadvantages"]
-        except:
+        except KeyError:
             pass
         else:
             if isinstance(disad, str):
@@ -296,7 +311,7 @@ class GG_City:
 
         try:
             alignment = self.cityDict["city"]["alignment"]
-        except:
+        except KeyError:
             good = True
             self.randoAlignment = True
         else:
@@ -317,7 +332,7 @@ class GG_City:
     def _validate_government(self):
         try:
             government = self.cityDict["city"]["government"]
-        except:
+        except KeyError:
             self.randoGovernment = True
         else:
             if government not in self.supportedGovernments:
@@ -326,7 +341,7 @@ class GG_City:
     def _validate_population(self):
         try:
             population = self.cityDict["city"]["population"]
-        except:
+        except KeyError:
             self.randoPopulation = True
         else:
             if not isinstance(population, int):
@@ -340,7 +355,7 @@ class GG_City:
     def _validate_qualities(self):
         try:
             qualities = self.cityDict["city"]["qualities"]
-        except:
+        except KeyError:
             self.randoQualities = True
         else:
             if not qualities:
@@ -353,7 +368,8 @@ class GG_City:
                     raise TypeError("Unknown qualities entry")
                 # Parse entries
                 for quality in qualities:
-                    if quality not in self.supportedQualities and not quality.startswith("Racially Intolerant"):
+                    if quality not in self.supportedQualities \
+                      and not quality.startswith("Racially Intolerant"):
                         raise RuntimeError("Unsupported quality")
 
     def _validate_defined(self):
@@ -381,7 +397,7 @@ class GG_City:
         # Get it
         try:
             baseValue = self.cityDict["city"]["base_value"]
-        except:
+        except KeyError:
             self.calcBaseValue = True
         else:
             try:
@@ -395,7 +411,7 @@ class GG_City:
         # Get it
         try:
             cityNPCs = self.cityDict["city"]["npcs"]
-        except:
+        except KeyError:
             self.calcNPCs = True
         else:
             if not cityNPCs:
@@ -405,7 +421,7 @@ class GG_City:
         # Get it
         try:
             localType = self.cityDict["city"]["type"]
-        except:
+        except KeyError:
             self.calcType = True
         else:
             if localType not in self.settlementStatistics.keys():
@@ -435,7 +451,8 @@ class GG_City:
 
     def _rando_population(self):
         """Randomizes a population into self.cityDict"""
-        self.cityDict["city"]["population"] = str(rand_integer(CITY_SIZE_LIMITS[0], CITY_SIZE_LIMITS[1]))
+        self.cityDict["city"]["population"] = str(rand_integer(CITY_SIZE_LIMITS[0],
+                                                               CITY_SIZE_LIMITS[1]))
 
     def _rando_disadvantage(self):
         """Randomize one disadvantage into self.cityDict"""
@@ -444,7 +461,8 @@ class GG_City:
     def _rando_alignment(self):
         """Randomize one alignment into self.cityDict"""
         # Rando
-        localAlignment = random.choice(self.supportedEthics) + " " + random.choice(self.supportedMoralities)
+        localAlignment = random.choice(self.supportedEthics) + " " \
+            + random.choice(self.supportedMoralities)
         # Update True Neutral
         if localAlignment == "Neutral Neutral":
             localAlignment = "Neutral"
@@ -492,7 +510,8 @@ class GG_City:
 
         # NPCs
         # Moved randomization validation downwards
-        # Some 'consumers' of the GG_City class need some randomized totals regardless of what's already been calculated
+        # Some 'consumers' of the GG_City class need some randomized totals regardless of what's
+        # already been calculated
         self._rando_city_npcs()
         self.calcNPCs = False
 
@@ -522,7 +541,7 @@ class GG_City:
             localType = "Metropolis"
 
         # Verify Type
-        assert (localType in self.settlementStatistics.keys()),"Invalid city type"
+        assert (localType in self.settlementStatistics.keys()), "Invalid city type"
 
         # Done
         self.cityDict["city"]["type"] = localType
@@ -534,8 +553,8 @@ class GG_City:
         numQuals = self.settlementStatistics[self.cityDict["city"]["type"]]["Qualities"]
 
         # INPUT VALIDATION
-        assert (numQuals > 0),"Invalid number of qualities"
-        assert (numQuals <= len(self.supportedQualities)),"Not enough supported qualities"
+        assert (numQuals > 0), "Invalid number of qualities"
+        assert (numQuals <= len(self.supportedQualities)), "Not enough supported qualities"
 
         # RANDO QUALITIES
         while len(localQualList) < numQuals:
@@ -547,7 +566,10 @@ class GG_City:
         self.cityDict["city"]["qualities"] = localQualList
 
     def _calc_city_base_value(self):
-        """Calcualte city's base value, adjust for qualities/disadvantages, then store it in city dict"""
+        """Calculate and store the city's base value.
+
+        Calculate city's base value, adjust for qualities/disadvantages, then store it in city dict.
+        """
         # LOCAL VARIABLES
         localBaseValue = self.settlementStatistics[self.cityDict["city"]["type"]]["Base Value"]
         adjustPercent = 100
@@ -573,7 +595,7 @@ class GG_City:
                 adjustPercent -= 50
             if "Plagued" in self.cityDict["city"]["disadvantages"]:
                 adjustPercent -= 20
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # ADJUST BASE VALUE
@@ -583,9 +605,10 @@ class GG_City:
         self.cityDict["city"]["base_value"] = str(int(localBaseValue))
 
     def _calc_city_modifiers(self):
-        """Calcualte all six city modifiers into cityDict"""
+        """Calculate all six city modifiers into cityDict"""
         #   modifiers:
-        self.baseCityModifier = self.settlementStatistics[self.cityDict["city"]["type"]]["Modifiers"]
+        self.baseCityModifier = \
+            self.settlementStatistics[self.cityDict["city"]["type"]]["Modifiers"]
         self.cityDict["city"]["modifiers"] = {}  # Reset
         #     corruption:
         self._calc_city_modifier_corruption()
@@ -601,9 +624,14 @@ class GG_City:
         self._calc_city_modifier_society()
 
     def _calc_city_purchase_limit(self):
-        """Calcualte city's purchase limit, adjust for qualities/disadvantages, then store it in city dict"""
+        """Calculate and store the city's purchase limit.
+
+        Calculate city's purchase limit, adjust for qualities/disadvantages, then store it in
+        city dict.
+        """
         # LOCAL VARIABLES
-        localPurchaseLimit = self.settlementStatistics[self.cityDict["city"]["type"]]["Purchase Limit"]
+        localPurchaseLimit = \
+            self.settlementStatistics[self.cityDict["city"]["type"]]["Purchase Limit"]
         adjustPercent = 100
 
         # CALCULATE ADJUSTMENTS
@@ -619,7 +647,7 @@ class GG_City:
         try:
             if "Impoverished" in self.cityDict["city"]["disadvantages"]:
                 adjustPercent -= 50
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # ADJUST BASE LIMIT
@@ -629,7 +657,11 @@ class GG_City:
         self.cityDict["city"]["purchase_limit"] = str(int(localPurchaseLimit))
 
     def _calc_city_spellcasting(self):
-        """Calcualte city's spellcasting, adjust for qualities/disadvantages, then store it in city dict"""
+        """Calculate and store city's spellcasting.
+
+        Calculate the city's spellcasting, adjust for qualities/disadvantages, then store it in
+        city dict.
+        """
         # LOCAL VARIABLES
         localSpellcasting = self.settlementStatistics[self.cityDict["city"]["type"]]["Spellcasting"]
 
@@ -710,7 +742,7 @@ class GG_City:
     def _rando_remaining_npc_population(self):
         # LOCAL VARIABLES
         currentRemainingPop = int(self.cityDict["city"]["population"])
-        remainderDict = {"aristocrat":0, "adept":0, "expert":0, "warrior":0, "commoner":0}
+        remainderDict = {"aristocrat": 0, "adept": 0, "expert": 0, "warrior": 0, "commoner": 0}
 
         # 1. Determine remaining population
         for valueDict in self.npcClassLevels.values():
@@ -722,10 +754,13 @@ class GG_City:
             remainderDict["adept"] = int(currentRemainingPop * .005)
             remainderDict["expert"] = int(currentRemainingPop * .03)
             remainderDict["warrior"] = int(currentRemainingPop * .05)
-            remainderDict["commoner"] = (currentRemainingPop \
-                                            - remainderDict["aristocrat"] - remainderDict["adept"] \
-                                            - remainderDict["expert"] - remainderDict["warrior"])
-            assert ((remainderDict["aristocrat"] + remainderDict["adept"] + remainderDict["expert"] + remainderDict["warrior"] + remainderDict["commoner"]) == currentRemainingPop), "Remaining population miscalculation"
+            remainderDict["commoner"] = (currentRemainingPop
+                                         - remainderDict["aristocrat"] - remainderDict["adept"]
+                                         - remainderDict["expert"] - remainderDict["warrior"])
+            assert ((remainderDict["aristocrat"] + remainderDict["adept"]
+                     + remainderDict["expert"] + remainderDict["warrior"]
+                     + remainderDict["commoner"]) == currentRemainingPop), \
+                   "Remaining population miscalculation"
         else:
             for key in remainderDict.keys():
                 remainderDict[key] = 0
@@ -776,28 +811,28 @@ class GG_City:
         """Return the total of all human ethnic percentages"""
         # LOCAL VARIABLES
         runningPercentTotal = 0.0
-        
+
         # GET TOTAL
         for humanEthnicity in HUMAN_ETHNICITY_LIST:
             runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][humanEthnicity]
-            
+
         # DONE
         return runningPercentTotal
-    
+
     def _determine_human_ethnic_average(self):
         """Return the average of all human ethnic percentages"""
         # LOCAL VARIABLES
         runningPercentTotal = 0.0
         ethnicTotal = 0
         retAverage = 0.0
-        
+
         # GET AVERAGE
         # Total
         runningPercentTotal = self._total_human_ethnic_percentages()
         ethnicTotal = len(HUMAN_ETHNICITY_LIST)
         # Average
         retAverage = runningPercentTotal / ethnicTotal
-        
+
         return retAverage
 
     def _determine_human_barbarian_average(self):
@@ -805,14 +840,16 @@ class GG_City:
         # LOCAL VARIABLES
         runningPercentTotal = 0.0
         retAverage = 0.0
-        
+
         # GET AVERAGE
         # Total
-        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_KELLID]
-        runningPercentTotal += self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_ULFEN]
+        runningPercentTotal += \
+            self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_KELLID]
+        runningPercentTotal += \
+            self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_ULFEN]
         # Average
         retAverage = runningPercentTotal / 2
-        
+
         return retAverage
 
     def _rando_city_npc_bards(self):
@@ -867,7 +904,7 @@ class GG_City:
 
     def _determine_human_monk_average(self):
         return self.cityDict["city"]["ancestry"]["Human"][GG_Globals.GG_CITY_RACE_TIAN]
-    
+
     def _rando_city_npc_rangers(self):
         # LOCAL VARIABLES
         upperLimit = 3  # Ranger 1d3
@@ -920,16 +957,16 @@ class GG_City:
         # Validation of calcualting NPCs moved down to ensure this class always...
         if self.calcNPCs:
             self._translate_level_dict_into_npc_list(className, levelDict)
-        # ...calculates the total 'population' of each class for the sake of class-based randomization
+        # ...calculates total 'population' of each class for the sake of class-based randomization
         self._update_npc_class_totals(className, levelDict)
 
     def _set_npc_class(self, className, charLevel, numOfThatLevel):
-        levelDict = {charLevel:numOfThatLevel}
+        levelDict = {charLevel: numOfThatLevel}
 
         # Validation of calcualting NPCs moved down to ensure this class always...
         if self.calcNPCs:
             self._translate_level_dict_into_npc_list(className, levelDict)
-        # ...calculates the total 'population' of each class for the sake of class-based randomization
+        # ...calculates total 'population' of each class for the sake of class-based randomization
         self._update_npc_class_totals(className, levelDict)
 
     def _calc_highest_level(self, numDice, numFaces):
@@ -954,7 +991,8 @@ class GG_City:
 
         for level in sortedDictKeys:
             if levelDict[level] > 0:
-                npcListEntry = numToWord.number_to_words(levelDict[level]).capitalize() + " " + numToWord.ordinal(level) + " level " + className
+                npcListEntry = numToWord.number_to_words(levelDict[level]).capitalize() + " " \
+                               + numToWord.ordinal(level) + " level " + className
                 if levelDict[level] > 1:
                     npcListEntry = npcListEntry + "s"
                 self.cityDict["city"]["npcs"].append(npcListEntry)
@@ -966,7 +1004,7 @@ class GG_City:
         for value in levelDict.values():
             classTotal += value
 
-        self.npcClassLevels[className] = {"Total":classTotal, "Dict":levelDict}
+        self.npcClassLevels[className] = {"Total": classTotal, "Dict": levelDict}
 
     def _calc_city_modifier_corruption(self):
         # LOCAL VARIABLES
@@ -994,11 +1032,11 @@ class GG_City:
                 localCorruption += 4
             if "Impoverished" in self.cityDict["city"]["disadvantages"]:
                 localCorruption += 1
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"corruption":str(localCorruption)})
+        self.cityDict["city"]["modifiers"].update({"corruption": str(localCorruption)})
 
     def _calc_city_modifier_crime(self):
         # LOCAL VARIABLES
@@ -1028,11 +1066,11 @@ class GG_City:
                 localCrime += 4
             if "Impoverished" in self.cityDict["city"]["disadvantages"]:
                 localCrime += 1
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"crime":str(localCrime)})
+        self.cityDict["city"]["modifiers"].update({"crime": str(localCrime)})
 
     def _calc_city_modifier_economy(self):
         # LOCAL VARIABLES
@@ -1056,11 +1094,11 @@ class GG_City:
                 localEconomy -= 4
             if "Hunted" in self.cityDict["city"]["disadvantages"]:
                 localEconomy -= 4
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"economy":str(localEconomy)})
+        self.cityDict["city"]["modifiers"].update({"economy": str(localEconomy)})
 
     def _calc_city_modifier_law(self):
         # LOCAL VARIABLES
@@ -1092,11 +1130,11 @@ class GG_City:
                 localLaw -= 6
             if "Hunted" in self.cityDict["city"]["disadvantages"]:
                 localLaw -= 4
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"law":str(localLaw)})
+        self.cityDict["city"]["modifiers"].update({"law": str(localLaw)})
 
     def _calc_city_modifier_lore(self):
         # LOCAL VARIABLES
@@ -1121,7 +1159,7 @@ class GG_City:
             localLore += 1
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"lore":str(localLore)})
+        self.cityDict["city"]["modifiers"].update({"lore": str(localLore)})
 
     def _calc_city_modifier_society(self):
         # LOCAL VARIABLES
@@ -1151,58 +1189,31 @@ class GG_City:
                 localSociety -= 4
             if "Hunted" in self.cityDict["city"]["disadvantages"]:
                 localSociety -= 4
-        except:
+        except KeyError:
             pass  # Disadvantages are not mandatory
 
         # DONE
-        self.cityDict["city"]["modifiers"].update({"society":str(localSociety)})
+        self.cityDict["city"]["modifiers"].update({"society": str(localSociety)})
 
     def _parse_city(self):
         """Parse the cityDict contents into attributes"""
-        detailsDict = self.cityDict[GG_Globals.GG_CITY_KEY]
-        cityEthnicity = detailsDict[GG_Globals.GG_CITY_RACE_KEY]
+        details_dict = self.cityDict[GG_Globals.GG_CITY_KEY]
+        city_ethnicity = details_dict[GG_Globals.GG_CITY_RACE_KEY]
 
-        self.name = detailsDict[GG_Globals.GG_CITY_NAME_KEY]
-        self.region = detailsDict[GG_Globals.GG_CITY_REGION_KEY]
-        self.dwarfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_DWARF)
-        self.elfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_ELF)
-        self.gnomePercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GNOME)
-        self.goblinPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_GOBLIN)
-        self.halflingPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALFLING)
-        self.garundiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_GARUNDI)
-        self.keleshitePercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_KELESHITE)
-        self.kellidPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_KELLID)
-        self.mwangiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_MWANGI)
-        self.nidalesePercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_NIDALESE)
-        self.shoantiPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_SHOANTI)
-        self.taldanPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_TALDAN)
-        self.tianPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_TIAN)
-        self.ulfenPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_ULFEN)
-        self.varisianPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_VARISIAN)
-        self.vudraniPercent = get_key_value(cityEthnicity[GG_Globals.GG_CITY_RACE_HUMAN], GG_Globals.GG_CITY_RACE_VUDRANI)
-        self.halfElfPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ELF)
-        self.halfOrcPercent = get_key_value(cityEthnicity, GG_Globals.GG_CITY_RACE_HALF_ORC)
-
-        self.raceLookup = {
-            GG_Globals.GG_CITY_RACE_DWARF:self.dwarfPercent,
-            GG_Globals.GG_CITY_RACE_ELF:self.elfPercent,
-            GG_Globals.GG_CITY_RACE_GNOME:self.gnomePercent,
-            GG_Globals.GG_CITY_RACE_GOBLIN:self.goblinPercent,
-            GG_Globals.GG_CITY_RACE_HALFLING:self.halflingPercent,
-            GG_Globals.GG_CITY_RACE_GARUNDI:self.garundiPercent,
-            GG_Globals.GG_CITY_RACE_KELESHITE:self.keleshitePercent,
-            GG_Globals.GG_CITY_RACE_KELLID:self.kellidPercent,
-            GG_Globals.GG_CITY_RACE_MWANGI:self.mwangiPercent,
-            GG_Globals.GG_CITY_RACE_NIDALESE:self.nidalesePercent,
-            GG_Globals.GG_CITY_RACE_SHOANTI:self.shoantiPercent,
-            GG_Globals.GG_CITY_RACE_TALDAN:self.taldanPercent,
-            GG_Globals.GG_CITY_RACE_TIAN:self.tianPercent,
-            GG_Globals.GG_CITY_RACE_ULFEN:self.ulfenPercent,
-            GG_Globals.GG_CITY_RACE_VARISIAN:self.varisianPercent,
-            GG_Globals.GG_CITY_RACE_VUDRANI:self.vudraniPercent,
-            GG_Globals.GG_CITY_RACE_HALF_ELF:self.halfElfPercent,
-            GG_Globals.GG_CITY_RACE_HALF_ORC:self.halfOrcPercent
-        }
+        self.name = details_dict[GG_Globals.GG_CITY_NAME_KEY]
+        self.region = details_dict[GG_Globals.GG_CITY_REGION_KEY]
+        for ancestry in ANCESTRY_LIST:
+            if ancestry == GG_Globals.GG_CITY_RACE_HUMAN:
+                for human_ethnicity in HUMAN_ETHNICITY_LIST:
+                    try:
+                        self.race_lookup[human_ethnicity] = \
+                            get_key_value(city_ethnicity[GG_Globals.GG_CITY_RACE_HUMAN],
+                                          human_ethnicity)
+                    except KeyError:
+                        self.race_lookup[human_ethnicity] = 0
+            else:
+                self.race_lookup[ancestry] = get_key_value(city_ethnicity, ancestry)
+        print(self.race_lookup)  # DEBUGGING
 
         # GENERAL
         self.name = self.cityDict["city"]["name"]
@@ -1234,11 +1245,15 @@ class GG_City:
         # DISADVANTAGES
         try:
             self.disadvantages = self.cityDict["city"]["disadvantages"]
-        except:
+        except KeyError:
             self.disadvantages = None  # Disadvantages are not mandatory
 
     def _print_city_general_details(self):
-        """Print city's name, region, alignment, type, modifiers, qualities, danger, and disadvantages"""
+        """Print city's details.
+
+        Print the city's name, region, alignment, type, modifiers, qualities, danger, and
+        disadvantages.
+        """
         # Name
         print_header(self.name.upper())
 
@@ -1270,7 +1285,8 @@ class GG_City:
 
         # PRINT
         for modifier in CITY_MODIFIER_LIST:
-            modifierString = modifierString + "{} {:+d}; ".format(modifier, self.modifierLookup[modifier])
+            modifierString = modifierString + "{} {:+d}; ".format(modifier,
+                                                                  self.modifierLookup[modifier])
         modifierString = modifierString[:len(modifierString)-2]  # Trim off the end
         print(modifierString)
 
@@ -1292,7 +1308,8 @@ class GG_City:
         if self.disadvantages:
             for cityDisadvantage in self.disadvantages:
                 disadvantagesString = disadvantagesString + cityDisadvantage.lower() + ", "
-            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]  # Trim the trailing comma
+            # Trim the trailing comma
+            disadvantagesString = disadvantagesString[:len(disadvantagesString)-2]
             print("Disadvantages {}".format(disadvantagesString))
 
     def _print_city_demographic_details(self):
@@ -1300,10 +1317,9 @@ class GG_City:
         # Header
         print_header("DEMOGRAPHICS")
         # Government
-        print("{} {}".format("Government", self.government))
+        print(f'Government {self.government}')
         # Population (Ancestry breakdown)
-        print("{} {} ({})".format("Population", self.population,
-            self._determine_ancestry_breakdown()))
+        print(f'Population {self.population} ({self._determine_ancestry_breakdown()})')
         # NPCs
         # self.print_city_npcs()  # TOO VERBOSE
         print("")
@@ -1312,8 +1328,8 @@ class GG_City:
         """Return a city size based list of the top ancestries"""
         # LOCAL VARIABLES
         cityLookup = {
-                "Thorp":2, "Hamlet":2, "Village":3, "Small Town":3,
-                "Large Town":4, "Small City":4, "Large City":5, "Metropolis":5
+                "Thorp": 2, "Hamlet": 2, "Village": 3, "Small Town": 3,
+                "Large Town": 4, "Small City": 4, "Large City": 5, "Metropolis": 5
                 }
         numAncestries = cityLookup[self.cityType]
         retStr = None
@@ -1338,7 +1354,11 @@ class GG_City:
             if race == "Human":
                 ancestorDict[race] = self._calc_total_human_population()
             else:
-                ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race] * .01 * self.population)
+                try:
+                    ancestorDict[race] = int(self.cityDict["city"]["ancestry"][race]
+                                             * .01 * self.population)
+                except KeyError:
+                    ancestorDict[race] = 0  # Not found?  They don't live here.
 
         # 2. Sort populations
         valueList = list(ancestorDict.values())
@@ -1348,8 +1368,10 @@ class GG_City:
         for index in range(numEntries):
             if index > len(valueList) - 1:
                 break
-            ancestryStr = ancestryStr + " " + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
-            runningPopTotal += valueList[index]  # Keep track of the population already accounted for to support "others"
+            ancestryStr = ancestryStr + " " \
+                + self._form_one_ancestry_substring(ancestorDict, valueList[index]) + ";"
+            # Keep track of the population already accounted for to support "others"
+            runningPopTotal += valueList[index]
 
         # 4. Others
         ancestryStr = ancestryStr + " {} {}".format(self.population - runningPopTotal, "other")
@@ -1404,9 +1426,8 @@ class GG_City:
         # Base Value
         # Purchase Limit
         # Spellcasting
-        print("{} {} gp; {} {} gp; {} {}".format("Base Value", self.baseValue,
-                                                 "Purchase Limit", self.purchaseLimit,
-                                                 "Spellcasting", numToWord.ordinal(self.spellcasting)))
+        print(f'Base Value {self.baseValue} gp; Purchase Limit {self.purchaseLimit} gp; '
+              f'Spellcasting {numToWord.ordinal(self.spellcasting)}')
 
         # Magic Items
         # See: Task 5-7
