@@ -1213,7 +1213,6 @@ class GG_City:
                         self.race_lookup[human_ethnicity] = 0
             else:
                 self.race_lookup[ancestry] = get_key_value(city_ethnicity, ancestry)
-        print(self.race_lookup)  # DEBUGGING
 
         # GENERAL
         self.name = self.cityDict["city"]["name"]

@@ -209,7 +209,7 @@ class GGAncestry:
             self._rando_elf_surname()
         elif self.ancestry == 'Dwarf':
             self._rando_dwarf_surname()
-        elif self.ancestry in ('Gnome', 'Goblin', 'Half-Orc', 'Tengu'):
+        elif self.ancestry in ('Gnome', 'Goblin', 'Half-Orc', 'Kitsune', 'Tengu'):
             self.surname = ''
         elif self.ancestry == 'Human':
             self.surname = self._get_human_surname()
