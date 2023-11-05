@@ -5,8 +5,8 @@ from typing import Final, List
 # Third Party
 # Local
 
-ANCESTRY_LIST: Final[List] = ['Dwarf', 'Elf', 'Gnome', 'Goblin', 'Halfling', 'Human', 'Half-Elf',
-                              'Half-Orc']
+ANCESTRY_LIST: Final[List] = sorted(['Dwarf', 'Elf', 'Gnome', 'Goblin', 'Halfling', 'Human',
+                                     'Half-Elf', 'Half-Orc'])
 CITY_MODIFIER_LIST: Final[List] = ['Corruption', 'Crime', 'Economy', 'Law', 'Lore', 'Society']
 CITY_SIZE_LIMITS: Final[tuple] = (5, 200000)  # (Min, Max)
 GG_CITY_KEY: Final[str] = 'city'
