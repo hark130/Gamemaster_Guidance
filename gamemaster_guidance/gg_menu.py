@@ -2,7 +2,7 @@
 
 # Standard
 from collections import OrderedDict
-from typing import Final
+from typing import Final, List
 import subprocess
 # Third Party
 import platform
@@ -11,12 +11,21 @@ from gamemaster_guidance.gg_ancestry import GGAncestry
 from gamemaster_guidance.gg_bounty import GGBounty
 from gamemaster_guidance.gg_character import GGCharacter
 from gamemaster_guidance.gg_city import GG_City
+from gamemaster_guidance.gg_globals import ANCESTRY_LIST
 
 
+# Formation of the race-based menu dictionary
+_RACE_DICT_BEGIN: Final[List] = [(1, None)]  # Beginning of the menu list
+_RACE_DICT_END: Final[List] = []  # End of the menu list (see: GAGU-19)
+# Starting value for additional menu items
+try:
+    _MENU_CHOICE_START: Final[int] = _RACE_DICT_BEGIN[-1][0] + 1
+except IndexError:
+    _MENU_CHOICE_START: Final[int] = 1
 # Lookup of race menu selection to actual race
-RACE_DICT: Final[dict] = OrderedDict([(1, None), (2, 'Dwarf'), (3, 'Elf'), (4, 'Gnome'),
-                                      (5, 'Goblin'), (6, 'Halfling'), (7, 'Human'),
-                                      (8, 'Half-Elf'), (9, 'Half-Orc')])
+RACE_DICT: Final[dict] = \
+    OrderedDict(_RACE_DICT_BEGIN + [(count + _MENU_CHOICE_START, value) for (count, value)
+                                    in enumerate(ANCESTRY_LIST)] + _RACE_DICT_END)
 
 
 def clear_screen():
