@@ -5,8 +5,6 @@ from typing import Final, List
 # Third Party
 # Local
 
-ANCESTRY_LIST: Final[List] = sorted(['Dwarf', 'Elf', 'Gnome', 'Goblin', 'Halfling', 'Human',
-                                     'Half-Elf', 'Half-Orc'])
 CITY_MODIFIER_LIST: Final[List] = ['Corruption', 'Crime', 'Economy', 'Law', 'Lore', 'Society']
 CITY_SIZE_LIMITS: Final[tuple] = (5, 200000)  # (Min, Max)
 GG_CITY_KEY: Final[str] = 'city'
@@ -32,12 +30,17 @@ GG_CITY_RACE_VARISIAN: Final[str] = 'Varisian'
 GG_CITY_RACE_VUDRANI: Final[str] = 'Vudrani'
 GG_CITY_RACE_HALF_ELF: Final[str] = 'Half-Elf'
 GG_CITY_RACE_HALF_ORC: Final[str] = 'Half-Orc'
+GG_CITY_RACE_TENGU: Final[str] = 'Tengu'
 HUMAN_ETHNICITY_LIST: Final[List] = [GG_CITY_RACE_GARUNDI, GG_CITY_RACE_KELESHITE,
                                      GG_CITY_RACE_KELLID, GG_CITY_RACE_MWANGI,
                                      GG_CITY_RACE_NIDALESE, GG_CITY_RACE_SHOANTI,
                                      GG_CITY_RACE_TALDAN, GG_CITY_RACE_TIAN,
                                      GG_CITY_RACE_ULFEN, GG_CITY_RACE_VARISIAN,
                                      GG_CITY_RACE_VUDRANI]  # User Story 8. Nidalese
+ANCESTRY_LIST: Final[List] = sorted([GG_CITY_RACE_DWARF, GG_CITY_RACE_ELF, GG_CITY_RACE_GNOME,
+                                     GG_CITY_RACE_GOBLIN, GG_CITY_RACE_HALFLING,
+                                     GG_CITY_RACE_HUMAN, GG_CITY_RACE_HALF_ELF,
+                                     GG_CITY_RACE_HALF_ORC, GG_CITY_RACE_TENGU])
 CLASS_LIST: Final[List] = ['Adept', 'Alchemist', 'Aristocrat', 'Barbarian', 'Bard', 'Champion',
                            'Cleric', 'Commoner', 'Druid', 'Expert', 'Fighter', 'Monk', 'Ranger',
                            'Rogue', 'Sorcerer', 'Warrior', 'Wizard']
