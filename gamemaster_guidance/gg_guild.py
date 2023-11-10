@@ -5,7 +5,9 @@ from typing import Any, List
 # Third Party Imports
 # Local Imports
 from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST
-from gamemaster_guidance.gg_misc import print_header
+from gamemaster_guidance.gg_job import GGJob
+from gamemaster_guidance.gg_misc import (print_header, print_numbered_list, print_rjust_list,
+                                         validate_num, validate_percent, validate_scale)
 
 
 class GGGuild():
@@ -40,8 +42,19 @@ class GGGuild():
 
     def rando_jobs(self) -> None:
         """Randomize and print a pre-determined number of jobs based on guild specialities."""
+        # LOCAL VARIABLES
+        job_list = []  # List of randomized jobs
+
+        # VALIDATE INPUT
         self._validate_input()
-        print("TO DO: DON'T DO NOW... Implement rando_jobs()")
+        if not self._job_obj:
+            self._job_obj = GGJob(special_dict=self._guild_dict['guild']['specialties'],
+                                  goals=self._guild_dict['guild']['design']['goals'],
+                                  territory=self._guild_dict['guild']['design']['territory'])
+
+        # PRINT IT
+        job_list = self._job_obj.rando_jobs(num_jobs=self._num_jobs)
+        print_numbered_list(print_list=job_list, header='Job List')
 
     def get_num_events(self) -> int:
         """Get the current number of events to randomize at once."""
@@ -65,7 +78,7 @@ class GGGuild():
         print_header('ALIGNMENT')
         print_list.append(f"Morals {self._guild_dict['guild']['alignment']['morals']}")
         print_list.append(f"Ethics {self._guild_dict['guild']['alignment']['ethics']}")
-        _print_rjust_list(print_list)
+        print_rjust_list(print_list)
         print('')
 
     def _print_guild_config(self) -> None:
@@ -97,7 +110,7 @@ class GGGuild():
         print_header('DESIGN')
         print_list.append(f"Goals {self._guild_dict['guild']['design']['goals']}")
         print_list.append(f"Territory {self._guild_dict['guild']['design']['territory']}")
-        _print_rjust_list(print_list)
+        print_rjust_list(print_list)
         print('')
 
     def _print_guild_specialties(self) -> None:
@@ -114,7 +127,7 @@ class GGGuild():
             temp_val = self._guild_dict['guild']['specialties'][func_special]
             if temp_val:
                 print_list.append(f'{func_special.capitalize()}: {temp_val: >3}%')
-        _print_rjust_list(print_list)
+        print_rjust_list(print_list)
 
         # DONE
         print('')
@@ -157,7 +170,7 @@ class GGGuild():
         # VALIDATE ALIGNMENT
         for found_key in alignment.keys():
             if found_key in mandatory_keys:
-                _validate_scale(alignment[found_key], f"{dict_key}'s {found_key}")
+                validate_scale(alignment[found_key], f"{dict_key}'s {found_key}")
             else:
                 raise RuntimeError(f'Discovered errant guild {dict_key} entry: {found_key}')
 
@@ -170,7 +183,7 @@ class GGGuild():
         # VALIDATE DESIGN
         for found_key in design.keys():
             if found_key in mandatory_keys:
-                _validate_scale(design[found_key], f"{dict_key}'s {found_key}")
+                validate_scale(design[found_key], f"{dict_key}'s {found_key}")
             else:
                 raise RuntimeError(f'Discovered errant guild {dict_key} entry: {found_key}')
 
@@ -200,8 +213,8 @@ class GGGuild():
         # VALIDATE ALIGNMENT
         for found_key in specialties.keys():
             if found_key in mandatory_keys:
-                _validate_percent(specialties[found_key], f"{dict_key}'s {found_key}",
-                                  can_be_zero=True)
+                validate_percent(specialties[found_key], f"{dict_key}'s {found_key}",
+                                 can_be_zero=True)
             else:
                 raise RuntimeError(f'Discovered errant guild {dict_key} entry: {found_key}')
 
@@ -215,9 +228,9 @@ class GGGuild():
             # guild_dict
             self._validate_guild()
             # num_jobs
-            _validate_num(value=self._num_jobs, name='num_jobs')
+            validate_num(value=self._num_jobs, name='num_jobs')
             # num_events
-            _validate_num(value=self._num_events, name='num_events')
+            validate_num(value=self._num_events, name='num_events')
 
             # DONE
             self._validated = True
