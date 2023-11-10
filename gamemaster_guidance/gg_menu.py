@@ -138,7 +138,6 @@ def menu(city_dict: dict, guild_dict: dict) -> None:
         city_obj.load()
     if guild_dict:
         guild_obj = GGGuild(guild_dict)
-        guild_obj.load()
 
     # START
     while user_input != 999:
