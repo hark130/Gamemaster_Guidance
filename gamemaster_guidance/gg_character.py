@@ -25,7 +25,6 @@ class GGCharacter:
         dbFilename = os.path.join(os.getcwd(), "databases", "Traits.txt")
         self.traitList = pick_entries(dbFilename, num_traits)
 
-
     def print_character(self):
         """Print all character descriptions"""
         print("\n")
@@ -36,11 +35,9 @@ class GGCharacter:
         self.print_traits()
         print("\n")
 
-
     def print_name(self):
         """Print the character's full name"""
         self._print_something("Name:", self.charAncestry.return_full_name())
-
 
     def print_race(self):
         """Print the character's race"""
@@ -55,11 +52,9 @@ class GGCharacter:
         if charSubGroup:
             self._print_something("Subgroup:", charSubGroup)
 
-
     def print_sex(self):
         """Print the character's gender"""
         self._print_something("Gender:", self.charAncestry.return_sex())
-
 
     def print_notes(self):
         """Print the character's notes"""
@@ -73,10 +68,7 @@ class GGCharacter:
         elif isinstance(charNotes, str):
             listOfNotes.append(charNotes)
         else:
-            try:
-                listOfNotes.append(str(charNotes))
-            except:
-                listOfNotes = None
+            listOfNotes.append(str(charNotes))
 
         # PRINT NOTES
         if listOfNotes:
@@ -87,13 +79,11 @@ class GGCharacter:
                 for note in listOfNotes:
                     self._print_something("", note)
 
-
     def print_traits(self):
         """Print the character's traits"""
         self._print_something("Traits:", "")
         for trait in self.traitList:
             self._print_something("", trait)
-
 
     def _print_something(self, title, entry):
         """Standardize the format on behalf of all print_* methods"""

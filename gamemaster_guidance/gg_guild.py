@@ -27,7 +27,9 @@ class GGGuild():
         self._job_obj = None           # GGJob object
         self._validated = False        # Controls internal validation
 
-    ### PUBLIC METHODS ###
+    ##################
+    # PUBLIC METHODS #
+    ##################
     # Organized in suggested call order
 
     def print_guild_config(self) -> None:
@@ -66,7 +68,9 @@ class GGGuild():
         self._validate_input()
         return self._num_jobs
 
-    ### PRIVATE METHODS ###
+    ###################
+    # PRIVATE METHODS #
+    ###################
     # Organized alphabetically
 
     def _print_guild_alignment(self) -> None:

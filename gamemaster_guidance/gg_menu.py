@@ -83,8 +83,8 @@ def guild_menu(guild_obj):
 
     # INPUT VALIDATION
     if not guild_obj:
-       print('\nNo guild config provided')
-       user_input = 999
+        print('\nNo guild config provided')
+        user_input = 999
 
     # GUILD MENU
     while user_input != 999:

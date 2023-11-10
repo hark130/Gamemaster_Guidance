@@ -69,7 +69,9 @@ class GGJob():
         self._validated = False            # Controls internal validation
         self._job_cat_list = []            # Contains special_dict and _JOB_LIST entries
 
-    ### PUBLIC METHODS ###
+    ##################
+    # PUBLIC METHODS #
+    ##################
     # Organized in suggested call order
 
     def rando_job(self) -> str:
@@ -96,7 +98,9 @@ class GGJob():
         # DONE
         return job_list
 
-    ### PRIVATE METHODS ###
+    ###################
+    # PRIVATE METHODS #
+    ###################
     # Organized alphabetically
 
     def _prepare_job_cat_list(self) -> None:

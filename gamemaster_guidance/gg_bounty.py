@@ -15,7 +15,7 @@ from gamemaster_guidance.gg_rando import rand_integer, rand_percent
 
 
 def calculate_exponential_percent(num):
-    """Returns y if num were x on an exponential curve running through points (1, 10) and (20, 90)"""
+    """Returns y if num were x on an exponential curve moving through points (1, 10) and (20, 90)"""
     return (10 / math.pow(9, 1/19)) * math.pow(math.pow(9, 1/19), num)
 
 
@@ -25,26 +25,26 @@ class GGBounty(GGCharacter):
     supportedStates = ["Alive", "Dead or Alive"]
     deadRewardPercents = [.25, .5, 1]
     crimePercents = {
-        1: [75,  15,  5,   5 ],
-        2: [70,  17,  7,   6 ],
-        3: [65,  19,  9,   7 ],
-        4: [60,  21,  11,  8 ],
-        5: [55,  23,  13,  9 ],
+        1: [75,  15,  5,   5],
+        2: [70,  17,  7,   6],
+        3: [65,  19,  9,   7],
+        4: [60,  21,  11,  8],
+        5: [55,  23,  13,  9],
         6: [50,  25,  15,  10],
         7: [45,  27,  17,  11],
         8: [40,  29,  19,  12],
         9: [35,  31,  21,  13],
-        10:[30,  33,  23,  14],
-        11:[25,  33,  25,  17],
-        12:[20,  31,  27,  22],
-        13:[15,  29,  29,  27],
-        14:[10,  27,  31,  32],
-        15:[5,   25,  33,  37],
-        16:[0,   23,  33,  44],
-        17:[0,   21,  31,  48],
-        18:[0,   19,  29,  52],
-        19:[0,   17,  27,  56],
-        20:[0,   15,  25,  60],
+        10: [30,  33,  23,  14],
+        11: [25,  33,  25,  17],
+        12: [20,  31,  27,  22],
+        13: [15,  29,  29,  27],
+        14: [10,  27,  31,  32],
+        15: [5,   25,  33,  37],
+        16: [0,   23,  33,  44],
+        17: [0,   21,  31,  48],
+        18: [0,   19,  29,  52],
+        19: [0,   17,  27,  56],
+        20: [0,   15,  25,  60],
     }
     crimeDatabases = [
         os.path.join('databases', 'Crimes-00-Minor.txt'),
@@ -56,48 +56,48 @@ class GGBounty(GGCharacter):
     complicationDatabase = os.path.join('databases', 'Complications.txt')
     # {source:{probability:percent 1-100, notes:string}}
     bountySources = {
-        'City guard':{
-            'Probability':40,
-            'Notes':'Low level crimes, guard being used as a front, or someone was bribed',
+        'City guard': {
+            'Probability': 40,
+            'Notes': 'Low level crimes, guard being used as a front, or someone was bribed',
         },
-        'Army':{
-            'Probability':25,
-            'Notes':'Escaped prison, war crimes, hated by army official, violated national law, '
+        'Army': {
+            'Probability': 25,
+            'Notes': 'Escaped prison, war crimes, hated by army official, violated national law, '
             'outside city limits, or someone was bribed/enticed/influenced',
         },
-        'Black Collar Union':{
-            'Probability':10,
-            'Notes':'Former guildsman that seriously violated the code, find a missing guildsman, '
+        'Black Collar Union': {
+            'Probability': 10,
+            'Notes': 'Former guildsman that seriously violated the code, find a missing guildsman, '
             'murdered a guildsman, knows something about a missing/murdered guildsman, guild '
             'was bribed/enticed/influenced to front a quiet abduction, do a favor for an ally, '
             'or nab a mark at the behest of another guildhouse',
         },
-        'Wealthy merchant':{
-            'Probability':5,
-            'Notes':'Criminal identified by police but not prioritized, front to find someone who '
+        'Wealthy merchant': {
+            'Probability': 5,
+            'Notes': 'Criminal identified by police but not prioritized, front to find someone who '
             'knows something, or high-level thief'
         },
-        'Nobility':{
-            'Probability':5,
-            'Notes':'Intrigue, sweeten the pot to locate a criminal that wronged them, find '
+        'Nobility': {
+            'Probability': 5,
+            'Notes': 'Intrigue, sweeten the pot to locate a criminal that wronged them, find '
             'someone who knows something, bribed a magister for nefarious reasons or locate '
             'fellow nobility run away/missing/kidnapped'
         },
-        'Criminal':{
-            'Probability':5,
-            'Notes':'Easiest way to find someone is to pay someone and then get/kill/rescue '
+        'Criminal': {
+            'Probability': 5,
+            'Notes': 'Easiest way to find someone is to pay someone and then get/kill/rescue '
             'them.  Could be informant, spy, ally, or enemy.  Have someone always following the '
             'PCs.  Actual source will be a front.'
         },
-        'Clergy':{
-            'Probability':5,
-            'Notes':'Silence a witness, find evil, find a heretic, etc.  Good way for a church '
+        'Clergy': {
+            'Probability': 5,
+            'Notes': 'Silence a witness, find evil, find a heretic, etc.  Good way for a church '
             'to get work done without getting their hands dirty.  Source might actually be city.  '
             'Maybe have the PCs feedbly followed.'
         },
-        'Magister':{
-            'Probability':5,
-            'Notes':'Sometimes the court needs to get to the bottom of something.  Special '
+        'Magister': {
+            'Probability': 5,
+            'Notes': 'Sometimes the court needs to get to the bottom of something.  Special '
             'inquiry, official investigation, shady city guard, shady Black Jackets, etc.'
         },
     }
@@ -147,7 +147,7 @@ class GGBounty(GGCharacter):
         currIndex = -1
 
         # Resolve Crime
-        for index in range(0,len(levelPercents)):
+        for index in range(0, len(levelPercents)):
             runningPercent += levelPercents[index]
             if randoPercent <= runningPercent:
                 currIndex = index
@@ -169,14 +169,14 @@ class GGBounty(GGCharacter):
 
     def _rando_complications(self):
         self._complications = pick_entries(self.complicationDatabase, 3)
-            
+
     def _rando_reward(self):
         # LOCAL VARIABLES
         aliveReward = self._level * 10  # Starting point
         deadReward = ''
         splitChance = 0
         randPercent = 0
-        
+
         # ADJUST REWARD
         # Standard Variance
         aliveReward = aliveReward * (1 + (self._crime_type * .1))
@@ -193,21 +193,26 @@ class GGBounty(GGCharacter):
                 # Split
                 if (randPercent / 2) <= splitChance:
                     deadReward = str(int(self.deadRewardPercents[0] * aliveReward))
-                    self.charAncestry._add_note('A low percent dead bounty could indicate a low level or dangerous criminal.  '
-                                                '(e.g., court wants to make a public example, already slated for execution, violent'
+                    self.charAncestry._add_note('A low percent dead bounty could indicate a low '
+                                                'level or dangerous criminal.  '
+                                                '(e.g., court wants to make a public example, '
+                                                'already slated for execution, violent'
                                                 ', case/criminal is generating bad press)')
                 elif randPercent <= splitChance:
                     deadReward = str(int(self.deadRewardPercents[1] * aliveReward))
-                    self.charAncestry._add_note('A mid percent dead bounty could indicate a dastardly or slippery felon.  '
+                    self.charAncestry._add_note('A mid percent dead bounty could indicate a '
+                                                'dastardly or slippery felon.  '
                                                 '(e.g., bad crimes, mid-to-high level')
                 else:
                     # No split.  Dead bounty is the same reward as living.
                     deadReward = str(int(self.deadRewardPercents[2] * aliveReward))
                     self.charAncestry._add_note('Dead and Alive bounty rewards match.')
-                    self.charAncestry._add_note('Perhaps, the mark is a nefarious or slippery villain. (e.g., egregious crimes, high level')
-                    self.charAncestry._add_note('Maybe someone wants the mark permanently silenced. (e.g., innocent, knows something')
+                    self.charAncestry._add_note('Perhaps, the mark is a nefarious or slippery '
+                                                'villain. (e.g., egregious crimes, high level')
+                    self.charAncestry._add_note('Maybe someone wants the mark permanently '
+                                                'silenced. (e.g., innocent, knows something')
                 deadReward = deadReward + '/'  # Truncate the "alive" reward later
-        
+
         self._reward = deadReward + str(int(aliveReward))
 
     def _rando_source(self):
@@ -285,12 +290,13 @@ class GGBounty(GGCharacter):
         """Print the crimes listed for the bounty"""
         if self._crime_list:
             if len(self._crime_list) == 1:
-                self._print_something("Crime:", self._crime_list[0] + f" {self.crimeTypes[self._crime_type]}")
+                self._print_something("Crime:", self._crime_list[0]
+                                      + f" {self.crimeTypes[self._crime_type]}")
             else:
                 self._print_something("Crimes:", self.crimeTypes[self._crime_type])
                 for crime in self._crime_list:
                     self._print_something("", crime)
-                    
+
     def print_complications(self):
         """Print the complications listed for the bounty"""
         if self._complications:
