@@ -1,6 +1,15 @@
 """Implement some randomization functions for the package."""
 
+# Standard Imports
+from typing import List
 import random
+# Third Party Imports
+# Local Imports
+
+
+def rand_list_entry(choices: List[str]) -> str:
+    """Randomly select and return one entry from choices."""
+    return random.choice(choices)
 
 
 def rand_percent():
