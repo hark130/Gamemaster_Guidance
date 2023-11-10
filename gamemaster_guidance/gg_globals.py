@@ -47,13 +47,6 @@ ANCESTRY_LIST: Final[List] = sorted([GG_CITY_RACE_DWARF, GG_CITY_RACE_ELF, GG_CI
 CLASS_LIST: Final[List] = ['Adept', 'Alchemist', 'Aristocrat', 'Barbarian', 'Bard', 'Champion',
                            'Cleric', 'Commoner', 'Druid', 'Expert', 'Fighter', 'Monk', 'Ranger',
                            'Rogue', 'Sorcerer', 'Warrior', 'Wizard']
-
-
-def print_header(header):
-    """Print a header surrounded by a standardized banner."""
-    # LOCAL VARIABLES
-    banner = '-' * len(header)
-
-    print(banner)
-    print(header)
-    print(banner)
+FUNC_SPECIAL_LIST: Final[List] = sorted(['corruption', 'counterfeiting', 'drugs', 'exploitation',
+                                         'fraud', 'property', 'racketeering', 'smuggling', 'vice',
+                                         'violence'])
