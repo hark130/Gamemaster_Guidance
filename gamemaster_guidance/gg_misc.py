@@ -16,6 +16,16 @@ def print_header(header: str) -> None:
     print(banner)
 
 
+def print_numbered_list(print_list: List[str], header: str = None) -> None:
+    """Print list contents in a numbered list under an optional header."""
+    if header:
+        print_header(header=header)
+    for num, print_entry in enumerate(print_list):
+        temp_num = f'{num + 1}'
+        print((' ' * (len(str(len(print_list))) - len(temp_num)))
+              + f'{temp_num}. {print_entry}')
+
+
 def print_rjust_list(str_list: List[str]) -> None:
     """Print a list of strings, right-justified to the width of the longest string."""
     # LOCAL VARIABLES
@@ -35,6 +45,19 @@ def print_rjust_list(str_list: List[str]) -> None:
         print(f"{(longest_str - len(str_list_entry)) * ' '}{str_list_entry}")
 
 
+def validate_int_scale(value: int, name: str) -> None:
+    """Validate value is an integer on an inclusive scale of 1 to 10.
+
+    Args:
+        value: Value to test as a number on a scale of 1 to 10.
+        name: Argument name being validated.  Used to format exception messages.
+    """
+    # INPUT VALIDATION
+    if not isinstance(value, int):
+        raise TypeError(f'The {name} must be of type int')
+    validate_scale(value=value, name=name)
+
+
 def validate_num(value: int, name: str) -> None:
     """Validate value is an integer between 1 and 100, inclusive.
 
@@ -45,7 +68,7 @@ def validate_num(value: int, name: str) -> None:
     # INPUT VALIDATION
     if not isinstance(value, int):
         raise TypeError(f'The {name} must be of type int')
-    _validate_percent(value=value, name=name)
+    validate_percent(value=value, name=name)
 
 
 def validate_percent(value: Any, name: str, can_be_zero: bool = False) -> None:
