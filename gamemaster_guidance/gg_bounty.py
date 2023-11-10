@@ -9,7 +9,8 @@ import random
 # Local Imports
 from gamemaster_guidance.gg_character import GGCharacter
 from gamemaster_guidance.gg_file_io import pick_entries
-from gamemaster_guidance.gg_globals import CLASS_LIST, print_header
+from gamemaster_guidance.gg_globals import CLASS_LIST
+from gamemaster_guidance.gg_misc import print_header
 from gamemaster_guidance.gg_rando import rand_integer, rand_percent
 
 

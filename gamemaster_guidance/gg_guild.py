@@ -4,7 +4,8 @@
 from typing import Any, List
 # Third Party Imports
 # Local Imports
-from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST, print_header
+from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST
+from gamemaster_guidance.gg_misc import print_header
 
 
 class GGGuild():
