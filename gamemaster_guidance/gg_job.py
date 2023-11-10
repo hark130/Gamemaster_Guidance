@@ -146,11 +146,11 @@ class GGJob():
         # INPUT VALIDATION
         if category not in _JOB_LIST:
             raise RuntimeError(f'Unknown guild job category: {category}')
-        if category not in func_lookup.keys():
+        if category not in func_lookup:
             raise RuntimeError(f'Unsupported guild job category: {category}')
 
         # RANDO IT
-        score_details = func_lookup[category]()
+        job_details = func_lookup[category]()
 
         # DONE
         return job_details
@@ -283,7 +283,7 @@ class GGJob():
         # INPUT VALIDATION
         if specialty not in FUNC_SPECIAL_LIST:
             raise RuntimeError(f'Unknown functional specialty: {specialty}')
-        if specialty not in func_lookup.keys():
+        if specialty not in func_lookup:
             raise RuntimeError(f'Unsupported functional specialty: {specialty}')
 
         # RANDO IT
@@ -357,9 +357,11 @@ class GGJob():
         # Is there a sub-specialty?
         try:
             sub_specialty = rand_list_entry(_FUNC_SPEC_LOOKUP[GG_GLOBALS.FUNC_SPECIAL_PROPERTY])
-        except KeyError:
-            raise RuntimeError(f'Where are the {GG_GLOBALS.FUNC_SPECIAL_PROPERTY} sub-specialties?')
+        except KeyError as err:
+            raise RuntimeError(f'Where are the {GG_GLOBALS.FUNC_SPECIAL_PROPERTY} '
+                               'sub-specialties?') from err
         # TO DO: DON'T DO NOW... switch on the sub-specialty, fill in a templated string, and return
+        print(f'SUB SPECIALTY: {sub_specialty}')  # TEMP
 
         # DONE
         return score_details

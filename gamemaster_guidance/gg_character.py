@@ -1,3 +1,5 @@
+"""Defines the GGCharacter class to create and print new characters."""
+
 # Standard
 import os
 # Third Party
@@ -8,8 +10,8 @@ from gamemaster_guidance.gg_file_io import pick_entries
 
 class GGCharacter:
     """Create and print a new character"""
-    entryTitleWidth = 10  # Width of each printed entry's title
-    entryFormatStr = "{:"+str(entryTitleWidth)+"}"
+    entry_title_width = 10  # Width of each printed entry's title
+    entry_format_str = "{:"+str(entry_title_width)+"}"
 
     def __init__(self, race=None, sex=None, num_traits=3, city_object=None):
         """Class constructor"""
@@ -20,10 +22,10 @@ class GGCharacter:
             race = self.city_obj.rando_city_race()
 
         # Ancestry
-        self.charAncestry = GGAncestry(race, sex, city_object)
+        self.char_ancestry = GGAncestry(race, sex, city_object)
         # Traits
-        dbFilename = os.path.join(os.getcwd(), "databases", "Traits.txt")
-        self.traitList = pick_entries(dbFilename, num_traits)
+        db_filename = os.path.join(os.getcwd(), "databases", "Traits.txt")
+        self.trait_list = pick_entries(db_filename, num_traits)
 
     def print_character(self):
         """Print all character descriptions"""
@@ -37,54 +39,54 @@ class GGCharacter:
 
     def print_name(self):
         """Print the character's full name"""
-        self._print_something("Name:", self.charAncestry.return_full_name())
+        self._print_something("Name:", self.char_ancestry.return_full_name())
 
     def print_race(self):
         """Print the character's race"""
-        charEthnicity = self.charAncestry.return_ethnicity()
-        charSubGroup = self.charAncestry.return_subgroup()
+        char_ethnicity = self.char_ancestry.return_ethnicity()
+        char_sub_group = self.char_ancestry.return_subgroup()
 
-        self._print_something("Race:", self.charAncestry.return_race())
+        self._print_something("Race:", self.char_ancestry.return_race())
 
-        if charEthnicity:
-            self._print_something("Ethnicity:", charEthnicity)
+        if char_ethnicity:
+            self._print_something("Ethnicity:", char_ethnicity)
 
-        if charSubGroup:
-            self._print_something("Subgroup:", charSubGroup)
+        if char_sub_group:
+            self._print_something("Subgroup:", char_sub_group)
 
     def print_sex(self):
         """Print the character's gender"""
-        self._print_something("Gender:", self.charAncestry.return_sex())
+        self._print_something("Gender:", self.char_ancestry.return_sex())
 
     def print_notes(self):
         """Print the character's notes"""
         # LOCAL VARIABLES
-        charNotes = self.charAncestry.return_notes()
-        listOfNotes = []
+        char_notes = self.char_ancestry.return_notes()
+        list_of_notes = []
 
         # PARSE NOTES
-        if isinstance(charNotes, list):
-            listOfNotes = charNotes
-        elif isinstance(charNotes, str):
-            listOfNotes.append(charNotes)
+        if isinstance(char_notes, list):
+            list_of_notes = char_notes
+        elif isinstance(char_notes, str):
+            list_of_notes.append(char_notes)
         else:
-            listOfNotes.append(str(charNotes))
+            list_of_notes.append(str(char_notes))
 
         # PRINT NOTES
-        if listOfNotes:
-            if len(listOfNotes) == 1:
-                self._print_something("Note:", listOfNotes[0])
+        if list_of_notes:
+            if len(list_of_notes) == 1:
+                self._print_something("Note:", list_of_notes[0])
             else:
                 self._print_something("Notes:", "")
-                for note in listOfNotes:
+                for note in list_of_notes:
                     self._print_something("", note)
 
     def print_traits(self):
         """Print the character's traits"""
         self._print_something("Traits:", "")
-        for trait in self.traitList:
+        for trait in self.trait_list:
             self._print_something("", trait)
 
     def _print_something(self, title, entry):
         """Standardize the format on behalf of all print_* methods"""
-        print(self.entryFormatStr.format(title) + " " + entry)
+        print(self.entry_format_str.format(title) + " " + entry)

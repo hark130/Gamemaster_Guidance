@@ -79,7 +79,7 @@ def validate_percent(value: Any, name: str, can_be_zero: bool = False) -> None:
         name: Argument name being validated.  Used to format exception messages.
     """
     # INPUT VALIDATION
-    if isinstance(value, int) or isinstance(value, float):
+    if isinstance(value, (float, int)):
         if value == 0 and can_be_zero:
             pass
         elif value < 1:
@@ -98,7 +98,7 @@ def validate_scale(value: Any, name: str) -> None:
         name: Argument name being validated.  Used to format exception messages.
     """
     # INPUT VALIDATION
-    if isinstance(value, int) or isinstance(value, float):
+    if isinstance(value, (float, int)):
         if value < 1:
             raise ValueError(f'The {name} may not be less than 1')
         if value > 10:

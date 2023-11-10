@@ -1,7 +1,6 @@
 """Defines the GGGuild class."""
 
 # Standard Imports
-from typing import Any, List
 # Third Party Imports
 # Local Imports
 from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST
