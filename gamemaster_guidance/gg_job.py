@@ -5,7 +5,7 @@ from typing import Any, Final, List
 import os
 # Third Party Imports
 # Local Imports
-from gamemaster_guidance.gg_file_io import pick_entry, read_entries
+from gamemaster_guidance.gg_file_io import read_entries
 from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST
 from gamemaster_guidance.gg_misc import validate_num, validate_percent, validate_scale
 from gamemaster_guidance.gg_rando import rand_integer, rand_list_entry
@@ -49,6 +49,7 @@ _FUNC_SPEC_LOOKUP: Final[dict] = {
     }
 
 
+# pylint: disable=too-many-instance-attributes
 class GGJob():
     """Generate one or more jobs based on functional specialties."""
 
@@ -329,7 +330,7 @@ class GGJob():
         if 'prison' in duty:
             job_details = job_details + f' for {rand_integer(3, 10)} prisoners'
         else:
-            job_details = job_details + f' for 12 hours'
+            job_details = job_details + ' for 12 hours'
 
         # DONE
         return job_details
@@ -660,6 +661,8 @@ class GGJob():
         # List of vandalism-related verbs
         verb_list = ['bend', 'break', 'chip', 'scrape', 'scratch', 'deface', 'desecrate', 'paint',
                      'cut', 'gouge', 'scratch up', 'scrape up', 'crack']
+        # Adjectives describing why maybe the thing is worth vandalizing
+        adjective_list = self._get_thing_adj_list()
 
         # RANDO IT
         score_details = self._rando_common_details(preamble=score_details, verb_list=verb_list,
