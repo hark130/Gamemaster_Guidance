@@ -1,0 +1,43 @@
+# A collection of common-use indoor and outdoor settings to choose from.
+festival
+carnival
+theater
+town square
+garden
+park
+abandoned warehouse
+dilapidated house
+tea house
+tea garden
+kabuki theater
+noodle shop
+holiday celebration
+inn
+stable
+ampitheater
+docks
+merchant
+warehouse
+clothing shop
+tailor shop
+curio shop
+antique store
+museum
+school
+geisha school
+samurai school
+training ground
+monastery
+temple
+shrine
+outside the city limits
+farm
+mill
+grain distributor
+food market
+rooftop garden
+rooftop market
+rooftop bazaar
+bazaar
+town center
+

@@ -1,0 +1,61 @@
+# A list of customers to choose from.
+priest
+thief
+soldier
+teacher
+daimyo
+representative
+noble
+lawyer
+merchant
+artisan
+artist
+dancer
+singer
+author
+painter
+sculptor
+teacher
+professor
+samurai
+noble
+detective
+vigilante
+assassin
+farmer
+chef
+acolyte
+interpreter
+ninja
+traveler
+businessman
+scribe
+bard
+barkeeper
+brewer
+distiller
+rancher
+judge
+clothier
+seamstress
+tailor
+police chief
+general
+shogun
+emperor
+anonymous client
+court nobility
+the guild
+the guildmaster
+law enforcement
+shop keep
+merchant
+street vendor
+local guards
+private security guard
+local gang
+different guild member
+priest
+mage
+witch
+
