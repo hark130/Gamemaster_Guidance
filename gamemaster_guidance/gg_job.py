@@ -199,8 +199,8 @@ class GGJob():
 
         # RANDO IT
         details = details + f'{customer.capitalize()} wants the guild to ' \
-                  + f'{verb.lower()} a(n) {adjective.lower()}{thing.lower()} which ' \
-                  + f'is owned by a(n) {owner.lower()}'
+            + f'{verb.lower()} a(n) {adjective.lower()}{thing.lower()} which ' \
+            + f'is owned by a(n) {owner.lower()}'
 
         # DONE
         return details
@@ -231,7 +231,6 @@ class GGJob():
 
         # DONE
         return details
-
 
     def _rando_guild_job_details(self, category: str) -> str:
         """Randomize job details based on guild work to be done.
@@ -268,8 +267,8 @@ class GGJob():
         # LOCAL VARIABLES
         job_details = f'{self._job_title}: {_JOB_ESCORT.title()} - '  # Details about this guild job
         # List of related verbs
-        verb_list = ['follow', 'guard', 'loosely follow', 'scout for', 'closely follow', 'accompany',
-                     'stick to', 'observe']
+        verb_list = ['follow', 'guard', 'loosely follow', 'scout for', 'closely follow',
+                     'accompany', 'stick to', 'observe']
         # List of potential escortees
         escortee_list = ['the Guildmaster', 'one Underboss', 'two Underbosses', 'one master thief'
                          f'{rand_integer(2, 3)} master thieves', 'one guild thief',
@@ -286,8 +285,8 @@ class GGJob():
 
         # RANDO IT
         job_details = job_details + f'{rand_list_entry(verb_list).capitalize()} ' \
-                      + f'{rand_list_entry(escortee_list)} to a {rand_list_entry(type_list)} ' \
-                      + f'at a(n) {setting}'
+            + f'{rand_list_entry(escortee_list)} to a {rand_list_entry(type_list)} ' \
+            + f'at a(n) {setting}'
 
         # DONE
         return job_details
@@ -311,7 +310,7 @@ class GGJob():
 
         # RANDO IT
         job_details = job_details + f'{rand_list_entry(verb_list).capitalize()} ' \
-                      + f'{rand_list_entry(target_list)}'
+            + f'{rand_list_entry(target_list)}'
 
         # DONE
         return job_details
@@ -347,7 +346,7 @@ class GGJob():
 
         # RANDO IT
         job_details = job_details + f'Observe and report on a(n) {rand_list_entry(adj_list)} ' \
-                      + f'{rand_list_entry(relation_list)}'
+            + f'{rand_list_entry(relation_list)}'
 
         # DONE
         return job_details
@@ -377,8 +376,7 @@ class GGJob():
 
         # RANDO IT
         job_details = job_details + f'{rand_list_entry(adverb_list).capitalize()} ' \
-                      + f'{rand_list_entry(patrol_list)} ' \
-                      + f'{rand_list_entry(location_list)}'
+            + f'{rand_list_entry(patrol_list)} {rand_list_entry(location_list)}'
 
         # DONE
         return job_details
@@ -390,7 +388,7 @@ class GGJob():
 
         # RANDO IT
         job_details = job_details + 'Recruit someone good at ' \
-                      + f'{rand_list_entry(self._func_special_list)}'
+            + f'{rand_list_entry(self._func_special_list)}'
 
         # DONE
         return job_details
@@ -584,7 +582,6 @@ class GGJob():
         # Adjectives describing why maybe the thing is worth burning
         adjective_list = self._get_thing_adj_list()
 
-
         # RANDO IT
         score_details = self._rando_common_details(preamble=score_details, verb_list=verb_list,
                                                    adj_list=adjective_list)
@@ -606,8 +603,8 @@ class GGJob():
 
         # RANDO IT
         score_details = score_details + f'{rand_list_entry(verb_list).capitalize()} a(n) ' \
-                        + f'{thing_adj.lower()} {thing.lower()} to/from a(n) {person.lower()} ' \
-                        + f'at a(n) {setting.lower()}'
+            + f'{thing_adj.lower()} {thing.lower()} to/from a(n) {person.lower()} ' \
+            + f'at a(n) {setting.lower()}'
 
         # DONE
         return score_details
