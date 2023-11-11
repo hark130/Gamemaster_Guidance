@@ -2,11 +2,13 @@
 
 # Standard Imports
 from typing import Any, Final, List
+import os
 # Third Party Imports
 # Local Imports
+from gamemaster_guidance.gg_file_io import pick_entry, read_entries
 from gamemaster_guidance.gg_globals import FUNC_SPECIAL_LIST
 from gamemaster_guidance.gg_misc import validate_num, validate_percent, validate_scale
-from gamemaster_guidance.gg_rando import rand_list_entry
+from gamemaster_guidance.gg_rando import rand_integer, rand_list_entry
 import gamemaster_guidance.gg_globals as GG_GLOBALS  # For brevity
 
 
@@ -68,6 +70,14 @@ class GGJob():
         self._territory = territory        # Nothing-to-city scale affects 'patrol' jobs
         self._validated = False            # Controls internal validation
         self._job_cat_list = []            # Contains special_dict and _JOB_LIST entries
+        self._func_special_list = []       # Contains just special_dict entries
+        self._score_title = '[SCORE]'      # Standardized job header for scores
+        self._job_title = '[JOB]'          # Standardized job header for guild jobs
+        # These list are read from the file and stored in the object.  Read once, reference many.
+        self._adj_list = []                # Contents of Common-Thing_Adjective.txt (if needed)
+        self._person_list = []             # Contents of Common-People.txt database (if needed)
+        self._thing_list = []              # Contents of Common-Thing.txt database (if needed)
+        self._setting_list = []            # Contents of Common-Setting.txt database (if needed)
 
     ##################
     # PUBLIC METHODS #
@@ -103,6 +113,13 @@ class GGJob():
     ###################
     # Organized alphabetically
 
+    def _get_thing_adj_list(self) -> List[str]:
+        """Read the Common-Thing_Adjective.txt database and return it."""
+        if not self._adj_list:
+            self._adj_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                          'Common-Thing_Adjective.txt'))
+        return self._adj_list
+
     def _prepare_job_cat_list(self) -> None:
         """Populate the _job_cat_list if it hasn't been done already."""
         if not self._job_cat_list:
@@ -110,6 +127,7 @@ class GGJob():
             # Populate with "scores" from self._special_dict
             for entry, count in self._special_dict.items():
                 for _ in range(count):
+                    self._func_special_list.append(entry)
                     self._job_cat_list.append(entry)
             # Populate with "jobs" from _JOB_LIST
             # Flat entries
@@ -124,6 +142,96 @@ class GGJob():
             # Territory
             for _ in range(round(10 * self._territory)):
                 self._job_cat_list.append(_JOB_PATROL)
+
+    def _rando_a_person(self) -> str:
+        """Randomize one person from the Common-People.txt database."""
+        # VALIDATION
+        if not self._person_list:
+            self._person_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                             'Common-People.txt'))
+        # RANDO IT
+        return rand_list_entry(self._person_list)
+
+    def _rando_a_setting(self) -> str:
+        """Randomize one person from the Common-Setting.txt database."""
+        if not self._setting_list:
+            self._setting_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                              'Common-Setting.txt'))
+        # RANDO IT
+        return rand_list_entry(self._setting_list)
+
+    def _rando_a_thing(self) -> str:
+        """Randomize one person from the Common-Thing.txt database."""
+        if not self._thing_list:
+            self._thing_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                            'Common-Thing.txt'))
+        # RANDO IT
+        return rand_list_entry(self._thing_list)
+
+    def _rando_common_details(self, preamble: str, verb_list: List[str],
+                              adj_list: List[str] = None) -> str:
+        """Randomize some common details using unique verbs and optional adjectives.
+
+        Many of the job/score detail results followed the same formula.  This method will help
+        make the randomization job easier.  This method will return a string that conforms to the
+        following format:
+
+            '<preamble><Person> wants the guild to <verb> a(n) <adjective> <thing> which is owned
+             by a(n) <person>'
+
+        Args:
+            preamble: A string to preprend to the return value.  Could be empty.
+            verb_list: A list of verbs to randomize from.
+            adj_list: [Optional] A list of adjectives to apply to the 'thing'.  An adjective will
+                be ommitted if the list empty or the value is None.
+        """
+        # LOCAL VARIABLES
+        details = preamble                 # Build the common details as it goes
+        customer = self._rando_a_person()  # The customer
+        owner = self._rando_a_person()     # The owner of the thing
+        verb = rand_list_entry(verb_list)  # What the customer wants the guild to do
+        adjective = ''                     # The adjective describing the thing
+        thing = self._rando_a_thing()      # The thing
+
+        # PREPARE
+        if isinstance(adj_list, list) and adj_list:
+            adjective = rand_list_entry(adj_list) + ' '  # Leave a space to make formatting easier
+
+        # RANDO IT
+        details = details + f'{customer.capitalize()} wants the guild to ' \
+                  + f'{verb.lower()} a(n) {adjective.lower()}{thing.lower()} which ' \
+                  + f'is owned by a(n) {owner.lower()}'
+
+        # DONE
+        return details
+
+    def _rando_uncommon_details(self, preamble: str, verb_list: List[str],
+                                person_list: List[str]) -> str:
+        """Randomize some uncommon details using unique verbs.
+
+        Some of the job/score detail resulted in this particular formula.  This method will help
+        make that randomization job easier.  This method will return a string that conforms to the
+        following format:
+
+            '<preamble>The guild needs you to <verb> a/the <person> in <setting>'
+
+        Args:
+            preamble: A string to preprend to the return value.  Could be empty.
+            verb_list: A list of verbs to randomize from.
+            person_list: A list of people to randomize from.
+        """
+        # LOCAL VARIABLES
+        details = preamble                     # Build the common details as it goes
+        verb = rand_list_entry(verb_list)      # What the customer wants the guild to do
+        person = rand_list_entry(person_list)  # Who needs to be "verbed"?
+        setting = self._rando_a_setting()      # Where will it take place?
+
+        # RANDO IT
+        details = details + f'The guild needs you to {verb} a/the {person} in/near a(n) {setting}'
+
+        # DONE
+        return details
+
 
     def _rando_guild_job_details(self, category: str) -> str:
         """Randomize job details based on guild work to be done.
@@ -155,57 +263,31 @@ class GGJob():
         # DONE
         return job_details
 
-    def _rando_guild_job_details_guard(self) -> str:
-        """Randomize a specific guild job that falls into the 'guard duty' category."""
-        # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
-
-        # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
-
-        # DONE
-        return job_details
-
-    def _rando_guild_job_details_patrol(self) -> str:
-        """Randomize a specific guild job that falls into the 'patrol' category."""
-        # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
-
-        # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
-
-        # DONE
-        return job_details
-
-    def _rando_guild_job_details_invest(self) -> str:
-        """Randomize a specific guild job that falls into the 'investigate' category."""
-        # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
-
-        # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
-
-        # DONE
-        return job_details
-
-    def _rando_guild_job_details_recruit(self) -> str:
-        """Randomize a specific guild job that falls into the 'recruitment' category."""
-        # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
-
-        # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
-
-        # DONE
-        return job_details
-
     def _rando_guild_job_details_escort(self) -> str:
         """Randomize a specific guild job that falls into the 'escort' category."""
         # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
+        job_details = f'{self._job_title}: {_JOB_ESCORT.title()} - '  # Details about this guild job
+        # List of related verbs
+        verb_list = ['follow', 'guard', 'loosely follow', 'scout for', 'closely follow', 'accompany',
+                     'stick to', 'observe']
+        # List of potential escortees
+        escortee_list = ['the Guildmaster', 'one Underboss', 'two Underbosses', 'one master thief'
+                         f'{rand_integer(2, 3)} master thieves', 'one guild thief',
+                         f'{rand_integer(3, 5)} guild thieves', 'one guild sneak',
+                         f'{rand_integer(5, 9)} guild sneaks', 'one new recruit',
+                         f'{rand_integer(9, 13)} new recruits', "the guild's patron",
+                         "the guild's customer", "the guild's ally",
+                         "the guild's contact", "a guild-affiliated contractor"]
+        # List of destination types
+        type_list = ['meeting', 'pickup', 'training', 'public event', 'field observation',
+                     'deal', 'negotiation', 'transaction', 'drop off', 'dead drop']
+        # Geographic locations
+        setting = self._rando_a_setting()
 
         # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
+        job_details = job_details + f'{rand_list_entry(verb_list).capitalize()} ' \
+                      + f'{rand_list_entry(escortee_list)} to a {rand_list_entry(type_list)} ' \
+                      + f'at a(n) {setting}'
 
         # DONE
         return job_details
@@ -213,10 +295,102 @@ class GGJob():
     def _rando_guild_job_details_expand(self) -> str:
         """Randomize a specific guild job that falls into the 'aggressive expansion' category."""
         # LOCAL VARIABLES
-        job_details = ''  # Details about this guild job
+        job_details = f'{self._job_title}: {_JOB_EXPAND.title()} - '  # Details about this guild job
+        # List of related verbs
+        verb_list = ['hit', 'accost', 'chase', 'distract', 'annoy', 'pester', 'attack', 'wound',
+                     'hurt', 'kill', 'hamper', 'stop', 'hinder', 'halt', 'delay', 'waylay',
+                     'ambush', 'kidnap', 'question', 'exile', 'intimidate', 'imprison']
+        # A list of target's susceptible to expansion
+        target_list = ["a competitor's gang", 'a local gang', "another guild's members",
+                       "an enemy's vault", 'an opposing guild', "an enemy's guildhall",
+                       "an opposing guild's affiliated gang", "an opposing gang's customer",
+                       "an opposing guild's customer", "an opposing gang's patron",
+                       "an opposing guild's patron", "an opposing gang's ally",
+                       "an opposing guild's ally", "an enemy's warehouse", "another guild's patrol",
+                       "another guild's thieves"]
 
         # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
+        job_details = job_details + f'{rand_list_entry(verb_list).capitalize()} ' \
+                      + f'{rand_list_entry(target_list)}'
+
+        # DONE
+        return job_details
+
+    def _rando_guild_job_details_guard(self) -> str:
+        """Randomize a specific guild job that falls into the 'guard duty' category."""
+        # LOCAL VARIABLES
+        job_details = f'{self._job_title}: {_JOB_GUARD.title()} - '  # Details about this guild job
+        # Various guard duty responsibilities
+        duties = ['backdoor guard', 'warehouse guard', 'vault supervisor', 'bar liaison',
+                  'prison guard']
+        duty = rand_list_entry(duties)  # Random duty
+
+        # RANDO IT
+        job_details = job_details + f'{duty.capitalize()}'
+        if 'prison' in duty:
+            job_details = job_details + f' for {rand_integer(3, 10)} prisoners'
+        else:
+            job_details = job_details + f' for 12 hours'
+
+        # DONE
+        return job_details
+
+    def _rando_guild_job_details_invest(self) -> str:
+        """Randomize a specific guild job that falls into the 'investigate' category."""
+        # LOCAL VARIABLES
+        job_details = f'{self._job_title}: {_JOB_INVEST.title()} - '  # Details about this guild job
+        # List of relationships
+        relation_list = ['patron', 'customer', 'ally', 'contact', 'contractor', 'mark']
+        # Relationship descriptors
+        adj_list = ['potential', 'former', 'current', 'prospective', "enemy's", "ally's",
+                    "employer's"]
+
+        # RANDO IT
+        job_details = job_details + f'Observe and report on a(n) {rand_list_entry(adj_list)} ' \
+                      + f'{rand_list_entry(relation_list)}'
+
+        # DONE
+        return job_details
+
+    def _rando_guild_job_details_patrol(self) -> str:
+        """Randomize a specific guild job that falls into the 'patrol' category."""
+        # LOCAL VARIABLES
+        job_details = f'{self._job_title}: {_JOB_PATROL.title()} - '  # Details about this guild job
+        # List of adjectives to describe how they should be patrolling
+        adverb_list = ['quietly', 'randomly', 'silently', 'brazenly', 'softly', 'unnoticeably',
+                       'invisibly', 'conspicuously', 'inconspicuously', 'prominently',
+                       'noticeably', 'discretely', 'unobtrusively', 'imperceptibly']
+        # List of various patrol activities
+        patrol_list = ['watch thru traffic', 'inspect shipments', 'question passerbys',
+                       'search for suspicious characters that pass', 'go door to door',
+                       'follow law enforcement', 'observe pedestrian traffic',
+                       'shadow law enforcement', 'follow large shipments', 'shadow large groups',
+                       'follow large groups', 'follow suspicious people',
+                       'question suspicious pedestrians']
+        # List of territory locations to patrol
+        location_list = ['near the guildhall', 'near the gang bar', 'around the territory border',
+                         'just outside territory boundaries', 'within guild territory',
+                         'in major thoroughfares through guild territory',
+                         'in random guild territory locations', 'near the territory border',
+                         "near the guild's warehouse", "near the guildhall's backdoor",
+                         'in front of the guildhall']
+
+        # RANDO IT
+        job_details = job_details + f'{rand_list_entry(adverb_list).capitalize()} ' \
+                      + f'{rand_list_entry(patrol_list)} ' \
+                      + f'{rand_list_entry(location_list)}'
+
+        # DONE
+        return job_details
+
+    def _rando_guild_job_details_recruit(self) -> str:
+        """Randomize a specific guild job that falls into the 'recruitment' category."""
+        # LOCAL VARIABLES
+        job_details = f'{self._job_title}: {_JOB_RECRUIT.title()} - '  # Details about this job
+
+        # RANDO IT
+        job_details = job_details + 'Recruit someone good at ' \
+                      + f'{rand_list_entry(self._func_special_list)}'
 
         # DONE
         return job_details
@@ -351,7 +525,15 @@ class GGJob():
         """Randomize a specific score that falls into the property functional specialty."""
         # LOCAL VARIABLES
         sub_specialty = None  # The specific type of job available within the functional specialty
-        score_details = ''    # Details about this score
+        # Method name lookup dictionary for functional specialties.  Each must return a string.
+        func_lookup = {
+            _PROPERTY_SHOPLIFT: self._rando_score_details_property_shop,
+            _PROPERTY_PICKPOCKET: self._rando_score_details_property_pick,
+            _PROPERTY_VANDAL: self._rando_score_details_property_vandal,
+            _PROPERTY_ARSON: self._rando_score_details_property_arson,
+            _PROPERTY_BURGLARY: self._rando_score_details_property_burgle,
+            _PROPERTY_FENCE: self._rando_score_details_property_fence,
+        }
 
         # RANDO IT
         # Is there a sub-specialty?
@@ -360,8 +542,131 @@ class GGJob():
         except KeyError as err:
             raise RuntimeError(f'Where are the {GG_GLOBALS.FUNC_SPECIAL_PROPERTY} '
                                'sub-specialties?') from err
-        # TO DO: DON'T DO NOW... switch on the sub-specialty, fill in a templated string, and return
-        print(f'SUB SPECIALTY: {sub_specialty}')  # TEMP
+
+        # VALIDATION
+        if sub_specialty not in func_lookup:
+            raise RuntimeError(f'Unsupported property crimes sub-specialty: {sub_specialty}')
+
+        # RANDO IT
+        score_details = func_lookup[sub_specialty]()
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_arson(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty arson."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_ARSON.capitalize()} - '
+        # List of arson-related verbs
+        verb_list = ['burn', 'char', 'singe', 'incinerate', 'torch', 'heat', 'ignite', 'melt',
+                     'scorch', 'smolder', 'cauterize', 'cremate', 'roast', 'scald', 'toast']
+        # Adjectives describing why maybe the thing is worth burning
+        adjective_list = self._get_thing_adj_list()
+
+        # RANDO IT
+        score_details = self._rando_common_details(preamble=score_details, verb_list=verb_list,
+                                                   adj_list=adjective_list)
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_burgle(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty burglary."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_BURGLARY.capitalize()} - '
+        # List of arson-related verbs
+        verb_list = ['steal', 'burgle', 'plunder', 'rifle', 'ransack', 'rob', 'loot',
+                     'abscond with', 'liberate', 'acquire']
+        # Adjectives describing why maybe the thing is worth burning
+        adjective_list = self._get_thing_adj_list()
+
+
+        # RANDO IT
+        score_details = self._rando_common_details(preamble=score_details, verb_list=verb_list,
+                                                   adj_list=adjective_list)
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_fence(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty fencing."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_FENCE.capitalize()} - '
+        verb_list = ['buy', 'sell', 'fence', 'deliver', 'negotate for']  # List of fencing verbs
+        thing = self._rando_a_thing()                                    # What is it?
+        thing_adj = rand_list_entry(self._get_thing_adj_list())          # Why is the thing special?
+        person = self._rando_a_person()                                  # Who is the other party?
+        setting = self._rando_a_setting()                                # Where will it take place?
+
+        # RANDO IT
+        score_details = score_details + f'{rand_list_entry(verb_list).capitalize()} a(n) ' \
+                        + f'{thing_adj.lower()} {thing.lower()} to/from a(n) {person.lower()} ' \
+                        + f'at a(n) {setting.lower()}'
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_pick(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty pick-pocketing."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_PICKPOCKET.capitalize()} - '
+        # Verbs related to pick-pocketing
+        verb_list = ['distract', 'accost', 'trick', 'lure', 'assist', 'watch', 'stop', 'attack',
+                     'assault', 'ambush', 'kill']
+        # People that might need to be "verbed"
+        person_list = ['law enforcement', 'shop keep', 'merchant', 'street vendor', 'local guards',
+                       'private security', 'local gang members', 'opposing guild members', 'mage',
+                       'magic user', 'witch', 'sorcerer', 'priest']
+
+        # RANDO IT
+        score_details = self._rando_uncommon_details(preamble=score_details, verb_list=verb_list,
+                                                     person_list=person_list)
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_shop(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty shoplifting."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_SHOPLIFT.capitalize()} - '
+        # Verbs related to shoplifting
+        verb_list = ['distract', 'accost', 'trick', 'lure', 'assist', 'watch', 'stop', 'attack',
+                     'assault', 'ambush', 'kill']
+        # People that might need to be "verbed"
+        person_list = ['law enforcement', 'shop keep', 'merchant', 'street vendor', 'local guards',
+                       'private security', 'local gang members', 'opposing guild members', 'mage',
+                       'magic user', 'witch', 'sorcerer', 'priest']
+
+        # RANDO IT
+        score_details = self._rando_uncommon_details(preamble=score_details, verb_list=verb_list,
+                                                     person_list=person_list)
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_property_vandal(self) -> str:
+        """Randomize a score that falls into the property crime sub-specialty vandalism."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_PROPERTY.upper()} - ' \
+                        f'{_PROPERTY_VANDAL.capitalize()} - '
+        # List of vandalism-related verbs
+        verb_list = ['bend', 'break', 'chip', 'scrape', 'scratch', 'deface', 'desecrate', 'paint',
+                     'cut', 'gouge', 'scratch up', 'scrape up', 'crack']
+
+        # RANDO IT
+        score_details = self._rando_common_details(preamble=score_details, verb_list=verb_list,
+                                                   adj_list=adjective_list)
 
         # DONE
         return score_details
