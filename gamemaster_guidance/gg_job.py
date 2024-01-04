@@ -23,12 +23,15 @@ _JOB_LIST: Final[List] = sorted([_JOB_GUARD, _JOB_PATROL, _JOB_INVEST, _JOB_RECR
                                  _JOB_EXPAND])
 # Some functional specialties require different "formulas" to generate scores.  Those functional
 # specialties are listed here.
-_PROPERTY_SHOPLIFT: Final[str] = 'shoplifting'
-_PROPERTY_PICKPOCKET: Final[str] = 'pick-pocketing'
-_PROPERTY_VANDAL: Final[str] = 'vandalism'
 _PROPERTY_ARSON: Final[str] = 'arson'
 _PROPERTY_BURGLARY: Final[str] = 'burglary'
 _PROPERTY_FENCE: Final[str] = 'fencing'
+_PROPERTY_PICKPOCKET: Final[str] = 'pick-pocketing'
+_PROPERTY_SHOPLIFT: Final[str] = 'shoplifting'
+_PROPERTY_VANDAL: Final[str] = 'vandalism'
+_RACKET_EXTORT: Final[str] = 'extortion'
+_RACKET_LOAN: Final[str] = 'loan-sharking'
+_RACKET_PROT: Final[str] = 'protection'
 _FUNC_SPEC_LOOKUP: Final[dict] = {
     # GG_GLOBALS.FUNC_SPECIAL_CORRUPTION: [],
     # GG_GLOBALS.FUNC_SPECIAL_COUNTERFEIT: [],
@@ -42,7 +45,10 @@ _FUNC_SPEC_LOOKUP: Final[dict] = {
         + ([_PROPERTY_SHOPLIFT] * 2)
         + ([_PROPERTY_ARSON] * 2)
         + ([_PROPERTY_VANDAL] * 1),
-    # GG_GLOBALS.FUNC_SPECIAL_RACKET: [],
+    GG_GLOBALS.FUNC_SPECIAL_RACKET:
+        ([_RACKET_EXTORT] * 3)
+        + ([_RACKET_LOAN] * 1)
+        + ([_RACKET_PROT] * 2),
     # GG_GLOBALS.FUNC_SPECIAL_SMUGGLE: [],
     # GG_GLOBALS.FUNC_SPECIAL_VICE: [],
     # GG_GLOBALS.FUNC_SPECIAL_VIOLENCE: []
@@ -76,7 +82,9 @@ class GGJob():
         self._job_title = '[JOB]'          # Standardized job header for guild jobs
         # These list are read from the file and stored in the object.  Read once, reference many.
         self._adj_list = []                # Contents of Common-Thing_Adjective.txt (if needed)
+        self._business_list = []           # Contents of Common-Business.txt database (if needed)
         self._person_list = []             # Contents of Common-People.txt database (if needed)
+        self._person_adj_list = []         # Contents of Common-People_Adjective.txt db (if needed)
         self._thing_list = []              # Contents of Common-Thing.txt database (if needed)
         self._setting_list = []            # Contents of Common-Setting.txt database (if needed)
 
@@ -144,14 +152,40 @@ class GGJob():
             for _ in range(round(10 * self._territory)):
                 self._job_cat_list.append(_JOB_PATROL)
 
-    def _rando_a_person(self) -> str:
-        """Randomize one person from the Common-People.txt database."""
+    def _rando_a_business(self) -> str:
+        """Randomize one business from the Common-Business.txt database."""
+        if not self._business_list:
+            self._business_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                               'Common-Business.txt'))
+        # RANDO IT
+        return rand_list_entry(self._business_list)
+
+    def _rando_a_person(self, add_adj: bool = False) -> str:
+        """Randomize one person from the Common-People.txt database.
+
+        Args:
+            add_adj: [Optional] Adds a random adjective from the Common-People_Adjective.txt
+                database to the randomized person if True.
+        """
+        # LOCAL VARIABLES
+        rando_person = ''  # Random person from the People database
+        person_adj = ''    # Random person adjective from the People_Adjective database.
+
         # VALIDATION
+        if add_adj and not self._person_adj_list:
+            self._person_adj_list = read_entries(os.path.join(os.getcwd(), 'databases',
+                                                 'Common-People_Adjective.txt'))
         if not self._person_list:
             self._person_list = read_entries(os.path.join(os.getcwd(), 'databases',
                                              'Common-People.txt'))
+
         # RANDO IT
-        return rand_list_entry(self._person_list)
+        if add_adj:
+            person_adj = rand_list_entry(self._person_adj_list) + ' '
+        rando_person = person_adj + rand_list_entry(self._person_list)
+
+        # DONE
+        return rando_person
 
     def _rando_a_setting(self) -> str:
         """Randomize one person from the Common-Setting.txt database."""
@@ -580,7 +614,7 @@ class GGJob():
         # List of arson-related verbs
         verb_list = ['steal', 'burgle', 'plunder', 'rifle', 'ransack', 'rob', 'loot',
                      'abscond with', 'liberate', 'acquire']
-        # Adjectives describing why maybe the thing is worth burning
+        # Adjectives describing why maybe the thing is worth burgling
         adjective_list = self._get_thing_adj_list()
 
         # RANDO IT
@@ -674,10 +708,83 @@ class GGJob():
     def _rando_score_details_racket(self) -> str:
         """Randomize a specific score that falls into the racketeering functional specialty."""
         # LOCAL VARIABLES
-        score_details = ''  # Details about this score
+        sub_specialty = None  # The specific type of job available within the functional specialty
+        # Method name lookup dictionary for functional specialties.  Each must return a string.
+        func_lookup = {
+            _RACKET_EXTORT: self._rando_score_details_racket_extort,
+            _RACKET_LOAN: self._rando_score_details_racket_loan,
+            _RACKET_PROT: self._rando_score_details_racket_prot,
+        }
 
         # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
+        # Is there a sub-specialty?
+        try:
+            sub_specialty = rand_list_entry(_FUNC_SPEC_LOOKUP[GG_GLOBALS.FUNC_SPECIAL_RACKET])
+        except KeyError as err:
+            raise RuntimeError(f'Where are the {GG_GLOBALS.FUNC_SPECIAL_RACKET} '
+                               'sub-specialties?') from err
+
+        # VALIDATION
+        if sub_specialty not in func_lookup:
+            raise RuntimeError(f'Unsupported racketeering crimes sub-specialty: {sub_specialty}')
+
+        # RANDO IT
+        score_details = func_lookup[sub_specialty]()
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_racket_extort(self) -> str:
+        """Randomize a score that falls into the racketeering crime sub-specialty extortion.
+
+        <ENTITY> wants a(n) <ENTITY ADJECTIVE> <ENTITY/BUSINESS> to <EXTORTION DETAIL>
+        """
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_RACKET.upper()} - ' \
+                        f'{_RACKET_EXTORT.capitalize()} - '
+        # Who came up with this score?
+        source_entity = ['The guildmaster'] + ['The deputy guildmaster'] * 2 \
+                        + ['A guild underboss'] * 3 + ['A master thief in the guild'] * 2 \
+                        + ['A customer']
+        target_entity = ''  # Person or business to extort for money
+        # Levels of extortion
+        extort_levels = ['pay a recurring flat fee'] * 10 \
+                        + ['pay a regular percentage of profit'] * 4 \
+                        + ['cut the guild in as a silent partner'] * 3 \
+                        + ['sell the business to the guild at a discount'] * 2 \
+                        + ['turn over full control to the guild'] * 1
+
+        # RANDO IT
+        if rand_integer(1, 100) <= 25:
+            # Person
+            target_entity = self._rando_a_person(add_adj=True)
+        else:
+            # Business
+            target_entity = self._rando_a_business()
+        score_details = score_details + f'{rand_list_entry(source_entity).capitalize()} ' \
+                        + f'wants a(n) {target_entity.lower()} to ' \
+                        + f'{rand_list_entry(extort_levels)}'
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_racket_loan(self) -> str:
+        """Randomize a score that falls into the racketeering crime sub-specialty loan-sharkking."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_RACKET.upper()} - ' \
+                        f'{_RACKET_LOAN.capitalize()} - '
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_racket_prot(self) -> str:
+        """Randomize a score that falls into the racketeering crime sub-specialty protection."""
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_RACKET.upper()} - ' \
+                        f'{_RACKET_PROT.capitalize()} - '
 
         # DONE
         return score_details
