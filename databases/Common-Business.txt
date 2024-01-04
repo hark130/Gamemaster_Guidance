@@ -1,0 +1,103 @@
+# A list of businesses to choose from.
+Rice Broker
+Sake Brewery
+Tea House
+Spice Merchant
+Textile Merchant
+Trade Route Trader
+Fur Trader
+Salt Merchant
+Tea Merchant
+Wine Merchant
+Spirits Merchant
+Art Dealer
+Jewelry Merchant
+Grain Merchant
+Potter
+Blacksmith
+Weaver
+Carpenter
+Glassblower
+Tailor
+Shoemaker
+Calligrapher
+Swordsmith
+Lacquerware craftsman
+Money Changer
+Inn
+Restaurant
+Cotton Mill
+Fish market
+Bookstore
+Fishmonger
+Armor Smith
+Perfumery
+Herbalist Shop
+Papermaker
+Charcoal Seller
+Scroll Shop
+Incense Merchant
+Armor Trader
+Lamp Oil Vendor
+Fan Maker
+Tannery
+Confectionery Shop
+Umbrella Shop
+Compass Maker
+Fan Shop
+Ink Manufacturer
+Rope Maker
+Fireworks Vendor
+Mirror Maker
+Bonsai Nursery
+Writing Implements Store
+Sculpture Studio
+Broom Maker
+Miso Paste Producer
+Wickerwork Shop
+Shellfish Market
+Herbal Tea Apothecary
+Pottery Studio
+Seaweed Vendor
+Goldsmith
+Scroll Binder
+Armor Workshop
+Rice Paper Maker
+Stained Glass Artisan
+Silk Worm Farm
+Temple Bell Craftsman
+Dye Merchant
+Engraving Studio
+Kite Maker
+Rice Broker
+Sake Brewery
+Spice Merchants
+Textile Merchants
+Silk Road Traders
+Fur Traders
+Salt Merchants
+Tea Merchants
+Wine and Spirits Merchants
+Art Dealers
+Jewelry Merchants
+Grain Merchants
+Blacksmiths
+Weavers
+Carpenters
+Potters
+Tailors
+Shoemakers
+Calligraphers
+Swordsmiths
+Glassblowers
+Lacquerware Craftsmen
+Inn
+Money Changer
+Tea House
+Fish Market
+Bookstore
+Textile Merchant
+Temple
+Shrine
+Church
+
