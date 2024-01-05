@@ -1,0 +1,40 @@
+guild:
+  details:
+    name: Jade Remnants
+    location: Kasai, Minkai
+  # What is the guild's finely detailed alignment?
+  alignment:
+    # Scale of 1 to 10, 1 being good and 10 being evil, what are the standards of right and wrong?
+    morals: 4
+    # Scale of 1 to 10, 1 being lawful and 10 being chaotic, what are the rules governing behavior?
+    ethics: 3.5
+  # What are the guild's central tenets?
+  design:
+    # Scale of 1 to 10, 1 being isolationist and 10 being expansionist, defense-vs-offense?
+    goals: 5.5
+    # Scale of 1 to 10, 1 being nothing and 10 entire city, how much land does it actively control?
+    territory: 5.5
+  # What city-wide criminal enterprise(s) does the guild focus on?
+  specialties:
+    # The manipulation, bribery or otherwise, of public officials, law enforcement, information
+    # gathering, spying, or institutions.
+    corruption: 20
+    # The forgery of currency, goods, or documents.
+    counterfeiting: 1
+    # The production, distribution, or sale of illicit and controlled substances.
+    drugs: 1
+    # Slavery, indentured servitude, sex trafficking, or forced labor.
+    exploitation: 1
+    # Grifting, scams, identity theft, or social engineering.
+    fraud: 10
+    # Shoplifting, pick-pocketing, vandalism, arson, burglary, or fencing stolen goods.
+    property: 20
+    # Financial gain through protection, extortion, or loan sharking.
+    racketeering: 30
+    # The illegal storage or transport of individuals, drugs, or other contraband into, through,
+    # or out of the city.
+    smuggling: 1
+    # Illegal gambling, pornography, or prostitution.
+    vice: 1
+    # Assault, murder, or robbery.
+    violence: 20
