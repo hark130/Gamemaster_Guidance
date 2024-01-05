@@ -211,8 +211,6 @@ class GGJob():
             'Daimyo': 'Feudal lords who governed specific territories.',
             'Hatamoto': 'Direct retainers of the Shogun, holding privileged positions. ' \
             'They were close advisors and administrators in the Shogun\'s administration.',
-            'Bugyo': 'Magistrates or administrators appointed by the Shogun to oversee ' \
-            'specific regions, handling legal, administrative, and financial matters.',
             'Karo': 'Chief advisors or administrators in daimyo households. They were ' \
             'influential figures, managing the daily affairs of the domain, advising the ' \
             'lord, and overseeing samurai retainers.',
@@ -299,47 +297,47 @@ class GGJob():
         # LOCAL VARIABLES
         # Dictionary of low-level public officials, from Japan's Edo period, and their descriptions
         public_officials = {
-            'Yoriki': 'Subordinate police officers or constables who assisted higher-ranking ' \
+            'Yoriki': 'Subordinate police officers or constables who assisted higher-ranking '
             'officials in maintaining law and order within towns or districts.',
-            'Doshin': 'Police officers or town constables responsible for patrolling ' \
+            'Doshin': 'Police officers or town constables responsible for patrolling '
             'neighborhoods, enforcing curfews, and addressing minor disputes in local communities.',
-            'Kurumabugyō': 'Officials responsible for overseeing transportation, especially the ' \
+            'Kurumabugyō': 'Officials responsible for overseeing transportation, especially the '
             'regulation and maintenance of carts, roads, and travel within a region.',
-            'Yakunin': 'Lower-ranked bureaucrats or clerks assisting in administrative duties ' \
-            'such as record-keeping, documentation, or managing accounts within government ' \
+            'Yakunin': 'Lower-ranked bureaucrats or clerks assisting in administrative duties '
+            'such as record-keeping, documentation, or managing accounts within government '
             'offices.',
-            'Hikeshi': 'Firefighters or firemen tasked with fire prevention, emergency response, ' \
+            'Hikeshi': 'Firefighters or firemen tasked with fire prevention, emergency response, '
             'and firefighting duties in Edo and other major cities.',
-            'Kenin': 'Servants or attendants working within the households of samurai or ' \
+            'Kenin': 'Servants or attendants working within the households of samurai or '
             'officials, often handling various domestic tasks or serving as assistants.',
-            'Gokenin': 'Vassals or retainers serving under daimyo, holding lower-ranking ' \
+            'Gokenin': 'Vassals or retainers serving under daimyo, holding lower-ranking '
             'positions in the feudal hierarchy and assisting in various administrative duties.',
-            'Dosho': 'Medical practitioners or doctors working in local clinics or ' \
+            'Dosho': 'Medical practitioners or doctors working in local clinics or '
             'dispensaries, providing basic healthcare services to the public.',
-            'Ninja': 'Espionage agents or covert operatives employed for intelligence ' \
+            'Ninja': 'Espionage agents or covert operatives employed for intelligence '
             'gathering, infiltration, and other clandestine activities.',
-            'Kyokan': 'Village headmen or elders responsible for local governance, resolving ' \
+            'Kyokan': 'Village headmen or elders responsible for local governance, resolving '
             'disputes, and managing community affairs in rural areas.',
-            'Goyo-shu': 'Clerks or scribes responsible for maintaining records, drafting ' \
+            'Goyo-shu': 'Clerks or scribes responsible for maintaining records, drafting '
             'documents, and handling administrative tasks in local government offices.',
-            'Dojo-gashira': 'Supervisors or managers overseeing public training grounds or ' \
+            'Dojo-gashira': 'Supervisors or managers overseeing public training grounds or '
             'martial arts schools, ensuring order and compliance with regulations.',
-            'Sakaya-bugyo': 'Officials overseeing sake breweries, regulating production, ' \
+            'Sakaya-bugyo': 'Officials overseeing sake breweries, regulating production, '
             'quality, and taxation of sake, an important commodity in Japanese society.',
-            'Kura-gashira': 'Administrators managing storehouses or warehouses, responsible ' \
+            'Kura-gashira': 'Administrators managing storehouses or warehouses, responsible '
             'for inventory, storage, and distribution of goods within a domain.',
-            'Tegata-goyō': 'Bureaucrats dealing with permits or certificates required for ' \
+            'Tegata-goyō': 'Bureaucrats dealing with permits or certificates required for '
             'various activities, such as travel permits or trade licenses.',
-            "Nin'ya": 'Secretaries or assistants aiding higher-ranking officials in managing ' \
+            "Nin'ya": 'Secretaries or assistants aiding higher-ranking officials in managing '
             'paperwork, correspondence, and routine administrative tasks.',
-            'Shiinoki': 'Lower-level officials responsible for managing and maintaining ' \
+            'Shiinoki': 'Lower-level officials responsible for managing and maintaining '
             'government-owned forests, overseeing logging activities, and conservation efforts.',
-            'Minteki-goyō': 'Officials managing or overseeing the minting and distribution ' \
+            'Minteki-goyō': 'Officials managing or overseeing the minting and distribution '
             'of currency within specific regions or domains.',
-            'Fudasashi': 'Couriers or messengers responsible for delivering official ' \
-            'communications, documents, or orders between different administrative offices ' \
+            'Fudasashi': 'Couriers or messengers responsible for delivering official '
+            'communications, documents, or orders between different administrative offices '
             'or regions.',
-            'Kokuze-gashira': 'Administrators overseeing local land surveys, maintaining ' \
+            'Kokuze-gashira': 'Administrators overseeing local land surveys, maintaining '
             'land records, and managing property tax assessments within a domain.',
         }
         public_official = rand_list_entry(list(public_officials.keys()))  # The public official
@@ -367,36 +365,36 @@ class GGJob():
             'Shogun': 'The supreme military commander who held the highest authority.',
             'Daimyo': 'Feudal lords who governed specific territories.',
             'Samurai': 'Warriors serving the daimyo and holding high prestige in society.',
-            'Ronin': 'Masterless samurai who were often skilled swordsmen and mercenaries. ' \
+            'Ronin': 'Masterless samurai who were often skilled swordsmen and mercenaries. '
             'While not public officials, they held social significance during this period.',
-            'Hatamoto': 'Direct retainers of the Shogun, holding privileged positions. They ' \
+            'Hatamoto': 'Direct retainers of the Shogun, holding privileged positions. They '
             'were close advisors and administrators in the Shogun\'s administration.',
-            'Metsuke': 'Officials responsible for surveillance and security, maintaining ' \
+            'Metsuke': 'Officials responsible for surveillance and security, maintaining '
             'order and monitoring daimyo who resided there.',
-            'Machibikeshi': 'Town magistrates responsible for local governance, security, ' \
+            'Machibikeshi': 'Town magistrates responsible for local governance, security, '
             'and enforcing laws in various towns and cities.',
-            'Bugyo': 'Magistrates or administrators appointed by the Shogun to oversee ' \
+            'Bugyo': 'Magistrates or administrators appointed by the Shogun to oversee '
             'specific regions, handling legal, administrative, and financial matters.',
-            'Karō': 'Chief advisors or administrators in daimyo households, managing the ' \
+            'Karō': 'Chief advisors or administrators in daimyo households, managing the '
             'affairs of the domain and advising the lord.',
-            'Hanshi': 'Scholars and intellectuals who held influence by advising daimyo on ' \
+            'Hanshi': 'Scholars and intellectuals who held influence by advising daimyo on '
             'matters related to philosophy, strategy, and governance.',
-            'Gonin-gumi Leader': 'Leaders of groups of five households, organized to ' \
+            'Gonin-gumi Leader': 'Leaders of groups of five households, organized to '
             'facilitate mutual responsibility and accountability among residents.',
-            'Mura-bugyo': 'Officials responsible for overseeing villages or rural areas, ' \
-            'handling agricultural matters, land distribution, tax collection, and local ' \
+            'Mura-bugyo': 'Officials responsible for overseeing villages or rural areas, '
+            'handling agricultural matters, land distribution, tax collection, and local '
             'disputes in the countryside.',
-            'Metsuke-doshin': 'A higher-ranked police official who assisted metsuke in ' \
-            'maintaining security and order within Edo. They had authority over ' \
+            'Metsuke-doshin': 'A higher-ranked police official who assisted metsuke in '
+            'maintaining security and order within Edo. They had authority over '
             'lower-ranked constables.',
-            'Osaka Jodai': 'Administrators in charge of governing Osaka, overseeing its ' \
-            'economic activities, trade, and harbor operations, playing a pivotal role in ' \
+            'Osaka Jodai': 'Administrators in charge of governing Osaka, overseeing its '
+            'economic activities, trade, and harbor operations, playing a pivotal role in '
             'the city\'s growth and development.',
-            'Sobashu': 'Officials who managed and regulated inns, tea houses, and ' \
-            'entertainment establishments. They oversaw licensing, taxation, and compliance ' \
+            'Sobashu': 'Officials who managed and regulated inns, tea houses, and '
+            'entertainment establishments. They oversaw licensing, taxation, and compliance '
             'with regulations in these businesses.',
-            'Jisha-bugyo': 'Officials responsible for overseeing and managing shrines, ' \
-            'ensuring their proper maintenance, conducting rituals, and handling ' \
+            'Jisha-bugyo': 'Officials responsible for overseeing and managing shrines, '
+            'ensuring their proper maintenance, conducting rituals, and handling '
             'shrine-related affairs.',
         }
         public_official = ''  # The public official
@@ -805,7 +803,7 @@ class GGJob():
 
         # RANDO IT
         score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
-                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
+            + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
 
         # DONE
         return score_details
@@ -832,7 +830,7 @@ class GGJob():
 
         # RANDO IT
         score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
-                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
+            + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
 
         # DONE
         return score_details
@@ -859,7 +857,7 @@ class GGJob():
 
         # RANDO IT
         score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
-                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
+            + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
 
         # DONE
         return score_details
@@ -1099,21 +1097,21 @@ class GGJob():
                         f'{_RACKET_EXTORT.capitalize()} - '
         # Who came up with this score?
         source_entity = ['The guildmaster'] + ['The deputy guildmaster'] * 2 \
-                        + ['A guild underboss'] * 3 + ['A master thief in the guild'] * 2 \
-                        + ['A customer']
+            + ['A guild underboss'] * 3 + ['A master thief in the guild'] * 2 \
+            + ['A customer']
         target_entity = ''  # Person or business to extort for money
         # Levels of extortion
         extort_levels = ['pay a recurring flat fee'] * 10 \
-                        + ['pay a regular percentage of profit'] * 4 \
-                        + ['cut the guild in as a silent partner'] * 3 \
-                        + ['sell the business to the guild at a discount'] * 2 \
-                        + ['turn over full control to the guild'] * 1
+            + ['pay a regular percentage of profit'] * 4 \
+            + ['cut the guild in as a silent partner'] * 3 \
+            + ['sell the business to the guild at a discount'] * 2 \
+            + ['turn over full control to the guild'] * 1
 
         # RANDO IT
         target_entity = self._rando_an_entity(add_adj=True)
         score_details = score_details + f'{rand_list_entry(source_entity).capitalize()} ' \
-                        + f'wants a(n) {target_entity.lower()} to ' \
-                        + f'{rand_list_entry(extort_levels)}'
+            + f'wants a(n) {target_entity.lower()} to ' \
+            + f'{rand_list_entry(extort_levels)}'
 
         # DONE
         return score_details
@@ -1163,7 +1161,7 @@ class GGJob():
                         f'{_RACKET_PROT.capitalize()} - '
         # Who came up with this score?
         source_entity = ['The guildmaster'] + ['The deputy guildmaster'] * 2 \
-                        + ['A guild underboss'] * 4 + ['A guild master thief'] * 2
+            + ['A guild underboss'] * 4 + ['A guild master thief'] * 2
         # What type of client is it?
         client_type_list = ['new client', 'old client', 'unwilling client', 'willing customer']
         # Who needs protecting?
@@ -1173,9 +1171,9 @@ class GGJob():
 
         # RANDO IT
         score_details = score_details + f'{rand_list_entry(source_entity).capitalize()} ' \
-                        + f'needs a(n) {customer.lower()} ' \
-                        + f'({rand_list_entry(client_type_list).lower()}) ' \
-                        + f'protected from a(n) {rand_list_entry(danger_list).lower()}'
+            + f'needs a(n) {customer.lower()} ' \
+            + f'({rand_list_entry(client_type_list).lower()}) ' \
+            + f'protected from a(n) {rand_list_entry(danger_list).lower()}'
 
         # DONE
         return score_details
