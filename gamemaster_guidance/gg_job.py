@@ -1,5 +1,5 @@
 """Defines the GGJob class."""
-
+# pylint: disable=too-many-lines
 # Standard Imports
 from typing import Any, Final, List
 import os
@@ -23,6 +23,9 @@ _JOB_LIST: Final[List] = sorted([_JOB_GUARD, _JOB_PATROL, _JOB_INVEST, _JOB_RECR
                                  _JOB_EXPAND])
 # Some functional specialties require different "formulas" to generate scores.  Those functional
 # specialties are listed here.
+_CORRUPT_GRAND: Final[str] = 'grand'  # en.wikipedia.org/wiki/Corruption#Definitions_and_scales
+_CORRUPT_PETTY: Final[str] = 'petty'  # en.wikipedia.org/wiki/Corruption#Definitions_and_scales
+_CORRUPT_SYSTEMIC: Final[str] = 'systemic'  # wikipedia.org/wiki/Corruption#Definitions_and_scales
 _PROPERTY_ARSON: Final[str] = 'arson'
 _PROPERTY_BURGLARY: Final[str] = 'burglary'
 _PROPERTY_FENCE: Final[str] = 'fencing'
@@ -33,7 +36,10 @@ _RACKET_EXTORT: Final[str] = 'extortion'
 _RACKET_LOAN: Final[str] = 'loan-sharking'
 _RACKET_PROT: Final[str] = 'protection'
 _FUNC_SPEC_LOOKUP: Final[dict] = {
-    # GG_GLOBALS.FUNC_SPECIAL_CORRUPTION: [],
+    GG_GLOBALS.FUNC_SPECIAL_CORRUPTION:
+        ([_CORRUPT_PETTY] * 3)
+        + ([_CORRUPT_GRAND] * 2)
+        + ([_CORRUPT_SYSTEMIC] * 1),
     # GG_GLOBALS.FUNC_SPECIAL_COUNTERFEIT: [],
     # GG_GLOBALS.FUNC_SPECIAL_DRUGS: [],
     # GG_GLOBALS.FUNC_SPECIAL_EXPLOIT: [],
@@ -47,8 +53,8 @@ _FUNC_SPEC_LOOKUP: Final[dict] = {
         + ([_PROPERTY_VANDAL] * 1),
     GG_GLOBALS.FUNC_SPECIAL_RACKET:
         ([_RACKET_EXTORT] * 3)
-        + ([_RACKET_LOAN] * 1)
-        + ([_RACKET_PROT] * 2),
+        + ([_RACKET_PROT] * 2)
+        + ([_RACKET_LOAN] * 1),
     # GG_GLOBALS.FUNC_SPECIAL_SMUGGLE: [],
     # GG_GLOBALS.FUNC_SPECIAL_VICE: [],
     # GG_GLOBALS.FUNC_SPECIAL_VIOLENCE: []
@@ -187,6 +193,228 @@ class GGJob():
         # DONE
         return rando_person
 
+    def _rando_a_public_official_high(self, add_desc: bool = True, percent_imp: int = 25) -> str:
+        """Randomize a high-level public official from Japan's Edo period.
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+            percent_imp: [Optional] Percent chance, 1 - 100, to randomize a mid-level public
+                official that works in the Imperial Palace.  Choosing a value of 0 will guarantee
+                a high-level public official.  Conversely, choosing a value of 100 will guarantee
+                a mid-level imperial public official is selected.
+        """
+        # LOCAL VARIABLES
+        # Dictionary of high-level public officials, from Japan's Edo period, and their descriptions
+        public_officials = {
+            # Non-Imperial Positions
+            'Shogun': 'The supreme military commander who held the highest authority.',
+            'Daimyo': 'Feudal lords who governed specific territories.',
+            'Hatamoto': 'Direct retainers of the Shogun, holding privileged positions. ' \
+            'They were close advisors and administrators in the Shogun\'s administration.',
+            'Bugyo': 'Magistrates or administrators appointed by the Shogun to oversee ' \
+            'specific regions, handling legal, administrative, and financial matters.',
+            'Karo': 'Chief advisors or administrators in daimyo households. They were ' \
+            'influential figures, managing the daily affairs of the domain, advising the ' \
+            'lord, and overseeing samurai retainers.',
+            'Hanshi': 'Scholars and intellectuals who held influence by advising daimyo ' \
+            'on matters related to philosophy, strategy, and governance.',
+            'Metsuke': 'Officials responsible for surveillance and security, working ' \
+            'under the direct authority of the shogunate. They monitored daimyo and their ' \
+            'activities while residing in the capital.',
+            'Machibikeshi': 'Town magistrates responsible for local governance, security, ' \
+            'and enforcing laws in various towns and cities across Japan.',
+            'Bugyo': 'Magistrates appointed by the shogunate to govern specific regions ' \
+            'or cities. They had authority over legal, administrative, and financial matters ' \
+            'within their assigned territories.',
+            'Karō': 'Chief advisors or administrators in daimyo households. They were ' \
+            'influential figures, managing the daily affairs of the domain, advising the ' \
+            'lord, and overseeing samurai retainers.',
+            'Mura-bugyō': 'Officials responsible for overseeing villages or rural areas, ' \
+            'handling agricultural matters, land distribution, tax collection, and local ' \
+            'disputes in the countryside.',
+            'Metsuke-doshin': 'A higher-ranked police official who assisted metsuke in ' \
+            'maintaining security and order. They had authority over lower-ranked constables.',
+            'Kasai Jodai': 'Administrators in charge of governing Kasai, overseeing its ' \
+            'economic activities, trade, and harbor operations, playing a pivotal role in ' \
+            'the city\'s growth and development.',
+            'Sobashu': 'Officials who managed and regulated inns, tea houses, and ' \
+            'entertainment establishments. They oversaw licensing, taxation, and ' \
+            'compliance with regulations in these businesses.',
+            'Jisha-bugyo': 'Officials responsible for overseeing and managing shrines, ' \
+            'ensuring their proper maintenance, conducting rituals, and handling ' \
+            'shrine-related affairs.',
+            # Imperial Positions
+            'Emperor': 'The ceremonial head of state and symbol of unity for the nation. ' \
+            'During the Edo Period, the Emperor held a largely ceremonial role, with actual ' \
+            'political power residing in the Shogun and regional daimyo.',
+            'Empress': 'The consort of the Emperor, playing significant ceremonial roles ' \
+            'and responsibilities within the imperial court and contributing to cultural ' \
+            'activities.',
+            'Crown Prince': 'The heir to the throne, groomed for succession to the ' \
+            'position of Emperor. They received education and training in governance, ' \
+            'culture, and courtly duties.',
+            'Grand Chamberlain': 'An official responsible for managing the Emperor\'s ' \
+            'household affairs, supervising the palace staff, and overseeing ceremonies ' \
+            'and audiences.',
+            'Minister of the Right and Minister of the Left': 'Senior officials in the ' \
+            'Daijokan (Grand Council of State) who advised the Emperor on administrative, ' \
+            'legislative, and judicial matters.',
+        }
+        # Public official dictionary keys that count as Imperial posts
+        imp_positions = ['Emperor', 'Empress', 'Crown Prince', 'Grand Chamberlain',
+                         'Minister of the Right and Minister of the Left']
+        important_titles = ['influential', 'high-level', 'key', 'top', 'important', 'invaluable',
+                            'prominent', 'notable', 'pivotal', 'eminent', 'paramount', 'crucial',
+                            'distinguished', 'vital', 'influential']
+        public_official = ''  # The public official
+        imp_position = False  # Indicates whether an Imperial position was selected
+
+        # RANDO IT
+        # Public Official
+        if rand_integer(1, 100) <= percent_imp:
+            # Imperial Public Official, mid-level
+            public_official = 'Imperial ' + self._rando_a_public_official_mid(add_desc=add_desc)
+            imp_position = True
+        else:
+            # High-level Public Official
+            public_official = rand_list_entry(list(public_officials.keys()))
+            if public_official in imp_positions:
+                imp_position = True
+            if add_desc:
+                public_official = public_official \
+                                  + f' ({public_officials[public_official].lower()})'
+        # Are they high-level?
+        if not imp_position:
+            public_official = f'{rand_list_entry(important_titles)} ' + public_official
+
+        # DONE
+        return public_official
+
+    def _rando_a_public_official_low(self, add_desc: bool = True) -> str:
+        """Randomize a low-level public official from Japan's Edo period.
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+        """
+        # LOCAL VARIABLES
+        # Dictionary of low-level public officials, from Japan's Edo period, and their descriptions
+        public_officials = {
+            'Yoriki': 'Subordinate police officers or constables who assisted higher-ranking ' \
+            'officials in maintaining law and order within towns or districts.',
+            'Doshin': 'Police officers or town constables responsible for patrolling ' \
+            'neighborhoods, enforcing curfews, and addressing minor disputes in local communities.',
+            'Kurumabugyō': 'Officials responsible for overseeing transportation, especially the ' \
+            'regulation and maintenance of carts, roads, and travel within a region.',
+            'Yakunin': 'Lower-ranked bureaucrats or clerks assisting in administrative duties ' \
+            'such as record-keeping, documentation, or managing accounts within government ' \
+            'offices.',
+            'Hikeshi': 'Firefighters or firemen tasked with fire prevention, emergency response, ' \
+            'and firefighting duties in Edo and other major cities.',
+            'Kenin': 'Servants or attendants working within the households of samurai or ' \
+            'officials, often handling various domestic tasks or serving as assistants.',
+            'Gokenin': 'Vassals or retainers serving under daimyo, holding lower-ranking ' \
+            'positions in the feudal hierarchy and assisting in various administrative duties.',
+            'Dosho': 'Medical practitioners or doctors working in local clinics or ' \
+            'dispensaries, providing basic healthcare services to the public.',
+            'Ninja': 'Espionage agents or covert operatives employed for intelligence ' \
+            'gathering, infiltration, and other clandestine activities.',
+            'Kyokan': 'Village headmen or elders responsible for local governance, resolving ' \
+            'disputes, and managing community affairs in rural areas.',
+            'Goyo-shu': 'Clerks or scribes responsible for maintaining records, drafting ' \
+            'documents, and handling administrative tasks in local government offices.',
+            'Dojo-gashira': 'Supervisors or managers overseeing public training grounds or ' \
+            'martial arts schools, ensuring order and compliance with regulations.',
+            'Sakaya-bugyo': 'Officials overseeing sake breweries, regulating production, ' \
+            'quality, and taxation of sake, an important commodity in Japanese society.',
+            'Kura-gashira': 'Administrators managing storehouses or warehouses, responsible ' \
+            'for inventory, storage, and distribution of goods within a domain.',
+            'Tegata-goyō': 'Bureaucrats dealing with permits or certificates required for ' \
+            'various activities, such as travel permits or trade licenses.',
+            "Nin'ya": 'Secretaries or assistants aiding higher-ranking officials in managing ' \
+            'paperwork, correspondence, and routine administrative tasks.',
+            'Shiinoki': 'Lower-level officials responsible for managing and maintaining ' \
+            'government-owned forests, overseeing logging activities, and conservation efforts.',
+            'Minteki-goyō': 'Officials managing or overseeing the minting and distribution ' \
+            'of currency within specific regions or domains.',
+            'Fudasashi': 'Couriers or messengers responsible for delivering official ' \
+            'communications, documents, or orders between different administrative offices ' \
+            'or regions.',
+            'Kokuze-gashira': 'Administrators overseeing local land surveys, maintaining ' \
+            'land records, and managing property tax assessments within a domain.',
+        }
+        public_official = rand_list_entry(list(public_officials.keys()))  # The public official
+
+        # RANDO IT
+        if add_desc:
+            public_official = public_official + f' ({public_officials[public_official].lower()})'
+
+        # DONE
+        return public_official
+
+    def _rando_a_public_official_mid(self, add_desc: bool = True, percent_imp: int = 25) -> str:
+        """Randomize a mid-level public official from Japan's Edo period.
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+            percent_imp: [Optional] Percent chance, 1 - 100, to randomize a low-level public
+                official that works in the Imperial Palace.  Choosing a value of 0 will guarantee
+                a mid-level public official.  Conversely, choosing a value of 100 will guarantee
+                a low-level imperial public official is selected.
+        """
+        # LOCAL VARIABLES
+        # Dictionary of mid-level public officials, from Japan's Edo period, and their descriptions
+        public_officials = {
+            'Shogun': 'The supreme military commander who held the highest authority.',
+            'Daimyo': 'Feudal lords who governed specific territories.',
+            'Samurai': 'Warriors serving the daimyo and holding high prestige in society.',
+            'Ronin': 'Masterless samurai who were often skilled swordsmen and mercenaries. ' \
+            'While not public officials, they held social significance during this period.',
+            'Hatamoto': 'Direct retainers of the Shogun, holding privileged positions. They ' \
+            'were close advisors and administrators in the Shogun\'s administration.',
+            'Metsuke': 'Officials responsible for surveillance and security, maintaining ' \
+            'order and monitoring daimyo who resided there.',
+            'Machibikeshi': 'Town magistrates responsible for local governance, security, ' \
+            'and enforcing laws in various towns and cities.',
+            'Bugyo': 'Magistrates or administrators appointed by the Shogun to oversee ' \
+            'specific regions, handling legal, administrative, and financial matters.',
+            'Karō': 'Chief advisors or administrators in daimyo households, managing the ' \
+            'affairs of the domain and advising the lord.',
+            'Hanshi': 'Scholars and intellectuals who held influence by advising daimyo on ' \
+            'matters related to philosophy, strategy, and governance.',
+            'Gonin-gumi Leader': 'Leaders of groups of five households, organized to ' \
+            'facilitate mutual responsibility and accountability among residents.',
+            'Mura-bugyo': 'Officials responsible for overseeing villages or rural areas, ' \
+            'handling agricultural matters, land distribution, tax collection, and local ' \
+            'disputes in the countryside.',
+            'Metsuke-doshin': 'A higher-ranked police official who assisted metsuke in ' \
+            'maintaining security and order within Edo. They had authority over ' \
+            'lower-ranked constables.',
+            'Osaka Jodai': 'Administrators in charge of governing Osaka, overseeing its ' \
+            'economic activities, trade, and harbor operations, playing a pivotal role in ' \
+            'the city\'s growth and development.',
+            'Sobashu': 'Officials who managed and regulated inns, tea houses, and ' \
+            'entertainment establishments. They oversaw licensing, taxation, and compliance ' \
+            'with regulations in these businesses.',
+            'Jisha-bugyo': 'Officials responsible for overseeing and managing shrines, ' \
+            'ensuring their proper maintenance, conducting rituals, and handling ' \
+            'shrine-related affairs.',
+        }
+        public_official = ''  # The public official
+
+        # RANDO IT
+        if rand_integer(1, 100) <= percent_imp:
+            # Imperial Public Official, low-level
+            public_official = 'Imperial ' + self._rando_a_public_official_low(add_desc=add_desc)
+        else:
+            # Mid-level Public Official
+            public_official = rand_list_entry(list(public_officials.keys()))
+            if add_desc:
+                public_official = public_official \
+                                  + f' ({public_officials[public_official].lower()})'
+
+        # DONE
+        return public_official
+
     def _rando_a_setting(self) -> str:
         """Randomize one person from the Common-Setting.txt database."""
         if not self._setting_list:
@@ -202,6 +430,33 @@ class GGJob():
                                             'Common-Thing.txt'))
         # RANDO IT
         return rand_list_entry(self._thing_list)
+
+    def _rando_an_entity(self, add_adj: bool = False, percent_person: int = 25) -> str:
+        """Randomize a random entity: person or business.
+
+        Utilizes self._rando_a_person() and self._rando_a_business(), respectively.
+
+        Args:
+            add_adj: [Optional] Adds a random adjective from the Common-People_Adjective.txt
+                database to a randomized person if True.
+            percent_person: [Optional] Percent chance, 1 - 100, to randomize a person.
+                The percent chance to randomize a business instead is derived from this value.
+                Choosing a value of 0 will guarantee a business.  Conversely, choosing a value
+                of 100 will guarantee a person is randomized.
+        """
+        # LOCAL VARIABLES
+        target_entity = ''  # Randomized person or business
+
+        # RANDO IT
+        if rand_integer(1, 100) <= percent_person:
+            # Person
+            target_entity = self._rando_a_person(add_adj=add_adj)
+        else:
+            # Business
+            target_entity = self._rando_a_business()
+
+        # DONE
+        return target_entity
 
     def _rando_common_details(self, preamble: str, verb_list: List[str],
                               adj_list: List[str] = None) -> str:
@@ -502,10 +757,109 @@ class GGJob():
     def _rando_score_details_corrupt(self) -> str:
         """Randomize a specific score that falls into the corruption functional specialty."""
         # LOCAL VARIABLES
-        score_details = ''  # Details about this score
+        sub_specialty = None  # The specific type of job available within the functional specialty
+        # Method name lookup dictionary for functional specialties.  Each must return a string.
+        func_lookup = {
+            _CORRUPT_PETTY: self._rando_score_details_corrupt_petty,
+            _CORRUPT_GRAND: self._rando_score_details_corrupt_grand,
+            _CORRUPT_SYSTEMIC: self._rando_score_details_corrupt_system,
+        }
 
         # RANDO IT
-        # TO DO: DON'T DO NOW... fill in a templated string and return
+        # Is there a sub-specialty?
+        try:
+            sub_specialty = rand_list_entry(_FUNC_SPEC_LOOKUP[GG_GLOBALS.FUNC_SPECIAL_CORRUPTION])
+        except KeyError as err:
+            raise RuntimeError(f'Where are the {GG_GLOBALS.FUNC_SPECIAL_CORRUPTION} '
+                               'sub-specialties?') from err
+
+        # VALIDATION
+        if sub_specialty not in func_lookup:
+            raise RuntimeError(f'Unsupported corruption crimes sub-specialty: {sub_specialty}')
+
+        # RANDO IT
+        score_details = func_lookup[sub_specialty]()
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_corrupt_grand(self, add_desc: bool = True) -> str:
+        """Randomize a score that falls into the corruption crime sub-specialty grand.
+
+        See: https://en.wikipedia.org/wiki/Corruption#Grand_corruption
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+        """
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_CORRUPTION.upper()} - ' \
+                        f'{_CORRUPT_GRAND.capitalize()} - '
+        # Ways in which a public official may be corrupted or involved with corruption
+        verb_list = ['manipulate', 'bribe', 'peddle influence with', 'trade influence with',
+                     'entice', 'extort', 'buy off', 'pay off', 'fix', 'induce',
+                     'provide incentive to', 'motivate', 'entice', 'grease the wheels with',
+                     'encourage', 'tempt']
+        customer = self._rando_a_person()                                       # The customer
+        public_official = self._rando_a_public_official_mid(add_desc=add_desc)  # The target
+
+        # RANDO IT
+        score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
+                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_corrupt_petty(self, add_desc: bool = True) -> str:
+        """Randomize a score that falls into the corruption crime sub-specialty petty.
+
+        See: https://en.wikipedia.org/wiki/Corruption#Petty_corruption
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+        """
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_CORRUPTION.upper()} - ' \
+                        f'{_CORRUPT_PETTY.capitalize()} - '
+        # Ways in which a public official may be corrupted or involved with corruption
+        verb_list = ['manipulate', 'bribe', 'peddle influence with', 'trade influence with',
+                     'entice', 'extort', 'buy off', 'pay off', 'fix', 'induce',
+                     'provide incentive to', 'motivate', 'entice', 'grease the wheels with',
+                     'encourage', 'tempt']
+        customer = self._rando_a_person()                                       # The customer
+        public_official = self._rando_a_public_official_low(add_desc=add_desc)  # The target
+
+        # RANDO IT
+        score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
+                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
+
+        # DONE
+        return score_details
+
+    def _rando_score_details_corrupt_system(self, add_desc: bool = True) -> str:
+        """Randomize a score that falls into the corruption crime sub-specialty systemic.
+
+        See: https://en.wikipedia.org/wiki/Corruption#Systemic_corruption
+
+        Args:
+            add_desc: [Optional] Add the description of the Edo period public official if True.
+        """
+        # LOCAL VARIABLES
+        # Details about this score
+        score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_CORRUPTION.upper()} - ' \
+                        f'{_CORRUPT_SYSTEMIC.capitalize()} - '
+        # Ways in which a public official may be corrupted or involved with corruption
+        verb_list = ['manipulate', 'bribe', 'peddle influence with', 'trade influence with',
+                     'entice', 'extort', 'buy off', 'pay off', 'fix', 'induce',
+                     'provide incentive to', 'motivate', 'entice', 'grease the wheels with',
+                     'encourage', 'tempt']
+        customer = self._rando_a_person()                                       # The customer
+        public_official = self._rando_a_public_official_high(add_desc=add_desc)  # The target
+
+        # RANDO IT
+        score_details = score_details + f'A(n) {customer.lower()} wants the guild to ' \
+                        + f'{rand_list_entry(verb_list).lower()} a(n) {public_official}'
 
         # DONE
         return score_details
@@ -756,12 +1110,7 @@ class GGJob():
                         + ['turn over full control to the guild'] * 1
 
         # RANDO IT
-        if rand_integer(1, 100) <= 25:
-            # Person
-            target_entity = self._rando_a_person(add_adj=True)
-        else:
-            # Business
-            target_entity = self._rando_a_business()
+        target_entity = self._rando_an_entity(add_adj=True)
         score_details = score_details + f'{rand_list_entry(source_entity).capitalize()} ' \
                         + f'wants a(n) {target_entity.lower()} to ' \
                         + f'{rand_list_entry(extort_levels)}'
@@ -770,11 +1119,38 @@ class GGJob():
         return score_details
 
     def _rando_score_details_racket_loan(self) -> str:
-        """Randomize a score that falls into the racketeering crime sub-specialty loan-sharkking."""
+        """Randomize a score that falls into the racketeering crime sub-specialty loan-sharking."""
         # LOCAL VARIABLES
         # Details about this score
         score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_RACKET.upper()} - ' \
                         f'{_RACKET_LOAN.capitalize()} - '
+        # Default list of trouble-makers
+        trouble_list = ['law enforcement', 'corrupt law enforcement', 'rival guild', 'local gang',
+                        'vigilante/vagabond']
+        # Collection list
+        collect_list = [f'delinquent {self._rando_a_person()}',
+                        f'{self._rando_a_person()} in hiding',
+                        f'{self._rando_a_business()} business']
+        shark_categories = ['protection', 'collection', 'recovery']  # Different loan-sharking jobs
+        shark_category = rand_list_entry(shark_categories)           # This loan-sharking job
+
+        # RANDO IT
+        if shark_category == 'protection':
+            # Protection
+            score_details = score_details + 'Guild loan shark needs additional protection from ' \
+                            + f'a(n) {rand_list_entry(trouble_list).lower()}'
+        elif shark_category == 'collection':
+            # Collection
+            score_details = score_details + 'Guild loan shark needs money collected from a(n) ' \
+                            + f'{rand_list_entry(collect_list).lower()}'
+        elif shark_category == 'recovery':
+            # Recovery
+            score_details = score_details + 'Guild loan shark needs capital recovered from a(n) ' \
+                            + f'{rand_list_entry(trouble_list[1:]).lower()}'
+        elif shark_category not in shark_categories:
+            raise RuntimeError(f'Encountered an unsupported loan-sharking job of {shark_category}')
+        else:
+            raise RuntimeError(f'Unimplemented loan-sharking job type of {shark_category}')
 
         # DONE
         return score_details
@@ -785,6 +1161,21 @@ class GGJob():
         # Details about this score
         score_details = f'{self._score_title}: {GG_GLOBALS.FUNC_SPECIAL_RACKET.upper()} - ' \
                         f'{_RACKET_PROT.capitalize()} - '
+        # Who came up with this score?
+        source_entity = ['The guildmaster'] + ['The deputy guildmaster'] * 2 \
+                        + ['A guild underboss'] * 4 + ['A guild master thief'] * 2
+        # What type of client is it?
+        client_type_list = ['new client', 'old client', 'unwilling client', 'willing customer']
+        # Who needs protecting?
+        customer = self._rando_an_entity(add_adj=True)
+        # From what does the customer need to be protected?
+        danger_list = ['corrupt law enforcement', 'rival guild', 'local gang', 'vagabond']
+
+        # RANDO IT
+        score_details = score_details + f'{rand_list_entry(source_entity).capitalize()} ' \
+                        + f'needs a(n) {customer.lower()} ' \
+                        + f'({rand_list_entry(client_type_list).lower()}) ' \
+                        + f'protected from a(n) {rand_list_entry(danger_list).lower()}'
 
         # DONE
         return score_details
