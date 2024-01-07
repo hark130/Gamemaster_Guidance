@@ -12,6 +12,7 @@ from gamemaster_guidance.gg_bounty import GGBounty
 from gamemaster_guidance.gg_character import GGCharacter
 from gamemaster_guidance.gg_city import GG_City
 from gamemaster_guidance.gg_globals import ANCESTRY_LIST
+from gamemaster_guidance.gg_guild import GGGuild
 
 
 # Formation of the race-based menu dictionary
@@ -73,25 +74,80 @@ def clear_screen():
     subprocess.call([command], shell=True)
 
 
-def menu(city_dict=None):
-    """Top level menu."""
+def guild_menu(guild_obj):
+    """Print the guild menu and read user input."""
     clear_screen()
-    user_input = 0
-    city_obj = None
+    user_input = 0  # Stores user input
+    num_jobs = 0    # Number of jobs to randomize
+    num_events = 0  # Number of events to randomize
 
+    # INPUT VALIDATION
+    if not guild_obj:
+        print('\nNo guild config provided')
+        user_input = 999
+
+    # GUILD MENU
+    while user_input != 999:
+        num_jobs = guild_obj.get_num_jobs()
+        num_events = guild_obj.get_num_events()
+        print_guild_menu(num_jobs=num_jobs, num_events=num_events)
+        user_input = read_user_input()
+        # Guild details
+        if user_input == 1:
+            clear_screen()
+            guild_obj.print_guild_config()
+        # Randomize jobs
+        elif user_input == 2:
+            clear_screen()
+            guild_obj.rando_jobs()
+        # Randomize event
+        elif user_input == 3:
+            clear_screen()
+            guild_obj.rando_events()
+        # Clear screen
+        elif user_input == 4:
+            clear_screen()
+        # Main menu
+        elif user_input == 42:
+            break
+        # Exit
+        else:
+            user_input = 999
+
+    # DONE
+    return user_input
+
+
+def menu(city_dict: dict, guild_dict: dict) -> None:
+    """Top level menu.
+
+    Args:
+        city_dict: Dictionary parsed from the city configuration file.  Can be None.
+        guild_dict: Dictionary parsed from the guild configuration file.  Can be None.
+    """
+    # LOCAL VARIABLES
+    user_input = 0    # User integer input
+    city_obj = None   # GGCity() object
+    guild_obj = None  # GGGuild() object
+
+    # SETUP
+    clear_screen()
+    print('\nWelcome to Gamemaster Guidance')
     if city_dict:
         city_obj = GG_City(city_dict)
         city_obj.load()
+    if guild_dict:
+        guild_obj = GGGuild(guild_dict)
 
-    print('\nWelcome to Gamemaster Guidance')
-
+    # START
     while user_input != 999:
         print('\n')
         print('  1. Randomize a name')
         print('  2. Randomize a character')
         print('  3. Randomize a bounty')
         print('  4. City menu')
-        print('  5. Clear screen')
+        print('  5. Guild menu')
+        print('  6. Clear screen')
         print('999. Exit')
         print('Choose an option [999]:')
         user_input = read_user_input()
@@ -104,9 +160,18 @@ def menu(city_dict=None):
         elif user_input == 4:
             user_input = city_menu(city_obj)
         elif user_input == 5:
+            user_input = guild_menu(guild_obj)
+        elif user_input == 6:
             clear_screen()
+        elif user_input == 999:
+            pass
+        elif user_input == -1:
+            user_input = 999
         else:
             raise SystemExit('Exiting Gamemaster Guidance')
+
+    # DONE
+    print('\nThank you for using Gamemaster Guidance\n')
 
 
 def print_bounty_menu():
@@ -126,6 +191,29 @@ def print_city_menu():
     print('  1. Print the city details')
     print('  2. Print the NPCs')
     print('  3. Clear screen')
+    print(' 42. Main Menu')
+    print('999. Exit')
+    print('Choose an option [999]:')
+
+
+def print_guild_menu(num_jobs: int, num_events: int) -> None:
+    """Print the guild menu."""
+    # LOCAL VARIABLES
+    job_suffix = 's'    # Default to plural jobs
+    event_suffix = 's'  # Default to plural events
+
+    # VARIABLE PRINTING
+    if num_jobs == 1:
+        job_suffix = ''
+    if num_events == 1:
+        event_suffix = ''
+
+    # PRINT IT
+    print('\n')
+    print('  1. Print the guild details')
+    print(f'  2. Randomize {num_jobs} job{job_suffix}/score{job_suffix}')
+    print(f'  3. Randomize {num_events} event{event_suffix}')
+    print('  4. Clear screen')
     print(' 42. Main Menu')
     print('999. Exit')
     print('Choose an option [999]:')

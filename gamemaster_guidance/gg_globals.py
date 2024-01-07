@@ -47,13 +47,18 @@ ANCESTRY_LIST: Final[List] = sorted([GG_CITY_RACE_DWARF, GG_CITY_RACE_ELF, GG_CI
 CLASS_LIST: Final[List] = ['Adept', 'Alchemist', 'Aristocrat', 'Barbarian', 'Bard', 'Champion',
                            'Cleric', 'Commoner', 'Druid', 'Expert', 'Fighter', 'Monk', 'Ranger',
                            'Rogue', 'Sorcerer', 'Warrior', 'Wizard']
-
-
-def print_header(header):
-    """Print a header surrounded by a standardized banner."""
-    # LOCAL VARIABLES
-    banner = '-' * len(header)
-
-    print(banner)
-    print(header)
-    print(banner)
+FUNC_SPECIAL_CORRUPTION: Final[str] = 'corruption'
+FUNC_SPECIAL_COUNTERFEIT: Final[str] = 'counterfeiting'
+FUNC_SPECIAL_DRUGS: Final[str] = 'drugs'
+FUNC_SPECIAL_EXPLOIT: Final[str] = 'exploitation'
+FUNC_SPECIAL_FRAUD: Final[str] = 'fraud'
+FUNC_SPECIAL_PROPERTY: Final[str] = 'property'
+FUNC_SPECIAL_RACKET: Final[str] = 'racketeering'
+FUNC_SPECIAL_SMUGGLE: Final[str] = 'smuggling'
+FUNC_SPECIAL_VICE: Final[str] = 'vice'
+FUNC_SPECIAL_VIOLENCE: Final[str] = 'violence'
+FUNC_SPECIAL_LIST: Final[List] = sorted([FUNC_SPECIAL_CORRUPTION, FUNC_SPECIAL_COUNTERFEIT,
+                                         FUNC_SPECIAL_DRUGS, FUNC_SPECIAL_EXPLOIT,
+                                         FUNC_SPECIAL_FRAUD, FUNC_SPECIAL_PROPERTY,
+                                         FUNC_SPECIAL_RACKET, FUNC_SPECIAL_SMUGGLE,
+                                         FUNC_SPECIAL_VICE, FUNC_SPECIAL_VIOLENCE])

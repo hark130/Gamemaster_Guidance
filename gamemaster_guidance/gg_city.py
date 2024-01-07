@@ -7,7 +7,8 @@ import math
 import random
 # Local
 from gamemaster_guidance.gg_globals import (ANCESTRY_LIST, CITY_MODIFIER_LIST, CITY_SIZE_LIMITS,
-                                            HUMAN_ETHNICITY_LIST, print_header)
+                                            HUMAN_ETHNICITY_LIST)
+from gamemaster_guidance.gg_misc import print_header
 from gamemaster_guidance.gg_rando import rand_float, rand_integer
 import gamemaster_guidance.gg_globals as GG_Globals  # For backwards compatibility
 

@@ -1,0 +1,212 @@
+# A list of things to choose from.
+house
+hut
+stable
+barn
+gazebo
+hovel
+scroll
+paperwork
+document
+sword
+dagger
+wagon
+horse
+mule
+donkey
+notice
+clothing
+obi
+hat
+cart
+stand
+crate
+bed
+pillow
+painting
+statue
+chair
+table
+dresser
+chest of drawers
+money
+gold
+copper
+ingots
+hay
+feed
+trough
+trash
+Cupboard
+Pillow
+Coffee
+Bed
+Spoon
+Blanket
+Knife
+Stove
+Sink
+Washing machine
+Pot
+Dish
+icebox
+Sofa
+Stool
+Cup
+Fork
+Glass
+Bicycle
+Banknote
+Wallet
+Blouse
+Bag
+Shirt
+Helmet
+Toothbrush
+Key
+Table
+Coin
+Pants
+Sweater
+Shoe
+Longsword
+Chainmail armor
+Quill and parchment
+Chalice
+Crossbow
+Mead
+Heraldic shield
+Trebuchet
+Cauldron
+Codpiece
+Flail
+Tapestries
+Tunic
+Oil lamp
+Jousting lance
+Candelabra
+Siege tower
+Coat of arms
+Feasting table
+Minstrel's lute
+Mace
+Gauntlets
+Scroll
+Arbalest
+Mead horn
+Parchment map
+Halberd
+Cuirass
+Trestle table
+Drinking goblet
+Besieged castle
+Herald's tabard
+Leather jerkin
+Catapult
+Torch sconce
+Smith's anvil
+Crenellations
+Warhorse
+Court jester's cap
+Tannery vat
+Tower shield
+Great helm
+Alchemist's vial
+Codex
+Sallet helmet
+Pottage
+Battle axe
+Pavilion tent
+Flagon
+Arbiter's gavel
+Chain gauntlets
+Pike
+Apothecary's mortar and pestle
+Palfrey
+Drinking horn
+Parchment scroll case
+Bastion walls
+Quern stone
+Quaich (a shallow drinking cup)
+Cloak clasp
+Crenulated tower
+Mangonel
+Siege engine blueprints
+Alembic
+Burgonet helmet
+Battering ram
+Portcullis
+Herbarium
+Stable saddle
+Tabard
+Rondel dagger
+Palfrey saddle
+Jester's bauble
+Goblet chain
+Moat bridge
+Chainmail coif
+Falconer's gauntlet
+Mason's trowel
+Ballista
+Pillory
+Royal scepter
+Tapestried canopy bed
+Breastplate armor
+Stirrup
+Broadaxe
+Dungeon keys
+Scutum shield
+Vellum manuscript
+Gilded goblet
+Manor estate
+Cresset torch
+Jousting barrier
+Chain hauberk
+Siege ladder
+Alchemist's alembic
+Herbalist's compendium
+Falconry hood
+Parapet walls
+Tilting helm
+Scriptorium desk
+Catapult ammunition
+Trestle bench
+Armorer's forge
+Crossbow bolts
+Targe shield
+Grimoire
+Tournament lances
+Fletching feathers
+Saddlebags
+Royal decree
+Cuirassier's cuirass
+Plumed helm
+Monk's habit
+Chainmail mittens
+Mead hall
+Grapeshot
+Hornbook
+Crenelated tower
+Fletcher's quiver
+Vintner's wineskins
+Chain haubergeon
+Goblet stand
+Scroll case
+Feasting trencher
+Blacksmith's bellows
+Tannery hide stretcher
+Poulaine shoes
+Sallet visor
+Battle pennant
+Bridle and reins
+Plague doctor's beak mask
+Mason's hammer
+Jouster's greaves
+Peasant's plow
+Tavern hearth
+Paladin's shield
+Codex manuscript
+Furrier's pelt
+Siege tower ramp
+Gambeson padding
+

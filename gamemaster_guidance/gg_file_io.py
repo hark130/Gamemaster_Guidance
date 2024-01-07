@@ -1,6 +1,7 @@
 """Implements simplified database wrapper functions."""
 
 # Standard
+from typing import List
 import random
 import sys
 # Third Party
@@ -13,9 +14,33 @@ def pick_entry(filename):
 
 
 def pick_entries(filename, num_tuples, skip_comments=True):
-    """Returns a list of strings from a newline-delimited file, skipping comments"""
+    """Returns a num_tuples number of strings, in a list, from a newline-delimited file."""
     # LOCAL VARIABLES
-    entry_list = []
+    file_list = []   # Full contents of filename.
+    entry_list = []  # A subset of the filename entries, of length num_tuples.
+
+    # BUILD LIST
+    # Read File
+    file_list = read_entries(filename=filename, skip_comments=skip_comments)
+    # Choose List Entries
+    for _ in range(1, num_tuples + 1):
+        entry_list.append(random.choice(file_list))
+
+    # DONE
+    return entry_list
+
+
+def read_entries(filename, skip_comments: bool = True) -> List[str]:
+    """Read all entries, as a list of strings, from a newline-delimited file.
+
+    Args:
+        filename: A newline-delimited file to read entries from.
+        skip_comments: [Optional] Skip any comments in filename.
+
+    Returns: A list of strings read from filename.
+    """
+    # LOCAL VARIABLES
+    file_list = []  # List of strings read from filename.
 
     # BUILD LIST
     # Open File
@@ -31,9 +56,5 @@ def pick_entries(filename, num_tuples, skip_comments=True):
     else:
         file_list = [entry for entry in file_content.split("\n") if entry]
 
-    # Choose List Entries
-    for _ in range(1, num_tuples + 1):
-        entry_list.append(random.choice(file_list))
-
     # DONE
-    return entry_list
+    return file_list

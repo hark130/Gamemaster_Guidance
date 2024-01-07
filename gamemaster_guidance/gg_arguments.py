@@ -10,7 +10,7 @@ import argparse
 
 # ARGUMENT DICTIONARY KEYS
 ARG_DICT_KEY_CITY: Final[str] = 'cityfile'  # -c, --cityfile
-ARG_DICT_KEY_GANG: Final[str] = 'gangfile'  # -g, --gangfile
+ARG_DICT_KEY_GANG: Final[str] = 'guildfile'  # -g, --guildfile
 
 
 def parse_arguments() -> Dict[str, Path]:
@@ -19,8 +19,8 @@ def parse_arguments() -> Dict[str, Path]:
                                      description='Gamemaster aid for Pathfinder 2nd Edition')
     parser.add_argument('-c', '--cityfile', action='store', required=False,
                         help='Filename of a city configuration file')
-    parser.add_argument('-g', '--gangfile', action='store', required=False,
-                        help='Filename of a gang configuration file')
+    parser.add_argument('-g', '--guildfile', action='store', required=False,
+                        help='Filename of a guild configuration file')
     parsed_args = parser.parse_args()
     ret_dict = {}
 
@@ -28,8 +28,8 @@ def parse_arguments() -> Dict[str, Path]:
     if parsed_args.cityfile:
         ret_dict[ARG_DICT_KEY_CITY] = Path(parsed_args.cityfile)
     # Gang file
-    if parsed_args.gangfile:
-        ret_dict[ARG_DICT_KEY_CITY] = Path(parsed_args.gangfile)
+    if parsed_args.guildfile:
+        ret_dict[ARG_DICT_KEY_GANG] = Path(parsed_args.guildfile)
 
     for value in ret_dict.values():
         _validate_path(value)
